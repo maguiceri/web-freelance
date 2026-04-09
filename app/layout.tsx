@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Magui | Frontend Developer",
-  description: "Frontend developer specialized in React, Next.js and modern UI.",
+  title: "Magali Cerisola | Frontend Developer",
+  description: "Frontend developer specializing in React, Next.js, and modern UI.",
 };
 
 export default function RootLayout({
@@ -24,7 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#050816] text-slate-100`}
+      >
+        <a className="skip-link" href="#main-content">
+          Skip to main content
+        </a>
         {children}
       </body>
     </html>
