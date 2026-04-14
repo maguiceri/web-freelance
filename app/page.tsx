@@ -12,6 +12,8 @@ export default function Home() {
   const [showHeader, setShowHeader] = useState(true);
   const lastScrollY = useRef(0);
 
+  console.log("hola")
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -86,10 +88,10 @@ export default function Home() {
           </Link>
         </div>
         <div className="flex-1 flex justify-center md:justify-end mt-12 md:mt-0">
-          <div
-            style={{ animationDelay: "0.25s" }}
-            className="fadeDown w-95 h-95 rounded-full overflow-hidden border border-white/15 shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_25px_70px_-35px_rgba(0,255,210,0.45)]"
-          >
+        <div
+  style={{ animationDelay: "0.25s" }}
+  className="fadeDown w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full overflow-hidden border border-white/15 shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_25px_70px_-35px_rgba(0,255,210,0.45)]"
+>
             <Image
               src="/avatar.jpeg" // Uses the avatar from /public
               alt="Portrait of Magali Cerisola"
@@ -345,7 +347,7 @@ Let’s work together to bring your project to life.
                 />
                 <Image
                   src="/mar.jpeg"
-                  alt="Mar, client review"
+                  alt="Martina Vega, client review"
                   width={96}
                   height={96}
                   className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#050816] transition-transform duration-300 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
@@ -354,7 +356,31 @@ Let’s work together to bring your project to life.
               <p className="text-sm leading-relaxed text-slate-200/85">
               “Working with Magali was a great experience. She translated my designs into a clean, pixel-perfect interface while maintaining attention to detail in spacing, typography, and responsiveness. Communication was smooth, and the final result matched the design perfectly.”
               </p>
-              <p className="mt-5 text-sm font-semibold text-teal-200/95">Mar</p>
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+                <Link
+                  href="https://linktr.ee/m.dagos?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAdGRleARLpbZleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafJ-l41L_EfCsd4nxU_CdeBlSX4AbWTgru4REtjrwRtxt_rKGYQQ-ZeYXHPsg_aem_4pDjRnYeDZmv3x2OZyZhQQ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
+                  aria-label="Martina Vega on Linktree (opens in a new tab)"
+                >
+                  <span>Martina Vega</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-4 w-4 shrink-0 text-teal-300/90"
+                    aria-hidden
+                  >
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                  </svg>
+                </Link>
+              </div>
               <p className="text-xs text-slate-400">UI/UX Designer</p>
             </article>
 
@@ -366,7 +392,7 @@ Let’s work together to bring your project to life.
                 />
                 <Image
                   src="/fran.jpeg"
-                  alt="Fran, client review"
+                  alt="Francisco Piaggio, client review"
                   width={96}
                   height={96}
                   className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#050816] transition-transform duration-300 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
@@ -375,7 +401,26 @@ Let’s work together to bring your project to life.
               <p className="text-sm leading-relaxed text-slate-200/85">
               “Magali writes clean, maintainable code and has a strong grasp of modern frontend practices. She builds reusable components and always pays attention to performance and detail.”
               </p>
-              <p className="mt-5 text-sm font-semibold text-teal-200/95">Fran</p>
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+                <Link
+                  href="https://www.linkedin.com/in/francisco-piaggio-224730b9/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
+                  aria-label="Francisco Piaggio on LinkedIn (opens in a new tab)"
+                >
+                  <span>Francisco Piaggio</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="h-4 w-4 shrink-0 text-teal-300/90"
+                    aria-hidden
+                  >
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                </Link>
+              </div>
               <p className="text-xs text-slate-400">Frontend Developer</p>
             </article>
 
@@ -387,7 +432,7 @@ Let’s work together to bring your project to life.
                 />
                 <Image
                   src="/jp.jpeg"
-                  alt="JP, client review"
+                  alt="Juan Pablo Saraceno, client review"
                   width={96}
                   height={96}
                   className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#050816] transition-transform duration-300 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
@@ -396,7 +441,26 @@ Let’s work together to bring your project to life.
               <p className="text-sm leading-relaxed text-slate-200/85">
               “Magali delivered a high-quality website that met both our design and performance expectations. She was reliable, easy to work with, and always communicated clearly throughout the process. The final product feels fast, modern, and user-friendly.”
               </p>
-              <p className="mt-5 text-sm font-semibold text-teal-200/95">JP</p>
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+                <Link
+                  href="https://www.linkedin.com/in/juan-pablo-saraceno-49656b/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
+                  aria-label="Juan Pablo Saraceno on LinkedIn (opens in a new tab)"
+                >
+                  <span>Juan Pablo Saraceno</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="h-4 w-4 shrink-0 text-teal-300/90"
+                    aria-hidden
+                  >
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                </Link>
+              </div>
               <p className="text-xs text-slate-400">Product Lead / Business Owner</p>
             </article>
           </div>
