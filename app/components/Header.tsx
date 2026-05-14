@@ -27,6 +27,15 @@ export default function Header() {
   }, [isMenuOpen]);
 
   useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isMenuOpen]);
+
+  useEffect(() => {
     let lastY = window.scrollY;
 
     const onScroll = () => {
@@ -57,66 +66,88 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-transform duration-300 ${
+      className={`sticky top-0 z-50 overflow-visible transition-transform duration-200 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <nav className="relative bg-slate-950/40 backdrop-blur border-b border-white/10" aria-label="Primary">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link
-              href="#top"
-              className="inline-block rounded-md text-2xl font-bold tracking-tight bg-gradient-to-r from-teal-300 via-cyan-300 to-sky-300 bg-clip-text text-transparent outline-none transition hover:opacity-90 focus-visible:ring-2 focus-visible:ring-teal-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
-            >
-              Magali Cerisola
-            </Link>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-px bg-gradient-to-r from-transparent via-teal-400/45 to-transparent"
+      />
 
-            <button
-              type="button"
-              className="md:hidden inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 p-2 text-slate-200 outline-none transition hover:text-teal-200 hover:border-teal-300/40 active:scale-95 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
-              aria-label="Toggle menu"
-              aria-expanded={isMenuOpen}
-              onClick={() => setIsMenuOpen((prev) => !prev)}
+      <nav className="relative z-[2] mx-auto max-w-6xl px-3 pt-3 pb-2 sm:px-4 md:px-5 md:pt-4" aria-label="Primary">
+        <div className="flex items-center justify-between gap-3 rounded-2xl border border-white/12 bg-slate-950/65 px-3 py-2.5 shadow-[0_16px_50px_-28px_rgba(0,0,0,0.75),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl sm:gap-4 sm:px-4 sm:py-3 md:px-5">
+          <Link
+            href="#top"
+            className="group flex min-w-0 flex-col gap-0.5 rounded-lg px-1 py-0.5 outline-none transition hover:opacity-95 focus-visible:ring-2 focus-visible:ring-teal-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
+          >
+            <span className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-500 transition group-hover:text-teal-400/85 sm:text-[11px]">
+              Frontend
+            </span>
+            <span className="bg-gradient-to-r from-teal-200 via-cyan-200 to-sky-200 bg-clip-text text-lg font-bold tracking-tight text-transparent sm:text-xl">
+              Magali Cerisola
+            </span>
+          </Link>
+
+          <button
+            type="button"
+            className="inline-flex shrink-0 items-center justify-center rounded-xl border border-white/14 bg-white/[0.06] p-2.5 text-slate-200 outline-none transition hover:border-teal-400/35 hover:bg-teal-500/10 hover:text-teal-100 active:scale-95 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816] md:hidden"
+            aria-label="Toggle menu"
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              className="h-5 w-5"
+              aria-hidden
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                className="h-5 w-5"
-              >
+              {isMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+              ) : (
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5"
                 />
-              </svg>
-            </button>
+              )}
+            </svg>
+          </button>
 
-            <div className="hidden md:flex items-center gap-1 text-sm font-medium text-slate-200/80">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-md px-2 py-1 outline-none transition hover:text-teal-200 focus-visible:text-teal-200 focus-visible:ring-2 focus-visible:ring-teal-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
+          <div className="hidden items-center gap-0.5 rounded-full border border-white/[0.07] bg-white/[0.04] p-1 md:flex">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="nav-pill-link rounded-full px-3.5 py-2 text-[13px] font-medium text-slate-300/90 outline-none transition hover:bg-white/[0.08] hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-teal-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
+        </div>
 
-          {isMenuOpen && (
+        {isMenuOpen ? (
+          <>
+            <button
+              type="button"
+              className="nav-mobile-overlay fixed inset-0 z-[60] bg-slate-950/55 backdrop-blur-sm md:hidden"
+              aria-label="Close menu"
+              onClick={() => setIsMenuOpen(false)}
+            />
             <div
-              className="md:hidden fixed right-0 top-0 h-dvh w-1/2 min-w-[240px] max-w-[420px] border-l border-white/10 bg-slate-950/85 backdrop-blur-xl shadow-2xl"
+              className="nav-drawer-panel fixed right-0 top-0 z-[70] flex h-dvh w-[min(100%,22rem)] flex-col border-l border-white/12 bg-slate-950/92 shadow-[-24px_0_60px_-20px_rgba(0,0,0,0.85)] backdrop-blur-2xl md:hidden"
               role="dialog"
               aria-label="Mobile navigation"
             >
-              <div className="p-4 pt-20">
+              <div className="flex items-center justify-between border-b border-white/10 px-4 py-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Menu</p>
                 <button
                   type="button"
-                  className="absolute right-4 top-4 inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 p-2 text-slate-200 hover:text-teal-200 hover:border-teal-300/40 transition"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/14 bg-white/[0.06] p-2 text-slate-200 outline-none transition hover:border-teal-400/35 hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/50"
                   aria-label="Close menu"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -127,28 +158,31 @@ export default function Header() {
                     stroke="currentColor"
                     strokeWidth="1.8"
                     className="h-5 w-5"
+                    aria-hidden
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                   </svg>
                 </button>
-                <div className="flex flex-col gap-2 text-sm font-medium text-slate-200/85">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="rounded-lg px-3 py-2 outline-none transition hover:bg-white/5 hover:text-teal-200 focus-visible:bg-white/10 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-teal-400/40"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
+              </div>
+              <div className="flex flex-col gap-1 px-3 py-6">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="nav-drawer-link rounded-xl px-4 py-3 text-[15px] font-medium text-slate-200/95 outline-none transition hover:bg-white/[0.06] hover:text-teal-100 focus-visible:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-teal-400/35"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-auto border-t border-white/10 px-4 py-5">
+                <p className="text-xs leading-relaxed text-slate-500">Scroll the page or pick a section above.</p>
               </div>
             </div>
-          )}
-        </div>
+          </>
+        ) : null}
       </nav>
     </header>
   );
 }
-

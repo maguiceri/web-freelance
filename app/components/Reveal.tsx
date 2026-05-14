@@ -59,7 +59,7 @@ export default function Reveal({
       className={
         visible
           ? `fadeDown ${className}`.trim()
-          : `opacity-0 -translate-y-10 blur-md ${className}`.trim()
+          : `opacity-0 -translate-y-8 blur-sm ${className}`.trim()
       }
       style={
         visible
