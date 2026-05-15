@@ -115,15 +115,15 @@ export default function Home() {
       </div>
      
 
-      {/* Hero: full viewport feel, centered single column */}
+      {/* Hero: text panel + portrait side by side, centered */}
       <section
         id="top"
-        className="relative isolate mx-auto flex min-h-[calc(100dvh-5rem)] max-w-3xl scroll-mt-28 flex-col items-center justify-center px-4 pb-16 pt-24 text-slate-100 md:min-h-[calc(100dvh-4rem)] md:pb-24 md:pt-28"
+        className="relative isolate mx-auto flex min-h-[calc(100dvh-5rem)] max-w-5xl scroll-mt-28 flex-col items-center justify-center px-4 pb-16 pt-24 text-slate-100 md:min-h-[calc(100dvh-4rem)] md:pb-24 md:pt-28"
       >
-        <div className="flex w-full flex-col items-center gap-10">
+        <div className="flex w-full flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-center lg:gap-12">
           <div
             style={{ animationDelay: "0.08s" }}
-            className="fadeDownPanel hero-glass-panel relative w-full min-w-0 overflow-hidden rounded-[1.75rem] p-8 text-center max-md:backdrop-blur-none backdrop-blur-md md:rounded-2xl md:p-10"
+            className="fadeDownPanel hero-glass-panel relative w-full min-w-0 overflow-hidden rounded-[1.75rem] p-8 text-center max-md:backdrop-blur-none backdrop-blur-md lg:max-w-xl md:rounded-2xl md:p-10"
           >
             <span className="hero-glass-panel-corner hero-glass-panel-corner--tl" aria-hidden />
             <span className="hero-glass-panel-corner hero-glass-panel-corner--br" aria-hidden />
@@ -132,7 +132,7 @@ export default function Home() {
               style={{ animationDelay: "0.2s" }}
               className="fadeDown relative text-balance font-semibold tracking-tight"
             >
-              <span className="hero-title-gradient mt-3 block text-[2.1rem] font-extrabold leading-[1.06] sm:text-5xl md:text-6xl lg:text-[3.35rem] lg:leading-[1.05]">
+              <span className="hero-title-gradient mt-3 block text-[2.1rem] font-extrabold leading-[1.06] sm:text-5xl lg:text-[2.75rem] lg:leading-[1.07]">
                 Interfaces that feel fast, clear, and human
               </span>
               <span className="mx-auto mt-5 block max-w-xl text-base leading-relaxed text-slate-300/92 sm:text-lg">
@@ -183,7 +183,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div style={{ animationDelay: "0.18s" }} className="fadeDown hidden sm:flex relative items-center justify-center">
+          <div style={{ animationDelay: "0.18s" }} className="fadeDown hidden lg:flex relative shrink-0 items-center justify-center">
             <div
               aria-hidden
               className="absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.14),transparent_68%)]"
