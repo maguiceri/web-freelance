@@ -95,7 +95,7 @@ export default function Header() {
             className="group flex min-w-0 flex-col gap-0.5 rounded-lg px-1 py-0.5 outline-none transition hover:opacity-95 focus-visible:ring-2 focus-visible:ring-teal-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
           >
             <span className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-500 transition group-hover:text-teal-400/85 sm:text-[11px]">
-              Frontend
+              Fullstack
             </span>
             <span className="bg-gradient-to-r from-teal-200 via-cyan-200 to-sky-200 bg-clip-text text-lg font-bold tracking-tight text-transparent sm:text-xl">
               Magali Cerisola

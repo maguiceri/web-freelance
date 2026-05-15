@@ -222,26 +222,15 @@ export default function Home() {
               className="pointer-events-none absolute -bottom-20 -left-16 hidden h-48 w-48 rounded-full bg-sky-400/12 blur-3xl md:block"
             />
 
-            <p
-              style={{ animationDelay: "0.14s" }}
-              className="hero-kicker fadeDown relative mb-5 inline-flex items-center gap-2 rounded-full border border-teal-400/30 bg-teal-500/[0.12] px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-teal-100/95 sm:text-[11px] sm:tracking-[0.22em]"
-            >
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-teal-400 shadow-[0_0_12px_rgb(45,212,191)]" />
-              Available for freelance
-            </p>
-
             <h1
               style={{ animationDelay: "0.2s" }}
               className="fadeDown relative text-balance font-semibold tracking-tight"
             >
-              <span className="block text-sm font-medium uppercase tracking-[0.18em] text-slate-400/95">
-                Magali Cerisola
-              </span>
               <span className="hero-title-gradient mt-3 block text-[2.1rem] font-extrabold leading-[1.06] sm:text-5xl md:text-6xl lg:text-[3.35rem] lg:leading-[1.05]">
                 Interfaces that feel fast, clear, and human
               </span>
               <span className="mt-5 block max-w-xl text-base leading-relaxed text-slate-300/92 sm:text-lg">
-                Frontend developer focused on React, Next.js, and TypeScript. I turn designs into resilient UI, smooth
+                Fullstack developer focused on React, Next.js, and TypeScript. I turn designs into resilient UI, smooth
                 motion, and accessible UX—so your product feels as good as it looks.
               </span>
             </h1>
@@ -413,7 +402,7 @@ export default function Home() {
             </div>
 
             <p className="relative mt-5 text-[11px] leading-relaxed text-slate-400">
-            Contributed to the development and modernization of a large-scale banking platform, building and refactoring complex frontend features using React and modern technologies.
+            Contributed to the development and modernization of a large-scale banking platform, building and refactoring complex fullstack features using React and modern technologies.
 
 Focused on performance optimization, reusable component architecture, and improving user experience across critical user flows.
 
@@ -484,7 +473,7 @@ Collaborated closely with product, design, and backend teams in an Agile environ
             About Me
           </Reveal>
           <Reveal as="p" delayMs={150} className="text-slate-200/75 text-lg">
-          Hi, I'm Magali Cerisola — a frontend developer with over 5 years of experience building web applications for real businesses, including the banking sector.
+          Hi, I'm Magali Cerisola — a fullstack developer with over 5 years of experience building web applications for real businesses, including the banking sector.
 
 I help clients create modern, responsive, and high-quality websites that are fast, easy to use, and designed to deliver results.
 
@@ -579,7 +568,7 @@ Let’s work together to bring your project to life.
                 />
               </div>
               <p className="text-sm leading-relaxed text-slate-200/85">
-              “Magali writes clean, maintainable code and has a strong grasp of modern frontend practices. She builds reusable components and always pays attention to performance and detail.”
+              “Magali writes clean, maintainable code and has a strong grasp of modern fullstack practices. She builds reusable components and always pays attention to performance and detail.”
               </p>
               <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
                 <Link
@@ -601,7 +590,7 @@ Let’s work together to bring your project to life.
                   </svg>
                 </Link>
               </div>
-              <p className="text-xs text-slate-400">Frontend Developer</p>
+              <p className="text-xs text-slate-400">Fullstack Developer</p>
           </Reveal>
 
           <Reveal

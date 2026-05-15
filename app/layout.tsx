@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Magali Cerisola | Frontend Developer",
-  description: "Frontend developer specializing in React, Next.js, and modern UI.",
+  title: "Magali Cerisola | Fullstack Developer",
+  description: "Fullstack developer specializing in React, Next.js, and modern UI.",
 };
 
 export default function RootLayout({
