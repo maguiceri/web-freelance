@@ -5,7 +5,8 @@ import Link from "next/link";
 import Reveal from "./components/Reveal";
 import ContactForm from "./components/ContactForm";
 import FixedHeader from "./components/FixedHeader";
-import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import NeuralBackground from "./components/NeuralBackground";
+import { useLayoutEffect } from "react";
 
 const SERVICE_CARDS = [
   {
@@ -93,67 +94,6 @@ const HERO_STACK = [
 
 
 export default function Home() {
-  const [heroVideoMounted, setHeroVideoMounted] = useState(false);
-  const [heroVideoReady, setHeroVideoReady] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    const nav = navigator as Navigator & {
-      connection?: { saveData?: boolean; effectiveType?: string };
-    };
-    if (nav.connection?.saveData) {
-      return;
-    }
-    const slowNet =
-      nav.connection?.effectiveType === "slow-2g" || nav.connection?.effectiveType === "2g";
-    if (slowNet) {
-      return;
-    }
-    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
-
-    const enable = () => {
-      if (!cancelled) setHeroVideoMounted(true);
-    };
-
-    const w = window as Window & {
-      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
-      cancelIdleCallback?: (id: number) => void;
-    };
-
-    if (typeof w.requestIdleCallback === "function") {
-      const id = w.requestIdleCallback(enable, { timeout: 1800 });
-      return () => {
-        cancelled = true;
-        w.cancelIdleCallback?.(id);
-      };
-    }
-
-    const t = window.setTimeout(enable, 500);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(t);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!heroVideoMounted || !heroVideoReady) return;
-    const video = videoRef.current;
-    if (!video) return;
-
-    const onVisibility = () => {
-      if (document.hidden) {
-        video.pause();
-      } else {
-        void video.play().catch(() => {});
-      }
-    };
-    document.addEventListener("visibilitychange", onVisibility);
-    return () => document.removeEventListener("visibilitychange", onVisibility);
-  }, [heroVideoMounted, heroVideoReady]);
-
   // Recarga con #sección: el navegador hace scroll al id; volvemos arriba para que arranque en el hero.
   useLayoutEffect(() => {
     const [entry] = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
@@ -169,30 +109,17 @@ export default function Home() {
       className="min-h-screen text-slate-900 relative overflow-hidden outline-none"
     >
       <FixedHeader />
-      {/* Vídeo a pantalla completa; velos encima para legibilidad del contenido */}
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 isolate overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_50%_-25%,rgba(45,212,191,0.1),transparent_55%),radial-gradient(ellipse_70%_55%_at_100%_20%,rgba(56,189,248,0.07),transparent_50%),#050816]" />
-
-        {heroVideoMounted ? (
-          <video
-            ref={videoRef}
-            className={`absolute left-1/2 top-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 scale-105 object-cover opacity-0 ${heroVideoReady ? "hero-video-ready" : ""}`}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            onLoadedData={() => setHeroVideoReady(true)}
-          >
-            <source src="/14134130_1920_1080_30fps.mp4" type="video/mp4" />
-          </video>
-        ) : null}
-
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050816]/62 via-[#050816]/28 to-[#050816]/68" />
-        <div className="absolute inset-0 bg-[#050816]/14" />
-
-        <div className="blob-drift absolute -top-32 left-[5%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.16),transparent_62%)] blur-3xl" />
-        <div className="blob-drift-slow absolute bottom-[5%] right-[-5%] h-[480px] w-[480px] rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.11),transparent_62%)] blur-3xl" />
+        <div className="absolute inset-0 bg-[#0d1a3a]" />
+        {/* Aurora — color base */}
+        <div className="aurora-l1 absolute -top-[8%] -left-[8%] h-[45%] w-[110%] rounded-[50%] bg-teal-400/[0.13] blur-[90px]" />
+        <div className="aurora-l2 absolute -top-[12%] right-[-12%] h-[42%] w-[90%] rounded-[50%] bg-indigo-400/[0.10] blur-[110px]" />
+        <div className="aurora-l3 absolute top-[6%] left-[5%] h-[28%] w-[95%] rounded-[50%] bg-cyan-300/[0.07] blur-[75px]" />
+        <div className="aurora-l4 absolute top-[4%] right-[-5%] h-[38%] w-[45%] rounded-[50%] bg-violet-500/[0.08] blur-[100px]" />
+        {/* Red neuronal 3D */}
+        <NeuralBackground />
+        {/* Bottom glow */}
+        <div className="blob-drift-slow absolute bottom-[-5%] left-[20%] h-[420px] w-[600px] rounded-[50%] bg-teal-500/[0.07] blur-[90px]" />
       </div>
      
 
@@ -201,10 +128,6 @@ export default function Home() {
         id="top"
         className="relative isolate mx-auto flex min-h-[calc(100dvh-5rem)] max-w-6xl scroll-mt-28 flex-col justify-center px-4 pb-16 pt-24 text-slate-100 md:min-h-[calc(100dvh-4rem)] md:pb-24 md:pt-28"
       >
-        <div
-          aria-hidden
-          className="hero-grid-bg pointer-events-none absolute inset-0 -z-[1]"
-        />
 
         <div className="grid min-w-0 items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
           <div
@@ -278,29 +201,37 @@ export default function Home() {
           </div>
 
           <div className="hidden justify-center pb-10 lg:flex lg:justify-end">
-            <div style={{ animationDelay: "0.18s" }} className="fadeDown relative">
+            <div style={{ animationDelay: "0.18s" }} className="fadeDown relative flex items-center justify-center">
               <div
                 aria-hidden
-                className="blob-drift-slow absolute left-1/2 top-1/2 h-[min(28rem,85vw)] w-[min(28rem,85vw)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.22),transparent_68%)] blur-2xl"
+                className="blob-drift-slow absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.16),transparent_68%)] blur-2xl"
               />
-              <div className="relative mx-auto w-[min(20rem,88vw)] sm:w-72 md:w-80">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -inset-1 rounded-[2.15rem] bg-gradient-to-br from-teal-400/20 via-transparent to-indigo-500/15 opacity-80 blur-xl motion-reduce:opacity-50"
-                />
-                <div className="hero-portrait-ring relative">
-                  <div className="hero-portrait-inner">
-                    <div className="overflow-hidden rounded-[1.65rem] ring-1 ring-white/12">
-                      <Image
-                        src="/avatar.jpeg"
-                        alt="Portrait of Magali Cerisola"
-                        width={320}
-                        height={320}
-                        className="aspect-square w-full object-cover"
-                        sizes="320px"
-                      />
-                    </div>
-                  </div>
+              <div className="portrait-scene">
+                {/* Anillos orbitales */}
+                <div className="portrait-ring-el portrait-ring-el-1" />
+                <div className="portrait-ring-el portrait-ring-el-2" />
+                <div className="portrait-ring-el portrait-ring-el-3" />
+                {/* Brazos giratorios con satélites */}
+                <div className="portrait-orbit-arm portrait-orbit-arm-1">
+                  <div className="portrait-sat portrait-sat-1" />
+                </div>
+                <div className="portrait-orbit-arm portrait-orbit-arm-2">
+                  <div className="portrait-sat portrait-sat-2" />
+                </div>
+                <div className="portrait-orbit-arm portrait-orbit-arm-3">
+                  <div className="portrait-sat portrait-sat-3" />
+                </div>
+                {/* Foto */}
+                <div className="portrait-photo-el">
+                  <Image
+                    src="/cv.jpeg"
+                    alt="Portrait of Magali Cerisola"
+                    width={220}
+                    height={220}
+                    className="h-full w-full object-cover"
+                    sizes="220px"
+                    priority
+                  />
                 </div>
               </div>
             </div>
@@ -416,11 +347,11 @@ Collaborated closely with product, design, and backend teams in an Agile environ
           <Reveal
             as="article"
             delayMs={300}
-            className="card-tile group relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] outline-none focus-within:ring-2 focus-within:ring-teal-400/35 focus-within:ring-offset-2 focus-within:ring-offset-[#050816] motion-safe:hover:border-teal-400/25"
+            className="card-tile group relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] outline-none focus-within:ring-2 focus-within:ring-teal-400/35 focus-within:ring-offset-2 focus-within:ring-offset-[#0d1a3a] motion-safe:hover:border-teal-400/25"
           >
             <div className="relative min-h-[240px] w-full min-h-0 flex-1">
               <Image
-                src="/proyect.png"
+                src="/proyect.jpg"
                 alt="Featured project screenshot"
                 fill
                 className="object-cover transition-transform duration-[450ms] ease-out motion-safe:group-hover:scale-[1.04] motion-safe:group-focus-within:scale-[1.04]"
@@ -515,7 +446,7 @@ Let’s work together to bring your project to life.
                   alt="Martina Vega, client review"
                   width={96}
                   height={96}
-                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#050816] transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
+                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#0d1a3a] transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
                 />
               </div>
               <p className="text-sm leading-relaxed text-slate-200/85">
@@ -526,7 +457,7 @@ Let’s work together to bring your project to life.
                   href="https://linktr.ee/m.dagos?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAdGRleARLpbZleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafJ-l41L_EfCsd4nxU_CdeBlSX4AbWTgru4REtjrwRtxt_rKGYQQ-ZeYXHPsg_aem_4pDjRnYeDZmv3x2OZyZhQQ"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
+                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1a3a]"
                   aria-label="Martina Vega on Linktree (opens in a new tab)"
                 >
                   <span>Martina Vega</span>
@@ -564,7 +495,7 @@ Let’s work together to bring your project to life.
                   alt="Francisco Piaggio, client review"
                   width={96}
                   height={96}
-                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#050816] transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
+                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#0d1a3a] transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
                 />
               </div>
               <p className="text-sm leading-relaxed text-slate-200/85">
@@ -575,7 +506,7 @@ Let’s work together to bring your project to life.
                   href="https://www.linkedin.com/in/francisco-piaggio-224730b9/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
+                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1a3a]"
                   aria-label="Francisco Piaggio on LinkedIn (opens in a new tab)"
                 >
                   <span>Francisco Piaggio</span>
@@ -608,7 +539,7 @@ Let’s work together to bring your project to life.
                   alt="Juan Pablo Saraceno, client review"
                   width={96}
                   height={96}
-                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#050816] transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
+                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#0d1a3a] transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
                 />
               </div>
               <p className="text-sm leading-relaxed text-slate-200/85">
@@ -619,7 +550,7 @@ Let’s work together to bring your project to life.
                   href="https://www.linkedin.com/in/juan-pablo-saraceno-49656b/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
+                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1a3a]"
                   aria-label="Juan Pablo Saraceno on LinkedIn (opens in a new tab)"
                 >
                   <span>Juan Pablo Saraceno</span>
@@ -667,7 +598,7 @@ Let’s work together to bring your project to life.
                   <span className="text-slate-200/60">Email</span>
                   <div className="mt-1">
                     <a
-                      className="text-teal-200 underline underline-offset-4 outline-none transition rounded-sm hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
+                      className="text-teal-200 underline underline-offset-4 outline-none transition rounded-sm hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1a3a]"
                       href="mailto:magui.cerisola@gmail.com"
                     >
                       magui.cerisola@gmail.com

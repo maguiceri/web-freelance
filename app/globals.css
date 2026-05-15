@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0d1a3a;
+  --foreground: #ededed;
 }
 
 @theme inline {
@@ -10,13 +10,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
@@ -194,6 +187,45 @@ body {
   .blob-drift-slow {
     animation: none;
   }
+}
+
+/* Aurora background effect */
+@keyframes auroraFloat1 {
+  0%, 100% { transform: translateX(0%) translateY(0%) scaleX(1); opacity: 0.65; }
+  30%       { transform: translateX(4%) translateY(-5%) scaleX(1.07); opacity: 0.85; }
+  65%       { transform: translateX(-3%) translateY(5%) scaleX(0.95); opacity: 0.50; }
+}
+
+@keyframes auroraFloat2 {
+  0%, 100% { transform: translateX(0%) translateY(0%) scaleX(1); opacity: 0.50; }
+  42%       { transform: translateX(-5%) translateY(-4%) scaleX(1.10); opacity: 0.72; }
+  78%       { transform: translateX(4%) translateY(6%) scaleX(0.93); opacity: 0.38; }
+}
+
+@keyframes auroraFloat3 {
+  0%, 100% { transform: translateX(0%) translateY(0%) scaleX(1); opacity: 0.42; }
+  55%       { transform: translateX(3%) translateY(-6%) scaleX(1.05); opacity: 0.62; }
+}
+
+.aurora-l1,
+.aurora-l2,
+.aurora-l3,
+.aurora-l4 {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .aurora-l1 { animation: auroraFloat1 20s ease-in-out infinite; }
+  .aurora-l2 { animation: auroraFloat2 27s ease-in-out infinite; animation-delay: -9s; }
+  .aurora-l3 { animation: auroraFloat1 17s ease-in-out infinite; animation-delay: -5s; }
+  .aurora-l4 { animation: auroraFloat3 23s ease-in-out infinite; animation-delay: -13s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-l1,
+  .aurora-l2,
+  .aurora-l3,
+  .aurora-l4 { animation: none; }
 }
 
 @keyframes kickerPulse {
@@ -753,4 +785,116 @@ body {
   .hero-portrait-ring {
     animation: none;
   }
+}
+
+/* ── Portrait orbital system ─────────────────────────────────── */
+.portrait-scene {
+  position: relative;
+  width: 420px;
+  height: 420px;
+  flex-shrink: 0;
+}
+
+/* Orbit rings — círculos achatados con scaleY para simular perspectiva */
+.portrait-ring-el {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.portrait-ring-el-1 {
+  width: 400px; height: 400px;
+  border: 1px solid rgba(45, 212, 191, 0.28);
+  box-shadow: 0 0 18px rgba(45, 212, 191, 0.07);
+  transform: translate(-50%, -50%);
+}
+
+.portrait-ring-el-2 {
+  width: 318px; height: 318px;
+  border: 1px solid rgba(129, 140, 248, 0.28);
+  box-shadow: 0 0 18px rgba(99, 102, 241, 0.07);
+  transform: translate(-50%, -50%);
+}
+
+.portrait-ring-el-3 {
+  width: 244px; height: 244px;
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.07);
+  transform: translate(-50%, -50%);
+}
+
+/* Brazos giratorios — div 0×0 en el centro que gira y lleva el satélite */
+.portrait-orbit-arm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+@keyframes orbitArmSpin {
+  to { transform: rotateZ(360deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .portrait-orbit-arm-1 { animation: orbitArmSpin 9s linear infinite; }
+  .portrait-orbit-arm-2 { animation: orbitArmSpin 6s linear infinite reverse; }
+  .portrait-orbit-arm-3 { animation: orbitArmSpin 13s linear infinite; animation-delay: -4s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-orbit-arm-1,
+  .portrait-orbit-arm-2,
+  .portrait-orbit-arm-3 { animation: none; }
+}
+
+/* Satélites — en el extremo de cada brazo */
+.portrait-sat {
+  position: absolute;
+  border-radius: 50%;
+  top: -5.5px;
+}
+
+.portrait-sat-1 {
+  width: 11px; height: 11px;
+  left: 194.5px; /* radio 200 - mitad del dot */
+  background: rgba(45, 212, 191, 0.95);
+  box-shadow: 0 0 8px rgba(45, 212, 191, 0.9), 0 0 22px rgba(45, 212, 191, 0.5);
+}
+
+.portrait-sat-2 {
+  width: 9px; height: 9px;
+  top: -4.5px;
+  left: 154.5px; /* radio 159 - mitad del dot */
+  background: rgba(129, 140, 248, 0.95);
+  box-shadow: 0 0 8px rgba(129, 140, 248, 0.9), 0 0 18px rgba(99, 102, 241, 0.5);
+}
+
+.portrait-sat-3 {
+  width: 8px; height: 8px;
+  top: -4px;
+  left: 118px; /* radio 122 - mitad del dot */
+  background: rgba(34, 211, 238, 0.95);
+  box-shadow: 0 0 6px rgba(34, 211, 238, 0.9), 0 0 14px rgba(34, 211, 238, 0.5);
+}
+
+/* Foto circular */
+.portrait-photo-el {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(45, 212, 191, 0.40);
+  box-shadow:
+    0 0 0 6px rgba(45, 212, 191, 0.07),
+    0 0 0 12px rgba(45, 212, 191, 0.03),
+    0 0 50px rgba(45, 212, 191, 0.22),
+    0 24px 60px rgba(0, 0, 0, 0.55);
+  z-index: 10;
 }
