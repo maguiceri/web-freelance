@@ -13,10 +13,17 @@ const navItems = [
 
 export default function Header() {
   const [isVisible, setIsVisible] = useState(true);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  /** Mobile drawer: keep mounted during "closing" so exit CSS can run */
+  const [mobileNav, setMobileNav] = useState<"idle" | "open" | "closing">("idle");
+
+  const isDrawerMounted = mobileNav !== "idle";
+  const isClosing = mobileNav === "closing";
+
+  const openMobileMenu = () => setMobileNav("open");
+  const startCloseMobileMenu = () => setMobileNav((s) => (s === "open" ? "closing" : s));
 
   useEffect(() => {
-    if (isMenuOpen) {
+    if (isDrawerMounted) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -24,16 +31,22 @@ export default function Header() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isMenuOpen]);
+  }, [isDrawerMounted]);
 
   useEffect(() => {
-    if (!isMenuOpen) return;
+    if (mobileNav !== "closing") return;
+    const id = window.setTimeout(() => setMobileNav("idle"), 260);
+    return () => window.clearTimeout(id);
+  }, [mobileNav]);
+
+  useEffect(() => {
+    if (!isDrawerMounted) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsMenuOpen(false);
+      if (e.key === "Escape") startCloseMobileMenu();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [isMenuOpen]);
+  }, [isDrawerMounted]);
 
   useEffect(() => {
     let lastY = window.scrollY;
@@ -52,7 +65,7 @@ export default function Header() {
 
     const onResize = () => {
       if (window.innerWidth >= 768) {
-        setIsMenuOpen(false);
+        setMobileNav("idle");
       }
     };
 
@@ -93,8 +106,12 @@ export default function Header() {
             type="button"
             className="inline-flex shrink-0 items-center justify-center rounded-xl border border-white/14 bg-white/[0.06] p-2.5 text-slate-200 outline-none transition hover:border-teal-400/35 hover:bg-teal-500/10 hover:text-teal-100 active:scale-95 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816] md:hidden"
             aria-label="Toggle menu"
-            aria-expanded={isMenuOpen}
-            onClick={() => setIsMenuOpen((prev) => !prev)}
+            aria-expanded={mobileNav === "open"}
+            onClick={() => {
+              if (mobileNav === "closing") return;
+              if (mobileNav === "open") startCloseMobileMenu();
+              else openMobileMenu();
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +122,7 @@ export default function Header() {
               className="h-5 w-5"
               aria-hidden
             >
-              {isMenuOpen ? (
+              {mobileNav === "open" || mobileNav === "closing" ? (
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
               ) : (
                 <path
@@ -130,17 +147,18 @@ export default function Header() {
           </div>
         </div>
 
-        {isMenuOpen ? (
+        {isDrawerMounted ? (
           <>
             <button
               type="button"
-              className="nav-mobile-overlay fixed inset-0 z-[60] bg-slate-950/55 backdrop-blur-sm md:hidden"
+              className={`nav-mobile-overlay fixed inset-0 z-[60] bg-slate-950/55 backdrop-blur-sm md:hidden ${isClosing ? "nav-mobile-overlay--exit" : ""}`}
               aria-label="Close menu"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => startCloseMobileMenu()}
             />
             <div
-              className="nav-drawer-panel fixed right-0 top-0 z-[70] flex h-dvh w-[min(100%,22rem)] flex-col border-l border-white/12 bg-slate-950/92 shadow-[-24px_0_60px_-20px_rgba(0,0,0,0.85)] backdrop-blur-2xl md:hidden"
+              className={`nav-drawer-panel fixed right-0 top-0 z-[70] flex h-dvh w-[min(100%,22rem)] flex-col border-l border-white/12 bg-slate-950/92 shadow-[-24px_0_60px_-20px_rgba(0,0,0,0.85)] backdrop-blur-2xl md:hidden ${isClosing ? "nav-drawer-panel--exit" : ""}`}
               role="dialog"
+              aria-modal="true"
               aria-label="Mobile navigation"
             >
               <div className="flex items-center justify-between border-b border-white/10 px-4 py-4">
@@ -149,7 +167,7 @@ export default function Header() {
                   type="button"
                   className="inline-flex items-center justify-center rounded-xl border border-white/14 bg-white/[0.06] p-2 text-slate-200 outline-none transition hover:border-teal-400/35 hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/50"
                   aria-label="Close menu"
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => startCloseMobileMenu()}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +188,7 @@ export default function Header() {
                     key={item.href}
                     href={item.href}
                     className="nav-drawer-link rounded-xl px-4 py-3 text-[15px] font-medium text-slate-200/95 outline-none transition hover:bg-white/[0.06] hover:text-teal-100 focus-visible:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-teal-400/35"
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={() => startCloseMobileMenu()}
                   >
                     {item.label}
                   </Link>

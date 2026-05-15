@@ -353,6 +353,33 @@ body {
   animation: drawerSlideIn 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+@keyframes navOverlayFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.nav-mobile-overlay--exit {
+  animation: navOverlayFadeOut 0.2s ease-in forwards;
+  pointer-events: none;
+}
+
+@keyframes drawerSlideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.nav-drawer-panel--exit {
+  animation: drawerSlideOut 0.24s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
 @keyframes drawerLinkIn {
   from {
     opacity: 0;
@@ -391,8 +418,18 @@ body {
     opacity: 1;
   }
 
+  .nav-mobile-overlay--exit {
+    animation: none;
+    opacity: 0;
+  }
+
   .nav-drawer-panel {
     animation: none;
+  }
+
+  .nav-drawer-panel--exit {
+    animation: none;
+    transform: translateX(100%);
   }
 
   .nav-drawer-link {
@@ -603,6 +640,32 @@ body {
     0 28px 90px -36px rgb(0 0 0 / 0.88),
     inset 0 1px 0 rgb(255 255 255 / 0.1),
     inset 0 -18px 48px -24px rgb(45 212 191 / 0.06);
+}
+
+/* Móvil: sin backdrop-blur en el panel (Safari/Chrome suavizan el texto);
+   fondo más opaco + título sin animación de gradiente + entrada sin filter. */
+@media (max-width: 767px) {
+  .hero-glass-panel {
+    background: linear-gradient(
+      168deg,
+      rgb(15 23 42 / 0.94) 0%,
+      rgb(15 23 42 / 0.86) 45%,
+      rgb(15 23 42 / 0.92) 100%
+    );
+  }
+
+  .hero-title-gradient {
+    animation: none;
+    background-position: 40% 50%;
+    text-rendering: geometricPrecision;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-glass-panel .fadeDown {
+      filter: none;
+      animation-name: fadeDownNoBlur;
+    }
+  }
 }
 
 .hero-glass-panel::before {
