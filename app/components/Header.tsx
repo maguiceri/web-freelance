@@ -92,7 +92,18 @@ export default function Header() {
         <div className="flex items-center justify-between gap-3 rounded-2xl border border-white/12 bg-slate-950/65 px-3 py-2.5 shadow-[0_16px_50px_-28px_rgba(0,0,0,0.75),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl sm:gap-4 sm:px-4 sm:py-3 md:px-5">
           <Link
             href="#top"
+            aria-label="Back to top of page"
             className="group flex min-w-0 flex-col gap-0.5 rounded-lg px-1 py-0.5 outline-none transition hover:opacity-95 focus-visible:ring-2 focus-visible:ring-teal-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050816]"
+            onClick={(e) => {
+              if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+              e.preventDefault();
+              const instant = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+              window.scrollTo({ top: 0, left: 0, behavior: instant ? "auto" : "smooth" });
+              const path = window.location.pathname || "/";
+              if (window.location.hash) {
+                window.history.replaceState(null, "", path);
+              }
+            }}
           >
             <span className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-500 transition group-hover:text-teal-400/85 sm:text-[11px]">
               Fullstack
