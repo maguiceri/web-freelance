@@ -11,11 +11,8 @@ interface Pulse {
   t: number; speed: number;
 }
 
-const N        = 90;
-const SPREAD   = 1080;
-const SPREAD_Y = 780;
-const CONNECT  = 400; // 3D distance threshold
-const FOV      = 740;
+const N        = 110;
+const CONNECT  = 420; // 3D distance threshold
 const ROT_Y    = 0.00085;
 
 export default function NeuralBackground() {
@@ -33,10 +30,16 @@ export default function NeuralBackground() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let cssW = window.innerWidth;
     let cssH = window.innerHeight;
+    let SPREAD   = cssW * 1.4;
+    let SPREAD_Y = cssH * 1.4;
+    let FOV      = Math.max(cssW, cssH) * 0.55;
 
     const resize = () => {
       cssW = window.innerWidth;
       cssH = window.innerHeight;
+      SPREAD   = cssW * 1.4;
+      SPREAD_Y = cssH * 1.4;
+      FOV      = Math.max(cssW, cssH) * 0.55;
       canvas.width  = cssW * dpr;
       canvas.height = cssH * dpr;
       ctx.scale(dpr, dpr);
@@ -81,7 +84,7 @@ export default function NeuralBackground() {
         const rz  = n.x * sinY + n.z * cosY;
         const ry  = n.y * cosX - rz  * sinX;
         const rz2 = n.y * sinX + rz  * cosX;
-        const s   = FOV / (FOV + rz2 + SPREAD / 2);
+        const s   = FOV / (FOV + rz2 + SPREAD * 0.5);
         return { sx: rx * s + cssW / 2, sy: ry * s + cssH / 2, scale: s, rz: rz2 };
       });
 
