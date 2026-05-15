@@ -182,12 +182,12 @@ export default function Header() {
                   </svg>
                 </button>
               </div>
-              <div className="flex flex-col gap-1 px-3 py-6">
+              <div className="flex flex-col gap-2.5 px-4 py-6">
                 {navItems.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="nav-drawer-link rounded-xl px-4 py-3 text-[15px] font-medium text-slate-200/95 outline-none transition hover:bg-white/[0.06] hover:text-teal-100 focus-visible:bg-white/[0.08] focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-teal-400/35"
+                    className="nav-drawer-link flex w-full touch-manipulation items-center justify-center rounded-full border border-white/14 bg-slate-900/55 px-5 py-3.5 text-[15px] font-semibold tracking-wide text-slate-200/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] outline-none transition-[color,background-color,border-color,box-shadow] duration-200 hover:border-teal-400/45 hover:bg-teal-500/[0.12] hover:text-teal-50 hover:shadow-[0_0_0_1px_rgba(45,212,191,0.15),inset_0_1px_0_rgba(255,255,255,0.08)] active:border-teal-400/60 active:bg-teal-500/25 active:text-teal-100 active:shadow-[0_0_20px_-8px_rgba(45,212,191,0.45)] focus-visible:ring-2 focus-visible:ring-teal-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                     onClick={() => startCloseMobileMenu()}
                   >
                     {item.label}
