@@ -5,7 +5,7 @@ import Link from "next/link";
 import Reveal from "./components/Reveal";
 import ContactForm from "./components/ContactForm";
 import FixedHeader from "./components/FixedHeader";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 
 const SERVICE_CARDS = [
   {
@@ -153,6 +153,14 @@ export default function Home() {
     document.addEventListener("visibilitychange", onVisibility);
     return () => document.removeEventListener("visibilitychange", onVisibility);
   }, [heroVideoMounted, heroVideoReady]);
+
+  // Recarga con #sección: el navegador hace scroll al id; volvemos arriba para que arranque en el hero.
+  useLayoutEffect(() => {
+    const [entry] = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+    if (entry?.type === "reload" && window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
 
   return (
     <div
