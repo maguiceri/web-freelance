@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Reveal from "./components/Reveal";
 import ContactForm from "./components/ContactForm";
-import Header from "./components/Header";
+import FixedHeader from "./components/FixedHeader";
 import { useState, useEffect, useRef } from "react";
 
 const SERVICE_CARDS = [
@@ -93,15 +93,24 @@ const HERO_STACK = [
 
 
 export default function Home() {
-  const [showHeader, setShowHeader] = useState(true);
   const [heroVideoMounted, setHeroVideoMounted] = useState(false);
   const [heroVideoReady, setHeroVideoReady] = useState(false);
-  const lastScrollY = useRef(0);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
+    const nav = navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    };
     if (nav.connection?.saveData) {
+      return;
+    }
+    const slowNet =
+      nav.connection?.effectiveType === "slow-2g" || nav.connection?.effectiveType === "2g";
+    if (slowNet) {
+      return;
+    }
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
 
@@ -130,26 +139,20 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-  
-      if (currentScrollY < lastScrollY.current) {
-        setShowHeader(true); // SUBE → aparece
+    if (!heroVideoMounted || !heroVideoReady) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        video.pause();
       } else {
-        setShowHeader(false); // BAJA → desaparece
+        void video.play().catch(() => {});
       }
-  
-      if (currentScrollY === 0) {
-        setShowHeader(true); // arriba del todo → siempre visible
-      }
-  
-      lastScrollY.current = currentScrollY;
     };
-  
-    window.addEventListener("scroll", handleScroll);
-  
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, [heroVideoMounted, heroVideoReady]);
 
   return (
     <div
@@ -157,21 +160,20 @@ export default function Home() {
       tabIndex={-1}
       className="min-h-screen text-slate-900 relative overflow-hidden outline-none"
     >
-        <div className={`fixed top-0 left-0 w-full z-50 transition-transform duration-200 ${showHeader ? "translate-y-0" : "-translate-y-full"}`}>
-  <Header />
-</div>
-      {/* Video tal cual el archivo; opacidad moderada + velo ligero para legibilidad */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <FixedHeader />
+      {/* Vídeo a pantalla completa; velos encima para legibilidad del contenido */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 isolate overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_90%_at_50%_-25%,rgba(45,212,191,0.1),transparent_55%),radial-gradient(ellipse_70%_55%_at_100%_20%,rgba(56,189,248,0.07),transparent_50%),#050816]" />
 
         {heroVideoMounted ? (
           <video
+            ref={videoRef}
             className={`absolute left-1/2 top-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 scale-105 object-cover opacity-0 ${heroVideoReady ? "hero-video-ready" : ""}`}
             autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
             onLoadedData={() => setHeroVideoReady(true)}
           >
             <source src="/14134130_1920_1080_30fps.mp4" type="video/mp4" />
@@ -199,7 +201,7 @@ export default function Home() {
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
           <div
             style={{ animationDelay: "0.08s" }}
-            className="fadeDown hero-glass-panel relative overflow-hidden rounded-[1.75rem] p-8 backdrop-blur-xl md:rounded-2xl md:p-10"
+            className="fadeDownPanel hero-glass-panel relative overflow-hidden rounded-[1.75rem] p-8 backdrop-blur-md md:rounded-2xl md:p-10"
           >
             <span className="hero-glass-panel-corner hero-glass-panel-corner--tl" aria-hidden />
             <span className="hero-glass-panel-corner hero-glass-panel-corner--br" aria-hidden />
@@ -278,7 +280,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex justify-center pb-10 lg:justify-end">
+          <div className="hidden justify-center pb-10 lg:flex lg:justify-end">
             <div style={{ animationDelay: "0.18s" }} className="fadeDown relative">
               <div
                 aria-hidden
@@ -298,14 +300,10 @@ export default function Home() {
                         width={320}
                         height={320}
                         className="aspect-square w-full object-cover"
-                        priority
-                        sizes="(max-width: 768px) 88vw, 320px"
+                        sizes="320px"
                       />
                     </div>
                   </div>
-                </div>
-                <div className="pointer-events-none absolute -bottom-1 left-1/2 z-10 w-[max(12rem,85%)] -translate-x-1/2 translate-y-1/2 rounded-full border border-teal-400/35 bg-slate-950/85 px-4 py-1.5 text-center text-[10px] font-semibold uppercase tracking-[0.18em] text-teal-100/95 shadow-[0_8px_32px_-12px_rgba(0,0,0,0.6)] backdrop-blur-md sm:text-[11px]">
-                  Frontend · UI
                 </div>
               </div>
             </div>
@@ -650,7 +648,7 @@ Let’s work together to bring your project to life.
           Contact
         </Reveal>
 
-        <div className="rounded-3xl border border-white/10 bg-slate-950/35 backdrop-blur shadow-[0_0_0_1px_rgba(255,255,255,0.06)] overflow-hidden">
+        <div className="rounded-3xl border border-white/10 bg-slate-950/72 backdrop-blur-sm shadow-[0_0_0_1px_rgba(255,255,255,0.06)] overflow-hidden antialiased">
           <div className="grid md:grid-cols-2">
             {/* Left gradient panel */}
             <div className="relative p-10 md:p-12">

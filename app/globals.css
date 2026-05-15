@@ -80,7 +80,7 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0);
+    filter: none;
   }
 }
 
@@ -100,6 +100,36 @@ body {
     opacity: 1;
     transform: none;
     filter: none;
+  }
+}
+
+/* Same motion as fadeDown but without filter — avoids blurring all children
+   when applied to a container (e.g. hero glass panel with backdrop-blur). */
+@keyframes fadeDownNoBlur {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fadeDownPanel {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation-name: fadeDownNoBlur;
+  animation-duration: 0.55s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fadeDownPanel {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -196,7 +226,7 @@ body {
     opacity: 0;
   }
   to {
-    opacity: 0.88;
+    opacity: 1;
   }
 }
 
@@ -207,7 +237,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hero-video-ready {
     animation: none;
-    opacity: 0.88;
+    opacity: 1;
   }
 }
 
@@ -397,10 +427,6 @@ body {
   }
 }
 
-.service-card-bob {
-  will-change: transform;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .service-card-bob {
     animation: serviceCardBob 3.2s ease-in-out infinite;
@@ -563,6 +589,8 @@ body {
 
 /* Hero main glass panel */
 .hero-glass-panel {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(
     168deg,
     rgb(15 23 42 / 0.72) 0%,

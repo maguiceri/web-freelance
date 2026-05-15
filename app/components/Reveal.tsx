@@ -58,8 +58,8 @@ export default function Reveal({
       ref={ref as unknown as React.Ref<HTMLElement>}
       className={
         visible
-          ? `fadeDown ${className}`.trim()
-          : `opacity-0 -translate-y-8 blur-sm ${className}`.trim()
+          ? `fadeDownPanel ${className}`.trim()
+          : `opacity-0 -translate-y-6 ${className}`.trim()
       }
       style={
         visible
