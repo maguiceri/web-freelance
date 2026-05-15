@@ -198,20 +198,20 @@ export default function Home() {
           className="hero-grid-bg pointer-events-none absolute inset-0 -z-[1]"
         />
 
-        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
+        <div className="grid min-w-0 items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
           <div
             style={{ animationDelay: "0.08s" }}
-            className="fadeDownPanel hero-glass-panel relative overflow-hidden rounded-[1.75rem] p-8 max-md:backdrop-blur-none backdrop-blur-md md:rounded-2xl md:p-10"
+            className="fadeDownPanel hero-glass-panel relative min-w-0 overflow-hidden rounded-[1.75rem] p-8 max-md:backdrop-blur-none backdrop-blur-md md:rounded-2xl md:p-10"
           >
             <span className="hero-glass-panel-corner hero-glass-panel-corner--tl" aria-hidden />
             <span className="hero-glass-panel-corner hero-glass-panel-corner--br" aria-hidden />
             <div
               aria-hidden
-              className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-teal-400/15 blur-3xl md:h-72 md:w-72"
+              className="pointer-events-none absolute -right-24 -top-24 hidden h-56 w-56 rounded-full bg-teal-400/15 blur-3xl md:block md:h-72 md:w-72"
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute -bottom-20 -left-16 h-48 w-48 rounded-full bg-sky-400/12 blur-3xl"
+              className="pointer-events-none absolute -bottom-20 -left-16 hidden h-48 w-48 rounded-full bg-sky-400/12 blur-3xl md:block"
             />
 
             <p
