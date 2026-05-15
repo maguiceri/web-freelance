@@ -5,15 +5,12 @@ interface NNode {
   x: number; y: number; z: number;
   vx: number; vy: number; vz: number;
 }
+interface Pulse { from: number; to: number; t: number; speed: number; }
 
-interface Pulse {
-  from: number; to: number;
-  t: number; speed: number;
-}
-
-const N        = 110;
-const CONNECT  = 420; // 3D distance threshold
+const N        = 70;
+const CONNECT  = 310;
 const ROT_Y    = 0.00085;
+const INTERVAL = 1000 / 30; // cap a 30 fps
 
 export default function NeuralBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -35,8 +32,8 @@ export default function NeuralBackground() {
     let FOV      = Math.max(cssW, cssH) * 0.55;
 
     const resize = () => {
-      cssW = window.innerWidth;
-      cssH = window.innerHeight;
+      cssW     = window.innerWidth;
+      cssH     = window.innerHeight;
       SPREAD   = cssW * 1.4;
       SPREAD_Y = cssH * 1.4;
       FOV      = Math.max(cssW, cssH) * 0.55;
@@ -57,11 +54,16 @@ export default function NeuralBackground() {
 
     const pulses: Pulse[] = [];
     let lastPulse = 0;
+    let lastFrame = 0;
     let angleY    = 0;
     let raf: number;
 
+    const CONNECT_SQ = CONNECT * CONNECT;
+
     const draw = (ts: number) => {
-      if (document.hidden) { raf = requestAnimationFrame(draw); return; }
+      raf = requestAnimationFrame(draw);
+      if (document.hidden || ts - lastFrame < INTERVAL) return;
+      lastFrame = ts;
 
       ctx.clearRect(0, 0, cssW, cssH);
 
@@ -70,7 +72,7 @@ export default function NeuralBackground() {
       const cosY = Math.cos(angleY), sinY = Math.sin(angleY);
       const cosX = Math.cos(aX),    sinX = Math.sin(aX);
 
-      // drift
+      // drift nodes
       for (const n of nodes) {
         n.x += n.vx; n.y += n.vy; n.z += n.vz;
         if (Math.abs(n.x) > SPREAD   / 2) n.vx *= -1;
@@ -88,20 +90,20 @@ export default function NeuralBackground() {
         return { sx: rx * s + cssW / 2, sy: ry * s + cssH / 2, scale: s, rz: rz2 };
       });
 
-      // edges (3D distance for stable topology)
+      // edges — squared distance para evitar sqrt innecesario
       const edges: [number, number, number][] = [];
       for (let i = 0; i < N; i++) {
         for (let j = i + 1; j < N; j++) {
           const dx = nodes[i].x - nodes[j].x;
           const dy = nodes[i].y - nodes[j].y;
           const dz = nodes[i].z - nodes[j].z;
-          const d  = Math.sqrt(dx * dx + dy * dy + dz * dz);
-          if (d < CONNECT) edges.push([i, j, d]);
+          const dSq = dx*dx + dy*dy + dz*dz;
+          if (dSq < CONNECT_SQ) edges.push([i, j, Math.sqrt(dSq)]);
         }
       }
 
-      // spawn pulse every ~450 ms
-      if (ts - lastPulse > 160 && edges.length) {
+      // spawn pulse
+      if (ts - lastPulse > 280 && edges.length) {
         const e = edges[Math.floor(Math.random() * edges.length)];
         pulses.push({ from: e[0], to: e[1], t: 0, speed: 0.018 + Math.random() * 0.014 });
         lastPulse = ts;
@@ -118,12 +120,12 @@ export default function NeuralBackground() {
         ctx.beginPath();
         ctx.moveTo(pi.sx, pi.sy);
         ctx.lineTo(pj.sx, pj.sy);
-        ctx.strokeStyle = `rgba(45,212,191,${fade * 0.36})`;
+        ctx.strokeStyle = `rgba(45,212,191,${(fade * 0.36).toFixed(2)})`;
         ctx.lineWidth   = 0.65 * (pi.scale + pj.scale) / 2;
         ctx.stroke();
       }
 
-      // draw pulses (glowing dot traveling along edge)
+      // draw pulses — solo unos pocos, el gradient vale la pena
       for (const p of pulses) {
         const pi = proj[p.from], pj = proj[p.to];
         const px = pi.sx + (pj.sx - pi.sx) * p.t;
@@ -139,28 +141,14 @@ export default function NeuralBackground() {
         ctx.fill();
       }
 
-      // draw nodes back → front
-      proj
-        .map((p, i) => ({ ...p, i }))
-        .sort((a, b) => b.rz - a.rz)
-        .forEach(({ sx, sy, scale }) => {
-          const r = Math.max(0.8, 2.2 * scale);
-          // soft glow
-          const grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, r * 4.5);
-          grd.addColorStop(0, `rgba(45,212,191,${0.60 * scale})`);
-          grd.addColorStop(1, "rgba(45,212,191,0)");
-          ctx.beginPath();
-          ctx.arc(sx, sy, r * 4.5, 0, Math.PI * 2);
-          ctx.fillStyle = grd;
-          ctx.fill();
-          // core dot
-          ctx.beginPath();
-          ctx.arc(sx, sy, r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(167,243,208,${Math.min(1, 0.85 * scale + 0.3)})`;
-          ctx.fill();
-        });
-
-      raf = requestAnimationFrame(draw);
+      // draw nodes — círculo sólido, sin gradient por nodo
+      for (const { sx, sy, scale } of proj) {
+        const r = Math.max(0.8, 2.2 * scale);
+        ctx.beginPath();
+        ctx.arc(sx, sy, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(45,212,191,${Math.min(0.9, scale * 0.7 + 0.15).toFixed(2)})`;
+        ctx.fill();
+      }
     };
 
     raf = requestAnimationFrame(draw);

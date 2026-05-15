@@ -157,76 +157,6 @@ body {
   }
 }
 
-@keyframes blobDrift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(2%, -3%, 0) scale(1.06);
-  }
-}
-
-.blob-drift {
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .blob-drift {
-    animation: blobDrift 18s ease-in-out infinite;
-  }
-
-  .blob-drift-slow {
-    animation: blobDrift 24s ease-in-out infinite;
-    animation-delay: -4s;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .blob-drift,
-  .blob-drift-slow {
-    animation: none;
-  }
-}
-
-/* Aurora background effect */
-@keyframes auroraFloat1 {
-  0%, 100% { transform: translateX(0%) translateY(0%) scaleX(1); opacity: 0.65; }
-  30%       { transform: translateX(4%) translateY(-5%) scaleX(1.07); opacity: 0.85; }
-  65%       { transform: translateX(-3%) translateY(5%) scaleX(0.95); opacity: 0.50; }
-}
-
-@keyframes auroraFloat2 {
-  0%, 100% { transform: translateX(0%) translateY(0%) scaleX(1); opacity: 0.50; }
-  42%       { transform: translateX(-5%) translateY(-4%) scaleX(1.10); opacity: 0.72; }
-  78%       { transform: translateX(4%) translateY(6%) scaleX(0.93); opacity: 0.38; }
-}
-
-@keyframes auroraFloat3 {
-  0%, 100% { transform: translateX(0%) translateY(0%) scaleX(1); opacity: 0.42; }
-  55%       { transform: translateX(3%) translateY(-6%) scaleX(1.05); opacity: 0.62; }
-}
-
-.aurora-l1,
-.aurora-l2,
-.aurora-l3,
-.aurora-l4 {
-  will-change: transform, opacity;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .aurora-l1 { animation: auroraFloat1 20s ease-in-out infinite; }
-  .aurora-l2 { animation: auroraFloat2 27s ease-in-out infinite; animation-delay: -9s; }
-  .aurora-l3 { animation: auroraFloat1 17s ease-in-out infinite; animation-delay: -5s; }
-  .aurora-l4 { animation: auroraFloat3 23s ease-in-out infinite; animation-delay: -13s; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .aurora-l1,
-  .aurora-l2,
-  .aurora-l3,
-  .aurora-l4 { animation: none; }
-}
 
 @keyframes kickerPulse {
   0%,
@@ -251,26 +181,6 @@ body {
     linear-gradient(90deg, rgb(148 163 184 / 0.06) 1px, transparent 1px);
   background-size: 52px 52px;
   mask-image: radial-gradient(ellipse 85% 70% at 50% 35%, rgb(0 0 0), transparent 72%);
-}
-
-@keyframes heroVideoFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.hero-video-ready {
-  animation: heroVideoFadeIn 0.55s ease-out forwards;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-video-ready {
-    animation: none;
-    opacity: 1;
-  }
 }
 
 /* Cards: lift + border glow on hover */
@@ -740,51 +650,6 @@ body {
   border-right: 1px solid;
   border-bottom: 1px solid;
   border-radius: 0 0 0.5rem 0;
-}
-
-/* Hero portrait frame */
-.hero-portrait-ring {
-  border-radius: 2rem;
-  padding: 2px;
-  background: linear-gradient(
-    145deg,
-    rgb(45 212 191 / 0.55),
-    rgb(34 211 238 / 0.35) 35%,
-    rgb(99 102 241 / 0.35) 70%,
-    rgb(45 212 191 / 0.4)
-  );
-  box-shadow:
-    0 0 0 1px rgb(255 255 255 / 0.08),
-    0 24px 70px -28px rgb(45 212 191 / 0.35),
-    0 32px 80px -40px rgb(0 0 0 / 0.75);
-}
-
-.hero-portrait-inner {
-  border-radius: calc(2rem - 2px);
-  background: linear-gradient(180deg, rgb(15 23 42 / 0.95), rgb(15 23 42 / 0.85));
-  padding: 3px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-portrait-ring {
-    animation: heroPortraitHalo 10s ease-in-out infinite;
-  }
-}
-
-@keyframes heroPortraitHalo {
-  0%,
-  100% {
-    filter: hue-rotate(0deg) saturate(1);
-  }
-  50% {
-    filter: hue-rotate(-12deg) saturate(1.15);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-portrait-ring {
-    animation: none;
-  }
 }
 
 /* ── Portrait orbital system ─────────────────────────────────── */

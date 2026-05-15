@@ -111,39 +111,22 @@ export default function Home() {
       <FixedHeader />
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 isolate overflow-hidden">
         <div className="absolute inset-0 bg-[#0d1a3a]" />
-        {/* Aurora — color base */}
-        <div className="aurora-l1 absolute -top-[8%] -left-[8%] h-[45%] w-[110%] rounded-[50%] bg-teal-400/[0.13] blur-[90px]" />
-        <div className="aurora-l2 absolute -top-[12%] right-[-12%] h-[42%] w-[90%] rounded-[50%] bg-indigo-400/[0.10] blur-[110px]" />
-        <div className="aurora-l3 absolute top-[6%] left-[5%] h-[28%] w-[95%] rounded-[50%] bg-cyan-300/[0.07] blur-[75px]" />
-        <div className="aurora-l4 absolute top-[4%] right-[-5%] h-[38%] w-[45%] rounded-[50%] bg-violet-500/[0.08] blur-[100px]" />
-        {/* Red neuronal 3D */}
         <NeuralBackground />
-        {/* Bottom glow */}
-        <div className="blob-drift-slow absolute bottom-[-5%] left-[20%] h-[420px] w-[600px] rounded-[50%] bg-teal-500/[0.07] blur-[90px]" />
       </div>
      
 
-      {/* Hero: full viewport feel, glass panel + portrait */}
+      {/* Hero: full viewport feel, centered single column */}
       <section
         id="top"
-        className="relative isolate mx-auto flex min-h-[calc(100dvh-5rem)] max-w-6xl scroll-mt-28 flex-col justify-center px-4 pb-16 pt-24 text-slate-100 md:min-h-[calc(100dvh-4rem)] md:pb-24 md:pt-28"
+        className="relative isolate mx-auto flex min-h-[calc(100dvh-5rem)] max-w-3xl scroll-mt-28 flex-col items-center justify-center px-4 pb-16 pt-24 text-slate-100 md:min-h-[calc(100dvh-4rem)] md:pb-24 md:pt-28"
       >
-
-        <div className="grid min-w-0 items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
+        <div className="flex w-full flex-col items-center gap-10">
           <div
             style={{ animationDelay: "0.08s" }}
-            className="fadeDownPanel hero-glass-panel relative min-w-0 overflow-hidden rounded-[1.75rem] p-8 max-md:backdrop-blur-none backdrop-blur-md md:rounded-2xl md:p-10"
+            className="fadeDownPanel hero-glass-panel relative w-full min-w-0 overflow-hidden rounded-[1.75rem] p-8 text-center max-md:backdrop-blur-none backdrop-blur-md md:rounded-2xl md:p-10"
           >
             <span className="hero-glass-panel-corner hero-glass-panel-corner--tl" aria-hidden />
             <span className="hero-glass-panel-corner hero-glass-panel-corner--br" aria-hidden />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-24 -top-24 hidden h-56 w-56 rounded-full bg-teal-400/15 blur-3xl md:block md:h-72 md:w-72"
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -bottom-20 -left-16 hidden h-48 w-48 rounded-full bg-sky-400/12 blur-3xl md:block"
-            />
 
             <h1
               style={{ animationDelay: "0.2s" }}
@@ -152,7 +135,7 @@ export default function Home() {
               <span className="hero-title-gradient mt-3 block text-[2.1rem] font-extrabold leading-[1.06] sm:text-5xl md:text-6xl lg:text-[3.35rem] lg:leading-[1.05]">
                 Interfaces that feel fast, clear, and human
               </span>
-              <span className="mt-5 block max-w-xl text-base leading-relaxed text-slate-300/92 sm:text-lg">
+              <span className="mx-auto mt-5 block max-w-xl text-base leading-relaxed text-slate-300/92 sm:text-lg">
                 Fullstack developer focused on React, Next.js, and TypeScript. I turn designs into resilient UI, smooth
                 motion, and accessible UX—so your product feels as good as it looks.
               </span>
@@ -160,7 +143,7 @@ export default function Home() {
 
             <ul
               style={{ animationDelay: "0.28s" }}
-              className="fadeDown relative mt-7 flex flex-wrap gap-2.5 sm:gap-3"
+              className="fadeDown relative mt-7 flex flex-wrap justify-center gap-2.5 sm:gap-3"
               aria-label="Core stack"
             >
               {HERO_STACK.map((item, i) => {
@@ -184,7 +167,7 @@ export default function Home() {
               +5 years shipping production work—from marketing sites to data-heavy dashboards.
             </p>
 
-            <div style={{ animationDelay: "0.42s" }} className="fadeDown relative mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+            <div style={{ animationDelay: "0.42s" }} className="fadeDown relative mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <Link
                 href="#contact"
                 className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-teal-400 to-cyan-500 px-7 py-3 text-sm font-semibold text-slate-950 shadow-[0_12px_40px_-18px_rgba(45,212,191,0.55)] outline-none transition duration-150 hover:brightness-110 motion-safe:hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-teal-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-8 sm:text-[15px]"
@@ -200,39 +183,34 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hidden justify-center pb-10 lg:flex lg:justify-end">
-            <div style={{ animationDelay: "0.18s" }} className="fadeDown relative flex items-center justify-center">
-              <div
-                aria-hidden
-                className="blob-drift-slow absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.16),transparent_68%)] blur-2xl"
-              />
-              <div className="portrait-scene">
-                {/* Anillos orbitales */}
-                <div className="portrait-ring-el portrait-ring-el-1" />
-                <div className="portrait-ring-el portrait-ring-el-2" />
-                <div className="portrait-ring-el portrait-ring-el-3" />
-                {/* Brazos giratorios con satélites */}
-                <div className="portrait-orbit-arm portrait-orbit-arm-1">
-                  <div className="portrait-sat portrait-sat-1" />
-                </div>
-                <div className="portrait-orbit-arm portrait-orbit-arm-2">
-                  <div className="portrait-sat portrait-sat-2" />
-                </div>
-                <div className="portrait-orbit-arm portrait-orbit-arm-3">
-                  <div className="portrait-sat portrait-sat-3" />
-                </div>
-                {/* Foto */}
-                <div className="portrait-photo-el">
-                  <Image
-                    src="/cv.jpeg"
-                    alt="Portrait of Magali Cerisola"
-                    width={220}
-                    height={220}
-                    className="h-full w-full object-cover"
-                    sizes="220px"
-                    priority
-                  />
-                </div>
+          <div style={{ animationDelay: "0.18s" }} className="fadeDown hidden sm:flex relative items-center justify-center">
+            <div
+              aria-hidden
+              className="absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.14),transparent_68%)]"
+            />
+            <div className="portrait-scene">
+              <div className="portrait-ring-el portrait-ring-el-1" />
+              <div className="portrait-ring-el portrait-ring-el-2" />
+              <div className="portrait-ring-el portrait-ring-el-3" />
+              <div className="portrait-orbit-arm portrait-orbit-arm-1">
+                <div className="portrait-sat portrait-sat-1" />
+              </div>
+              <div className="portrait-orbit-arm portrait-orbit-arm-2">
+                <div className="portrait-sat portrait-sat-2" />
+              </div>
+              <div className="portrait-orbit-arm portrait-orbit-arm-3">
+                <div className="portrait-sat portrait-sat-3" />
+              </div>
+              <div className="portrait-photo-el">
+                <Image
+                  src="/cv.jpeg"
+                  alt="Portrait of Magali Cerisola"
+                  width={220}
+                  height={220}
+                  className="h-full w-full object-cover"
+                  sizes="220px"
+                  priority
+                />
               </div>
             </div>
           </div>
