@@ -108,7 +108,7 @@ export default function Home() {
       {/* Hero: text panel + portrait side by side, centered */}
       <section
         id="top"
-        className="relative isolate mx-auto flex min-h-[calc(100dvh-5rem)] max-w-5xl scroll-mt-28 flex-col items-center justify-center px-4 pb-16 pt-24 text-slate-100 md:min-h-[calc(100dvh-4rem)] md:pb-24 md:pt-28"
+        className="relative isolate mx-auto flex min-h-[calc(100dvh-5rem)] max-w-5xl scroll-mt-28 flex-col items-center justify-center px-4 py-16 text-slate-100 md:min-h-[calc(100dvh-4rem)] md:pb-24 md:pt-28"
       >
         <div className="flex w-full flex-col gap-5 lg:flex-row lg:items-stretch">
 
@@ -131,12 +131,6 @@ export default function Home() {
                 className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-400 to-blue-500 px-7 py-3 text-sm font-semibold text-slate-950 shadow-[0_12px_40px_-18px_rgba(59,130,246,0.55)] outline-none transition duration-150 hover:brightness-110 motion-safe:hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-blue-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-8 sm:text-[15px]"
               >
                 Start a project
-              </Link>
-              <Link
-                href="#projects"
-                className="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-slate-100 outline-none transition duration-150 hover:border-blue-300/35 hover:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-blue-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-7 sm:text-[15px]"
-              >
-                View work
               </Link>
             </div>
           </div>
