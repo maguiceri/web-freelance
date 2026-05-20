@@ -108,7 +108,7 @@ export default function Home() {
       {/* Hero: text panel + portrait side by side, centered */}
       <section
         id="top"
-        className="relative isolate mx-auto flex min-h-[calc(100dvh-5rem)] max-w-5xl scroll-mt-28 flex-col items-center justify-center px-4 py-16 text-slate-100 md:min-h-[calc(100dvh-4rem)] md:pb-24 md:pt-28"
+        className="relative isolate mx-auto mt-16 flex min-h-[calc(100dvh-4rem)] max-w-5xl scroll-mt-28 flex-col items-center justify-center px-4 py-8 text-slate-100 md:mt-0 md:min-h-[calc(100dvh-4rem)] md:pb-24 md:pt-28"
       >
         <div className="flex w-full flex-col gap-5 lg:flex-row lg:items-stretch">
 
