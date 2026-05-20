@@ -85,7 +85,7 @@ export default function Header() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-px bg-gradient-to-r from-transparent via-teal-400/45 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-px bg-gradient-to-r from-transparent via-blue-400/45 to-transparent"
       />
 
       <nav className="relative z-[2] mx-auto max-w-6xl px-3 pt-3 pb-2 sm:px-4 md:px-5 md:pt-4" aria-label="Primary">
@@ -93,7 +93,7 @@ export default function Header() {
           <Link
             href="#top"
             aria-label="Back to top of page"
-            className="group flex min-w-0 flex-col gap-0.5 rounded-lg px-1 py-0.5 outline-none transition hover:opacity-95 focus-visible:ring-2 focus-visible:ring-teal-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1a3a]"
+            className="group flex min-w-0 flex-col gap-0.5 rounded-lg px-1 py-0.5 outline-none transition hover:opacity-95 focus-visible:ring-2 focus-visible:ring-blue-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             onClick={(e) => {
               if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
               e.preventDefault();
@@ -105,17 +105,17 @@ export default function Header() {
               }
             }}
           >
-            <span className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-500 transition group-hover:text-teal-400/85 sm:text-[11px]">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.26em] text-slate-500 transition group-hover:text-blue-400/85 sm:text-[11px]">
               Fullstack
             </span>
-            <span className="bg-gradient-to-r from-teal-200 via-cyan-200 to-sky-200 bg-clip-text text-lg font-bold tracking-tight text-transparent sm:text-xl">
+            <span className="bg-gradient-to-r from-slate-100 via-blue-200 to-blue-300 bg-clip-text text-lg font-light tracking-tight text-transparent sm:text-xl">
               Magali Cerisola
             </span>
           </Link>
 
           <button
             type="button"
-            className="inline-flex shrink-0 items-center justify-center rounded-xl border border-white/14 bg-white/[0.06] p-2.5 text-slate-200 outline-none transition hover:border-teal-400/35 hover:bg-teal-500/10 hover:text-teal-100 active:scale-95 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1a3a] md:hidden"
+            className="inline-flex shrink-0 items-center justify-center rounded-xl border border-white/14 bg-white/[0.06] p-2.5 text-slate-200 outline-none transition hover:border-blue-400/35 hover:bg-blue-500/10 hover:text-blue-100 active:scale-95 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 md:hidden"
             aria-label="Toggle menu"
             aria-expanded={mobileNav === "open"}
             onClick={() => {
@@ -150,7 +150,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="nav-pill-link rounded-full px-3.5 py-2 text-[13px] font-medium text-slate-300/90 outline-none transition hover:bg-white/[0.08] hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-teal-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="nav-pill-link rounded-full px-3.5 py-2 text-[13px] font-medium text-slate-300/90 outline-none transition hover:bg-white/[0.08] hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-blue-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
                 {item.label}
               </Link>
@@ -176,7 +176,7 @@ export default function Header() {
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Menu</p>
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/14 bg-white/[0.06] p-2 text-slate-200 outline-none transition hover:border-teal-400/35 hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/50"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/14 bg-white/[0.06] p-2 text-slate-200 outline-none transition hover:border-blue-400/35 hover:text-blue-100 focus-visible:ring-2 focus-visible:ring-blue-400/50"
                   aria-label="Close menu"
                   onClick={() => startCloseMobileMenu()}
                 >
@@ -198,7 +198,7 @@ export default function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="nav-drawer-link flex w-full touch-manipulation items-center justify-center rounded-full border border-white/14 bg-slate-900/55 px-5 py-3.5 text-[15px] font-semibold tracking-wide text-slate-200/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] outline-none transition-[color,background-color,border-color,box-shadow] duration-200 hover:border-teal-400/45 hover:bg-teal-500/[0.12] hover:text-teal-50 hover:shadow-[0_0_0_1px_rgba(45,212,191,0.15),inset_0_1px_0_rgba(255,255,255,0.08)] active:border-teal-400/60 active:bg-teal-500/25 active:text-teal-100 active:shadow-[0_0_20px_-8px_rgba(45,212,191,0.45)] focus-visible:ring-2 focus-visible:ring-teal-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                    className="nav-drawer-link flex w-full touch-manipulation items-center justify-center rounded-full border border-white/14 bg-slate-900/55 px-5 py-3.5 text-[15px] font-medium tracking-wide text-slate-200/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] outline-none transition-[color,background-color,border-color,box-shadow] duration-200 hover:border-blue-400/45 hover:bg-blue-500/[0.12] hover:text-blue-50 hover:shadow-[0_0_0_1px_rgba(59,130,246,0.15),inset_0_1px_0_rgba(255,255,255,0.08)] active:border-blue-400/60 active:bg-blue-500/25 active:text-blue-100 active:shadow-[0_0_20px_-8px_rgba(59,130,246,0.45)] focus-visible:ring-2 focus-visible:ring-blue-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                     onClick={() => startCloseMobileMenu()}
                   >
                     {item.label}

@@ -70,7 +70,7 @@ export default function ContactForm() {
           name="name"
           type="text"
           required
-          className="mt-2 w-full min-h-[44px] rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-400 outline-none transition-colors duration-200 focus:border-teal-400/60 focus:ring-2 focus:ring-teal-400/20 focus-visible:border-teal-400/60"
+          className="mt-2 w-full min-h-[44px] rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-400 outline-none transition-colors duration-200 focus:border-blue-400/60 focus:ring-2 focus:ring-blue-400/20 focus-visible:border-blue-400/60"
           placeholder="Your name"
           autoComplete="name"
         />
@@ -82,7 +82,7 @@ export default function ContactForm() {
           name="email"
           type="email"
           required
-          className="mt-2 w-full min-h-[44px] rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-400 outline-none transition-colors duration-200 focus:border-teal-400/60 focus:ring-2 focus:ring-teal-400/20 focus-visible:border-teal-400/60"
+          className="mt-2 w-full min-h-[44px] rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-400 outline-none transition-colors duration-200 focus:border-blue-400/60 focus:ring-2 focus:ring-blue-400/20 focus-visible:border-blue-400/60"
           placeholder="you@company.com"
           autoComplete="email"
         />
@@ -94,13 +94,13 @@ export default function ContactForm() {
           name="message"
           rows={4}
           required
-          className="mt-2 w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-400 outline-none transition-colors duration-200 focus:border-teal-400/60 focus:ring-2 focus:ring-teal-400/20 focus-visible:border-teal-400/60"
+          className="mt-2 w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-400 outline-none transition-colors duration-200 focus:border-blue-400/60 focus:ring-2 focus:ring-blue-400/20 focus-visible:border-blue-400/60"
           placeholder="Tell me what you need help with..."
         />
       </label>
 
       {status === "success" && (
-        <p className="text-sm text-teal-300" role="status">
+        <p className="text-sm text-blue-300" role="status">
           Message sent. I will get back to you soon.
         </p>
       )}
@@ -113,7 +113,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "sending"}
-        className="min-h-[48px] w-full touch-manipulation rounded-xl bg-gradient-to-r from-teal-400 to-cyan-500 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-teal-500/20 outline-none transition duration-200 hover:brightness-110 active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-teal-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:opacity-60 disabled:pointer-events-none disabled:active:scale-100"
+        className="min-h-[48px] w-full touch-manipulation rounded-xl bg-gradient-to-r from-blue-400 to-blue-500 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-blue-500/20 outline-none transition duration-200 hover:brightness-110 active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-blue-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:opacity-60 disabled:pointer-events-none disabled:active:scale-100"
       >
         {status === "sending" ? "Sending..." : "Send request"}
       </button>

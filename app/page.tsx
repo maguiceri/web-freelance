@@ -2,24 +2,24 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import Reveal from "./components/Reveal";
 import ContactForm from "./components/ContactForm";
 import FixedHeader from "./components/FixedHeader";
-import NeuralBackground from "./components/NeuralBackground";
+import NeuralCanvas from "./components/NeuralCanvas";
 import { useLayoutEffect } from "react";
+import Reveal from "./components/Reveal";
 
 const SERVICE_CARDS = [
   {
     title: "Custom Website Development",
     body: "I build modern, high-quality websites from scratch tailored to your business needs. Clean code, scalable architecture, and a strong focus on user experience.",
   },
+    {
+    title: "Automation Consulting",
+    body: "Tell me about your business and repetitive tasks. I’ll help you design smarter automated workflows powered by AI and modern tools.",
+  },
   {
     title: "Responsive & Mobile-First Design",
     body: "Your website will look and work perfectly across all devices - mobile, tablet, and desktop - ensuring a seamless user experience everywhere.",
-  },
-  {
-    title: "Pixel-Perfect UI Implementation",
-    body: "I transform your designs (Figma or similar) into clean, accurate, and interactive interfaces with attention to detail in layout, spacing, and typography.",
   },
   {
     title: "Performance & UX Optimization",
@@ -85,12 +85,6 @@ function IconTailwind() {
   );
 }
 
-const HERO_STACK = [
-  { label: "React", pillClass: "hero-stack-pill--react", Icon: IconReact },
-  { label: "Next.js", pillClass: "hero-stack-pill--next", Icon: IconNext },
-  { label: "TypeScript", pillClass: "hero-stack-pill--ts", Icon: IconTypeScript },
-  { label: "Tailwind CSS", pillClass: "hero-stack-pill--tailwind", Icon: IconTailwind },
-] as const;
 
 
 export default function Home() {
@@ -109,117 +103,64 @@ export default function Home() {
       className="min-h-screen text-slate-900 relative overflow-hidden outline-none"
     >
       <FixedHeader />
-      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 isolate overflow-hidden">
-        <div className="absolute inset-0 bg-[#0d1a3a]" />
-        <NeuralBackground />
-      </div>
-     
+      <NeuralCanvas />
 
       {/* Hero: text panel + portrait side by side, centered */}
       <section
         id="top"
         className="relative isolate mx-auto flex min-h-[calc(100dvh-5rem)] max-w-5xl scroll-mt-28 flex-col items-center justify-center px-4 pb-16 pt-24 text-slate-100 md:min-h-[calc(100dvh-4rem)] md:pb-24 md:pt-28"
       >
-        <div className="flex w-full flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-center lg:gap-12">
-          <div
-            style={{ animationDelay: "0.08s" }}
-            className="fadeDownPanel hero-glass-panel relative w-full min-w-0 overflow-hidden rounded-[1.75rem] p-8 text-center max-md:backdrop-blur-none backdrop-blur-md lg:max-w-xl md:rounded-2xl md:p-10"
-          >
+        <div className="flex w-full flex-col gap-5 lg:flex-row lg:items-stretch">
+
+          {/* Text card */}
+          <div className="hero-text-card relative flex-1 overflow-hidden rounded-[2rem] p-8 text-center lg:text-left lg:p-12">
             <span className="hero-glass-panel-corner hero-glass-panel-corner--tl" aria-hidden />
             <span className="hero-glass-panel-corner hero-glass-panel-corner--br" aria-hidden />
-
-            <h1
-              style={{ animationDelay: "0.2s" }}
-              className="fadeDown relative text-balance font-semibold tracking-tight"
-            >
-              <span className="hero-title-gradient mt-3 block text-[2.1rem] font-extrabold leading-[1.06] sm:text-5xl lg:text-[2.75rem] lg:leading-[1.07]">
-                Interfaces that feel fast, clear, and human
+            <h1 className="relative text-balance font-light tracking-tight">
+              <span className="hero-title-gradient mt-3 block text-[2.1rem] font-light leading-[1.06] sm:text-5xl lg:text-[2.75rem] lg:leading-[1.07]">
+                Modern web experiences,automation & AI-powered interfaces.
               </span>
-              <span className="mx-auto mt-5 block max-w-xl text-base leading-relaxed text-slate-300/92 sm:text-lg">
-                Fullstack developer focused on React, Next.js, and TypeScript. I turn designs into resilient UI, smooth
-                motion, and accessible UX—so your product feels as good as it looks.
+              <span className="mx-auto mt-5 block max-w-xl text-base leading-relaxed text-slate-300/92 sm:text-lg lg:mx-0">
+                5+ years building scalable frontend applications,
+                interactive interfaces and automation solutions.
               </span>
             </h1>
-
-            <ul
-              style={{ animationDelay: "0.28s" }}
-              className="fadeDown relative mt-7 flex flex-wrap justify-center gap-2.5 sm:gap-3"
-              aria-label="Core stack"
-            >
-              {HERO_STACK.map((item, i) => {
-                const Icon = item.Icon;
-                return (
-                  <li
-                    key={item.label}
-                    className={`hero-stack-pill ${item.pillClass} text-xs sm:text-[13px]`}
-                    style={{ animationDelay: `${i * 0.22}s` }}
-                  >
-                    <span className="hero-stack-pill-icon">
-                      <Icon />
-                    </span>
-                    <span className="hero-stack-pill-label">{item.label}</span>
-                  </li>
-                );
-              })}
-            </ul>
-
-            <p style={{ animationDelay: "0.34s" }} className="fadeDown relative mt-5 text-sm leading-relaxed text-slate-400/95 sm:text-[15px]">
-              +5 years shipping production work—from marketing sites to data-heavy dashboards.
-            </p>
-
-            <div style={{ animationDelay: "0.42s" }} className="fadeDown relative mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            <div className="relative mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4 lg:justify-start">
               <Link
                 href="#contact"
-                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-teal-400 to-cyan-500 px-7 py-3 text-sm font-semibold text-slate-950 shadow-[0_12px_40px_-18px_rgba(45,212,191,0.55)] outline-none transition duration-150 hover:brightness-110 motion-safe:hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-teal-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-8 sm:text-[15px]"
+                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-400 to-blue-500 px-7 py-3 text-sm font-semibold text-slate-950 shadow-[0_12px_40px_-18px_rgba(59,130,246,0.55)] outline-none transition duration-150 hover:brightness-110 motion-safe:hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-blue-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-8 sm:text-[15px]"
               >
                 Start a project
               </Link>
               <Link
                 href="#projects"
-                className="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-slate-100 outline-none transition duration-150 hover:border-teal-300/35 hover:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-teal-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-7 sm:text-[15px]"
+                className="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-slate-100 outline-none transition duration-150 hover:border-blue-300/35 hover:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-blue-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-7 sm:text-[15px]"
               >
                 View work
               </Link>
             </div>
           </div>
 
-          <div style={{ animationDelay: "0.18s" }} className="fadeDown hidden lg:flex relative shrink-0 items-center justify-center">
-            <div
-              aria-hidden
-              className="absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.14),transparent_68%)]"
-            />
-            <div className="portrait-scene">
-              <div className="portrait-ring-el portrait-ring-el-1" />
-              <div className="portrait-ring-el portrait-ring-el-2" />
-              <div className="portrait-ring-el portrait-ring-el-3" />
-              <div className="portrait-orbit-arm portrait-orbit-arm-1">
-                <div className="portrait-sat portrait-sat-1" />
-              </div>
-              <div className="portrait-orbit-arm portrait-orbit-arm-2">
-                <div className="portrait-sat portrait-sat-2" />
-              </div>
-              <div className="portrait-orbit-arm portrait-orbit-arm-3">
-                <div className="portrait-sat portrait-sat-3" />
-              </div>
-              <div className="portrait-photo-el">
-                <Image
-                  src="/cv.jpeg"
-                  alt="Portrait of Magali Cerisola"
-                  width={220}
-                  height={220}
-                  className="h-full w-full object-cover"
-                  sizes="220px"
-                  priority
-                />
-              </div>
+          {/* Photo card */}
+          <div className="hero-photo-card relative hidden w-[260px] shrink-0 flex-col items-center justify-center overflow-hidden rounded-[2rem] p-8 lg:flex">
+            <div className="relative h-[200px] w-[200px] overflow-hidden rounded-full border-2 border-blue-400/40 shadow-[0_0_0_8px_rgba(59,130,246,0.07),0_0_60px_rgba(59,130,246,0.2),0_20px_50px_rgba(0,0,0,0.5)]">
+              <Image
+                src="/cv.jpeg"
+                alt="Portrait of Magali Cerisola"
+                fill
+                className="object-cover"
+                sizes="200px"
+                priority
+              />
             </div>
           </div>
+
         </div>
       </section>
 
       {/* Services Section */}
       <section id="services" className="max-w-6xl mx-auto scroll-mt-28 px-4 py-20 text-slate-100">
-        <Reveal as="h2" delayMs={0} className="text-center text-2xl font-semibold mb-4 text-slate-100">
+        <Reveal as="h2" delayMs={0} className="text-center text-2xl font-light mb-4 text-slate-100">
           Services
         </Reveal>
         <Reveal
@@ -236,10 +177,10 @@ export default function Home() {
               key={card.title}
               as="article"
               delayMs={90 + i * 38}
-              className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/40 p-6 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-teal-400/20 motion-safe:hover:bg-slate-950/55"
+              className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/40 p-6 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-blue-400/20 motion-safe:hover:bg-slate-950/55"
             >
               <div className="service-card-bob" style={{ animationDelay: `${i * 0.42}s` }}>
-                <h3 className="text-lg font-semibold text-teal-200 transition duration-150 group-hover:text-teal-100">
+                <h3 className="text-lg font-medium text-blue-200 transition duration-150 group-hover:text-blue-100">
                   {card.title}
                 </h3>
                 <p className="mt-2 text-sm leading-7 text-slate-200/75">{card.body}</p>
@@ -251,7 +192,7 @@ export default function Home() {
 
       {/* Projects Section */}
       <section id="projects" className="max-w-5xl mx-auto scroll-mt-28 px-4 py-20 text-slate-100">
-        <Reveal as="h2" delayMs={0} className="text-2xl font-semibold mb-10 text-slate-100">
+        <Reveal as="h2" delayMs={0} className="text-2xl font-light mb-10 text-slate-100">
           Projects
         </Reveal>
         <div className="grid gap-8 md:grid-cols-2 md:items-stretch">
@@ -301,7 +242,7 @@ export default function Home() {
               <span className="font-mono text-[10px] leading-none text-slate-500">NDA</span>
             </div>
 
-            <h3 className="relative mt-5 text-lg font-semibold text-slate-100">Banking Platform UI</h3>
+            <h3 className="relative mt-5 text-lg font-medium text-slate-100">Banking Platform UI</h3>
             <p className="relative mt-1 text-xs text-amber-200/55">Client work - restricted disclosure</p>
 
             <div className="relative mt-5 space-y-2.5" aria-hidden>
@@ -325,7 +266,7 @@ Collaborated closely with product, design, and backend teams in an Agile environ
           <Reveal
             as="article"
             delayMs={300}
-            className="card-tile group relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] outline-none focus-within:ring-2 focus-within:ring-teal-400/35 focus-within:ring-offset-2 focus-within:ring-offset-[#0d1a3a] motion-safe:hover:border-teal-400/25"
+            className="card-tile group relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] outline-none focus-within:ring-2 focus-within:ring-blue-400/35 focus-within:ring-offset-2 focus-within:ring-offset-slate-950 motion-safe:hover:border-blue-400/25"
           >
             <div className="relative min-h-[240px] w-full min-h-0 flex-1">
               <Image
@@ -342,10 +283,10 @@ Collaborated closely with product, design, and backend teams in an Agile environ
                 className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-transparent"
               />
 
-              {/* Hover / focus: teal-cyan veil so the image stays slightly visible behind */}
+              {/* Hover / focus: indigo-blue veil so the image stays slightly visible behind */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-teal-500/25 via-slate-950/55 to-cyan-500/20 opacity-0 backdrop-blur-[0px] transition-all duration-200 group-hover:opacity-100 group-hover:backdrop-blur-[6px] group-focus-within:opacity-100 group-focus-within:backdrop-blur-[6px]"
+                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/25 via-slate-950/55 to-blue-500/20 opacity-0 backdrop-blur-[0px] transition-all duration-200 group-hover:opacity-100 group-hover:backdrop-blur-[6px] group-focus-within:opacity-100 group-focus-within:backdrop-blur-[6px]"
               />
 
               <div className="pointer-events-none absolute inset-0 flex flex-col justify-end p-6">
@@ -354,10 +295,10 @@ Collaborated closely with product, design, and backend teams in an Agile environ
                     href="https://atucasa.net/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block rounded-md outline-none transition hover:opacity-95 focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                    className="inline-block rounded-md outline-none transition hover:opacity-95 focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                     aria-label="Import Services Web Application - visit Atucasa (opens in a new tab)"
                   >
-                    <h3 className="text-lg font-semibold text-teal-200 drop-shadow-md underline-offset-4 transition group-hover:underline">
+                    <h3 className="text-lg font-medium text-blue-200 drop-shadow-md underline-offset-4 transition group-hover:underline">
                       Import Services Web Application
                     </h3>
                   </Link>
@@ -378,7 +319,7 @@ Collaborated closely with product, design, and backend teams in an Agile environ
       {/* About Section */}
       <section id="about" className="max-w-3xl mx-auto scroll-mt-28 px-4 py-16 text-slate-100">
         <div className="card-tile relative rounded-2xl border border-white/10 bg-slate-950/40 p-8 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-white/18 md:p-10">
-          <Reveal as="h2" delayMs={0} className="text-2xl font-semibold mb-4 text-slate-100">
+          <Reveal as="h2" delayMs={0} className="text-2xl font-light mb-4 text-slate-100">
             About Me
           </Reveal>
           <Reveal as="p" delayMs={150} className="text-slate-200/75 text-lg">
@@ -397,7 +338,7 @@ Let’s work together to bring your project to life.
 
       {/* Reviews Section */}
       <section id="reviews" className="max-w-6xl mx-auto scroll-mt-28 px-4 py-20 text-slate-100">
-        <Reveal as="h2" delayMs={0} className="text-center text-2xl font-semibold mb-4 text-slate-100">
+        <Reveal as="h2" delayMs={0} className="text-center text-2xl font-light mb-4 text-slate-100">
           Reviews
         </Reveal>
         <Reveal
@@ -412,19 +353,19 @@ Let’s work together to bring your project to life.
           <Reveal
             as="article"
             delayMs={180}
-            className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/45 px-8 pb-8 pt-10 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-teal-400/30"
+            className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/45 px-8 pb-8 pt-10 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-blue-400/30"
           >
               <div className="relative mx-auto mb-6 flex h-24 w-24 shrink-0 items-center justify-center">
                 <div
                   aria-hidden
-                  className="absolute -inset-2 rounded-full bg-gradient-to-br from-teal-400/50 via-cyan-400/20 to-sky-500/30 opacity-50 blur-lg transition-opacity duration-200 group-hover:opacity-90"
+                  className="absolute -inset-2 rounded-full bg-gradient-to-br from-blue-400/50 via-blue-400/20 to-blue-600/30 opacity-50 blur-lg transition-opacity duration-200 group-hover:opacity-90"
                 />
                 <Image
                   src="/mar.jpeg"
                   alt="Martina Vega, client review"
                   width={96}
                   height={96}
-                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#0d1a3a] transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
+                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-slate-950 transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-blue-400/40"
                 />
               </div>
               <p className="text-sm leading-relaxed text-slate-200/85">
@@ -435,7 +376,7 @@ Let’s work together to bring your project to life.
                   href="https://linktr.ee/m.dagos?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAdGRleARLpbZleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafJ-l41L_EfCsd4nxU_CdeBlSX4AbWTgru4REtjrwRtxt_rKGYQQ-ZeYXHPsg_aem_4pDjRnYeDZmv3x2OZyZhQQ"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1a3a]"
+                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-blue-200/95 outline-none transition hover:text-blue-100 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                   aria-label="Martina Vega on Linktree (opens in a new tab)"
                 >
                   <span>Martina Vega</span>
@@ -447,7 +388,7 @@ Let’s work together to bring your project to life.
                     strokeWidth="1.75"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="h-4 w-4 shrink-0 text-teal-300/90"
+                    className="h-4 w-4 shrink-0 text-blue-300/90"
                     aria-hidden
                   >
                     <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
@@ -461,19 +402,19 @@ Let’s work together to bring your project to life.
           <Reveal
             as="article"
             delayMs={260}
-            className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/45 px-8 pb-8 pt-10 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-teal-400/30"
+            className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/45 px-8 pb-8 pt-10 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-blue-400/30"
           >
               <div className="relative mx-auto mb-6 flex h-24 w-24 shrink-0 items-center justify-center">
                 <div
                   aria-hidden
-                  className="absolute -inset-2 rounded-full bg-gradient-to-br from-teal-400/50 via-cyan-400/20 to-sky-500/30 opacity-50 blur-lg transition-opacity duration-200 group-hover:opacity-90"
+                  className="absolute -inset-2 rounded-full bg-gradient-to-br from-blue-400/50 via-blue-400/20 to-blue-600/30 opacity-50 blur-lg transition-opacity duration-200 group-hover:opacity-90"
                 />
                 <Image
                   src="/fran.jpeg"
                   alt="Francisco Piaggio, client review"
                   width={96}
                   height={96}
-                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#0d1a3a] transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
+                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-slate-950 transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-blue-400/40"
                 />
               </div>
               <p className="text-sm leading-relaxed text-slate-200/85">
@@ -484,7 +425,7 @@ Let’s work together to bring your project to life.
                   href="https://www.linkedin.com/in/francisco-piaggio-224730b9/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1a3a]"
+                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-blue-200/95 outline-none transition hover:text-blue-100 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                   aria-label="Francisco Piaggio on LinkedIn (opens in a new tab)"
                 >
                   <span>Francisco Piaggio</span>
@@ -492,7 +433,7 @@ Let’s work together to bring your project to life.
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="h-4 w-4 shrink-0 text-teal-300/90"
+                    className="h-4 w-4 shrink-0 text-blue-300/90"
                     aria-hidden
                   >
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -505,19 +446,19 @@ Let’s work together to bring your project to life.
           <Reveal
             as="article"
             delayMs={340}
-            className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/45 px-8 pb-8 pt-10 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-teal-400/30"
+            className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/45 px-8 pb-8 pt-10 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-blue-400/30"
           >
               <div className="relative mx-auto mb-6 flex h-24 w-24 shrink-0 items-center justify-center">
                 <div
                   aria-hidden
-                  className="absolute -inset-2 rounded-full bg-gradient-to-br from-teal-400/50 via-cyan-400/20 to-sky-500/30 opacity-50 blur-lg transition-opacity duration-200 group-hover:opacity-90"
+                  className="absolute -inset-2 rounded-full bg-gradient-to-br from-blue-400/50 via-blue-400/20 to-blue-600/30 opacity-50 blur-lg transition-opacity duration-200 group-hover:opacity-90"
                 />
                 <Image
                   src="/jp.jpeg"
                   alt="Juan Pablo Saraceno, client review"
                   width={96}
                   height={96}
-                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-[#0d1a3a] transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-teal-400/40"
+                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-slate-950 transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-blue-400/40"
                 />
               </div>
               <p className="text-sm leading-relaxed text-slate-200/85">
@@ -528,7 +469,7 @@ Let’s work together to bring your project to life.
                   href="https://www.linkedin.com/in/juan-pablo-saraceno-49656b/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-teal-200/95 outline-none transition hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1a3a]"
+                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-blue-200/95 outline-none transition hover:text-blue-100 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                   aria-label="Juan Pablo Saraceno on LinkedIn (opens in a new tab)"
                 >
                   <span>Juan Pablo Saraceno</span>
@@ -536,7 +477,7 @@ Let’s work together to bring your project to life.
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="h-4 w-4 shrink-0 text-teal-300/90"
+                    className="h-4 w-4 shrink-0 text-blue-300/90"
                     aria-hidden
                   >
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -550,7 +491,7 @@ Let’s work together to bring your project to life.
 
       {/* Contact Section */}
       <section id="contact" className="max-w-5xl mx-auto scroll-mt-28 px-4 py-20 text-slate-100">
-        <Reveal as="h2" delayMs={0} className="text-2xl font-semibold mb-10 text-slate-100">
+        <Reveal as="h2" delayMs={0} className="text-2xl font-light mb-10 text-slate-100">
           Contact
         </Reveal>
 
@@ -559,15 +500,15 @@ Let’s work together to bring your project to life.
             {/* Left gradient panel */}
             <div className="relative p-10 md:p-12">
               <div aria-hidden className="absolute inset-0">
-                <div className="absolute inset-0 bg-[radial-gradient(1200px_circle_at_20%_20%,rgba(45,212,191,0.55),transparent_55%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(1200px_circle_at_20%_20%,rgba(59,130,246,0.55),transparent_55%)]" />
                 <div className="absolute inset-0 bg-[radial-gradient(900px_circle_at_70%_80%,rgba(56,189,248,0.35),transparent_55%)]" />
                 <div className="absolute inset-0 bg-[radial-gradient(700px_circle_at_60%_35%,rgba(99,102,241,0.22),transparent_55%)]" />
                 <div className="absolute inset-0 bg-slate-950/35" />
               </div>
 
               <Reveal as="div" delayMs={150} className="relative">
-                <p className="text-teal-200/90 text-sm font-medium tracking-wide">Get in touch</p>
-                <h3 className="mt-3 text-4xl font-semibold text-white">Let&apos;s build something</h3>
+                <p className="text-blue-200/90 text-sm font-medium tracking-wide">Get in touch</p>
+                <h3 className="mt-3 text-4xl font-light text-white">Let&apos;s build something</h3>
                 <p className="mt-3 max-w-sm text-slate-200/80">
                   Tell me about your product, timeline, and goals. I usually reply within 24-48 hours.
                 </p>
@@ -576,7 +517,7 @@ Let’s work together to bring your project to life.
                   <span className="text-slate-200/60">Email</span>
                   <div className="mt-1">
                     <a
-                      className="text-teal-200 underline underline-offset-4 outline-none transition rounded-sm hover:text-teal-100 focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d1a3a]"
+                      className="text-blue-200 underline underline-offset-4 outline-none transition rounded-sm hover:text-blue-100 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                       href="mailto:magui.cerisola@gmail.com"
                     >
                       magui.cerisola@gmail.com

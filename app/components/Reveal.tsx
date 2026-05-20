@@ -1,76 +1,86 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ElementType,
+  type ReactNode,
+} from "react";
+
+type Direction = "up" | "down" | "left" | "right" | "fade";
 
 type RevealProps = {
-  children: React.ReactNode;
-  /**
-   * Delay to sync the order (in ms).
-   * Applied only when the element enters the viewport.
-   */
+  as?: ElementType;
   delayMs?: number;
+  direction?: Direction;
   className?: string;
-  as?: keyof React.JSX.IntrinsicElements;
+  style?: CSSProperties;
+  children: ReactNode;
+};
+
+const initialTransform: Record<Direction, string> = {
+  up: "translate3d(0, 28px, 0)",
+  down: "translate3d(0, -28px, 0)",
+  left: "translate3d(-28px, 0, 0)",
+  right: "translate3d(28px, 0, 0)",
+  fade: "translate3d(0, 0, 0)",
 };
 
 export default function Reveal({
-  children,
+  as: Tag = "div",
   delayMs = 0,
+  direction = "up",
   className = "",
-  as = "div",
+  style,
+  children,
 }: RevealProps) {
-  const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLElement | null>(null);
+  const [shown, setShown] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-      if (reduceMotion.matches) {
-        setVisible(true);
-        return;
-      }
+    const node = ref.current;
+    if (!node) return;
+
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setShown(true);
+      return;
     }
 
-    if (!ref.current) return;
-
-    const el = ref.current;
     const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (!entry) return;
+      ([entry]) => {
         if (entry.isIntersecting) {
-          setVisible(true);
+          setShown(true);
           observer.disconnect();
         }
       },
-      // Trigger on the "first scroll" (before fully visible).
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
     );
 
-    observer.observe(el);
+    observer.observe(node);
     return () => observer.disconnect();
   }, []);
 
-  const Comp = as as unknown as React.ElementType;
+  const Element = Tag as ElementType;
 
   return (
-    <Comp
-      ref={ref as unknown as React.Ref<HTMLElement>}
-      className={
-        visible
-          ? `fadeDownPanel ${className}`.trim()
-          : `opacity-0 -translate-y-6 ${className}`.trim()
-      }
-      style={
-        visible
-          ? ({
-              animationDelay: `${delayMs / 1000}s`,
-            } as React.CSSProperties)
-          : undefined
-      }
+    <Element
+      ref={ref as React.Ref<HTMLElement>}
+      className={className}
+      style={{
+        opacity: shown ? 1 : 0,
+        transform: shown ? "translate3d(0,0,0)" : initialTransform[direction],
+        transition: "opacity 700ms ease-out, transform 700ms ease-out",
+        transitionDelay: `${delayMs}ms`,
+        willChange: shown ? "auto" : "opacity, transform",
+        ...style,
+      }}
     >
       {children}
-    </Comp>
+    </Element>
   );
 }
-

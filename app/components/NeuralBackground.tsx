@@ -1,163 +1,226 @@
 "use client";
-import { useEffect, useRef } from "react";
 
-interface NNode {
-  x: number; y: number; z: number;
-  vx: number; vy: number; vz: number;
-}
-interface Pulse { from: number; to: number; t: number; speed: number; }
+/**
+ * Animated neural network background.
+ * - 4 layers of nodes (input → 2 hidden → output)
+ * - Lines connecting every node between adjacent layers
+ * - A subset of edges has flowing dashes (data flow effect)
+ * - Each node pulses with its own delay
+ * - A hub node in each layer has an extra "thought" aura
+ */
 
-const N        = 70;
-const CONNECT  = 310;
-const ROT_Y    = 0.00085;
-const INTERVAL = 1000 / 30; // cap a 30 fps
+const VIEW_W = 1600;
+const VIEW_H = 900;
+
+const LAYER_X = [200, 600, 1000, 1400];
+const LAYER_COUNTS = [4, 7, 7, 4];
+
+type Node = {
+  id: string;
+  layer: number;
+  index: number;
+  x: number;
+  y: number;
+  r: number;
+  delay: number;
+  hub: boolean;
+};
+
+const NODES: Node[] = LAYER_X.flatMap((x, layerIdx) => {
+  const count = LAYER_COUNTS[layerIdx];
+  return Array.from({ length: count }, (_, i) => {
+    const yBase = 110 + ((i + 0.5) / count) * (VIEW_H - 220);
+    const yOffset = (((layerIdx * 17 + i * 23) % 11) - 5) * 5;
+    return {
+      id: `n-${layerIdx}-${i}`,
+      layer: layerIdx,
+      index: i,
+      x,
+      y: yBase + yOffset,
+      r: 6 + ((layerIdx + i) % 3),
+      delay: -(((layerIdx * 3 + i) * 0.27) % 4),
+      hub: i === Math.floor(count / 2),
+    };
+  });
+});
+
+type Edge = {
+  id: string;
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  delay: number;
+  duration: number;
+  bright: boolean;
+};
+
+const EDGES: Edge[] = (() => {
+  const list: Edge[] = [];
+  for (let l = 0; l < LAYER_X.length - 1; l++) {
+    const from = NODES.filter((n) => n.layer === l);
+    const to = NODES.filter((n) => n.layer === l + 1);
+    from.forEach((f, fi) => {
+      to.forEach((t, ti) => {
+        const idx = fi * 100 + ti + l * 7;
+        list.push({
+          id: `e-${l}-${fi}-${ti}`,
+          x1: f.x,
+          y1: f.y,
+          x2: t.x,
+          y2: t.y,
+          delay: -((idx * 0.4) % 6),
+          duration: 3 + ((idx + l) % 3),
+          bright: idx % 4 === 0,
+        });
+      });
+    });
+  }
+  return list;
+})();
+
+const STARS = Array.from({ length: 28 }, (_, i) => ({
+  left: (i * 53 + 7) % 100,
+  top: (i * 31 + 3) % 100,
+  size: 1 + ((i * 7) % 2),
+  delay: -(((i * 0.4) % 5)).toFixed(2),
+  duration: 2 + (i % 4),
+}));
 
 export default function NeuralBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+    >
+      {/* Base gradient (very dark, electric blue) */}
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#01030a_0%,#020617_45%,#040a1c_100%)]" />
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      {/* Soft glow blobs to add depth */}
+      <div className="absolute -top-40 left-[-12%] h-[680px] w-[680px] rounded-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.20),transparent_60%)] blur-3xl" />
+      <div className="absolute bottom-[-10%] right-[-12%] h-[600px] w-[600px] rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.18),transparent_60%)] blur-3xl" />
+      <div className="absolute top-[35%] left-[40%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.14),transparent_60%)] blur-3xl" />
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+      {/* Subtle grid for tech feel */}
+      <div className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(rgba(186,230,253,0.7)_1px,transparent_1px),linear-gradient(90deg,rgba(186,230,253,0.7)_1px,transparent_1px)] [background-size:60px_60px]" />
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let cssW = window.innerWidth;
-    let cssH = window.innerHeight;
-    let SPREAD   = cssW * 1.4;
-    let SPREAD_Y = cssH * 1.4;
-    let FOV      = Math.max(cssW, cssH) * 0.55;
+      {/* Faint stars for texture */}
+      {STARS.map((s, i) => (
+        <span
+          key={`star-${i}`}
+          data-fx-star
+          className="absolute rounded-full bg-sky-100"
+          style={{
+            left: `${s.left}%`,
+            top: `${s.top}%`,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
+            opacity: 0,
+            animation: `twinkle ${s.duration}s ease-in-out infinite`,
+            animationDelay: `${s.delay}s`,
+            boxShadow: "0 0 6px rgba(186,230,253,0.85)",
+          }}
+        />
+      ))}
 
-    const resize = () => {
-      cssW     = window.innerWidth;
-      cssH     = window.innerHeight;
-      SPREAD   = cssW * 1.4;
-      SPREAD_Y = cssH * 1.4;
-      FOV      = Math.max(cssW, cssH) * 0.55;
-      canvas.width  = cssW * dpr;
-      canvas.height = cssH * dpr;
-      ctx.scale(dpr, dpr);
-    };
-    resize();
+      {/* Neural network */}
+      <svg
+        className="absolute inset-0 h-full w-full"
+        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+        preserveAspectRatio="xMidYMid slice"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#e0f2fe" stopOpacity="1" />
+            <stop offset="35%" stopColor="#60a5fa" stopOpacity="0.85" />
+            <stop offset="80%" stopColor="#1d4ed8" stopOpacity="0.25" />
+            <stop offset="100%" stopColor="#1e3a8a" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id="hubAura" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="#1e3a8a" stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id="brightEdge" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#3b82f6" stopOpacity="0" />
+            <stop offset="50%" stopColor="#93c5fd" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+          </linearGradient>
+        </defs>
 
-    const nodes: NNode[] = Array.from({ length: N }, () => ({
-      x:  (Math.random() - 0.5) * SPREAD,
-      y:  (Math.random() - 0.5) * SPREAD_Y,
-      z:  (Math.random() - 0.5) * SPREAD,
-      vx: (Math.random() - 0.5) * 1.1,
-      vy: (Math.random() - 0.5) * 0.9,
-      vz: (Math.random() - 0.5) * 1.1,
-    }));
+        {/* Static dim edges */}
+        <g>
+          {EDGES.map((e) => (
+            <line
+              key={e.id}
+              x1={e.x1}
+              y1={e.y1}
+              x2={e.x2}
+              y2={e.y2}
+              stroke="rgba(96,165,250,0.18)"
+              strokeWidth={1}
+            />
+          ))}
+        </g>
 
-    const pulses: Pulse[] = [];
-    let lastPulse = 0;
-    let lastFrame = 0;
-    let angleY    = 0;
-    let raf: number;
+        {/* Bright edges with flowing dashes (data flow) */}
+        <g>
+          {EDGES.filter((e) => e.bright).map((e) => (
+            <line
+              key={`flow-${e.id}`}
+              x1={e.x1}
+              y1={e.y1}
+              x2={e.x2}
+              y2={e.y2}
+              stroke="rgba(147,197,253,0.85)"
+              strokeWidth={1.6}
+              strokeDasharray="6 14"
+              strokeLinecap="round"
+              className="fxEdgeFlow"
+              style={{
+                animationDuration: `${e.duration}s`,
+                animationDelay: `${e.delay}s`,
+              }}
+            />
+          ))}
+        </g>
 
-    const CONNECT_SQ = CONNECT * CONNECT;
+        {/* Hub node auras (extra "thinking" pulse) */}
+        <g>
+          {NODES.filter((n) => n.hub).map((n) => (
+            <circle
+              key={`aura-${n.id}`}
+              cx={n.x}
+              cy={n.y}
+              r={n.r * 4}
+              fill="url(#hubAura)"
+              className="fxNodeAura"
+              style={{ animationDelay: `${n.delay}s` }}
+            />
+          ))}
+        </g>
 
-    const draw = (ts: number) => {
-      raf = requestAnimationFrame(draw);
-      if (document.hidden || ts - lastFrame < INTERVAL) return;
-      lastFrame = ts;
+        {/* Nodes (halo + bright core) */}
+        <g>
+          {NODES.map((n) => (
+            <g key={n.id}>
+              <circle
+                cx={n.x}
+                cy={n.y}
+                r={n.r * 2.4}
+                fill="url(#nodeGlow)"
+                className="fxNode"
+                style={{ animationDelay: `${n.delay}s` }}
+              />
+              <circle cx={n.x} cy={n.y} r={n.r * 0.55} fill="#e0f2fe" />
+            </g>
+          ))}
+        </g>
+      </svg>
 
-      ctx.clearRect(0, 0, cssW, cssH);
-
-      angleY += ROT_Y;
-      const aX   = Math.sin(angleY * 0.45) * 0.28;
-      const cosY = Math.cos(angleY), sinY = Math.sin(angleY);
-      const cosX = Math.cos(aX),    sinX = Math.sin(aX);
-
-      // drift nodes
-      for (const n of nodes) {
-        n.x += n.vx; n.y += n.vy; n.z += n.vz;
-        if (Math.abs(n.x) > SPREAD   / 2) n.vx *= -1;
-        if (Math.abs(n.y) > SPREAD_Y / 2) n.vy *= -1;
-        if (Math.abs(n.z) > SPREAD   / 2) n.vz *= -1;
-      }
-
-      // rotate → project
-      const proj = nodes.map(n => {
-        const rx  = n.x * cosY - n.z * sinY;
-        const rz  = n.x * sinY + n.z * cosY;
-        const ry  = n.y * cosX - rz  * sinX;
-        const rz2 = n.y * sinX + rz  * cosX;
-        const s   = FOV / (FOV + rz2 + SPREAD * 0.5);
-        return { sx: rx * s + cssW / 2, sy: ry * s + cssH / 2, scale: s, rz: rz2 };
-      });
-
-      // edges — squared distance para evitar sqrt innecesario
-      const edges: [number, number, number][] = [];
-      for (let i = 0; i < N; i++) {
-        for (let j = i + 1; j < N; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dz = nodes[i].z - nodes[j].z;
-          const dSq = dx*dx + dy*dy + dz*dz;
-          if (dSq < CONNECT_SQ) edges.push([i, j, Math.sqrt(dSq)]);
-        }
-      }
-
-      // spawn pulse
-      if (ts - lastPulse > 280 && edges.length) {
-        const e = edges[Math.floor(Math.random() * edges.length)];
-        pulses.push({ from: e[0], to: e[1], t: 0, speed: 0.018 + Math.random() * 0.014 });
-        lastPulse = ts;
-      }
-      for (let i = pulses.length - 1; i >= 0; i--) {
-        pulses[i].t += pulses[i].speed;
-        if (pulses[i].t >= 1) pulses.splice(i, 1);
-      }
-
-      // draw edges
-      for (const [i, j, d] of edges) {
-        const pi = proj[i], pj = proj[j];
-        const fade = (1 - d / CONNECT) * ((pi.scale + pj.scale) / 2);
-        ctx.beginPath();
-        ctx.moveTo(pi.sx, pi.sy);
-        ctx.lineTo(pj.sx, pj.sy);
-        ctx.strokeStyle = `rgba(45,212,191,${(fade * 0.36).toFixed(2)})`;
-        ctx.lineWidth   = 0.65 * (pi.scale + pj.scale) / 2;
-        ctx.stroke();
-      }
-
-      // draw pulses — solo unos pocos, el gradient vale la pena
-      for (const p of pulses) {
-        const pi = proj[p.from], pj = proj[p.to];
-        const px = pi.sx + (pj.sx - pi.sx) * p.t;
-        const py = pi.sy + (pj.sy - pi.sy) * p.t;
-        const sc = (pi.scale + pj.scale) / 2;
-        const g  = ctx.createRadialGradient(px, py, 0, px, py, 7 * sc);
-        g.addColorStop(0,    "rgba(167,243,208,0.95)");
-        g.addColorStop(0.35, "rgba(45,212,191,0.55)");
-        g.addColorStop(1,    "rgba(45,212,191,0)");
-        ctx.beginPath();
-        ctx.arc(px, py, 7 * sc, 0, Math.PI * 2);
-        ctx.fillStyle = g;
-        ctx.fill();
-      }
-
-      // draw nodes — círculo sólido, sin gradient por nodo
-      for (const { sx, sy, scale } of proj) {
-        const r = Math.max(0.8, 2.2 * scale);
-        ctx.beginPath();
-        ctx.arc(sx, sy, r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(45,212,191,${Math.min(0.9, scale * 0.7 + 0.15).toFixed(2)})`;
-        ctx.fill();
-      }
-    };
-
-    raf = requestAnimationFrame(draw);
-    window.addEventListener("resize", resize);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} aria-hidden className="absolute inset-0 h-full w-full" />;
+      {/* Vignettes */}
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-slate-950/85 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-950/70 to-transparent" />
+    </div>
+  );
 }
