@@ -20,6 +20,9 @@ export default function ContactForm() {
     const email = String(fd.get("email") ?? "").trim();
     const message = String(fd.get("message") ?? "").trim();
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10_000);
+
     try {
       const res = await fetch(FORMSUBMIT_ENDPOINT, {
         method: "POST",
@@ -34,15 +37,18 @@ export default function ContactForm() {
           message,
           _replyto: email,
         }),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeout);
+
       const data = (await res.json().catch(() => ({}))) as {
-        success?: string;
+        success?: string | boolean;
         message?: string;
         error?: string;
       };
 
-      if (!res.ok) {
+      if (!res.ok || data.success === "false" || data.success === false) {
         setErrorMessage(
           data.message || data.error || "Could not send. Try again later."
         );
@@ -52,8 +58,13 @@ export default function ContactForm() {
 
       setStatus("success");
       form.reset();
-    } catch {
-      setErrorMessage("Network error. Check your connection and try again.");
+    } catch (err) {
+      clearTimeout(timeout);
+      if (err instanceof Error && err.name === "AbortError") {
+        setErrorMessage("Request timed out. Try again later.");
+      } else {
+        setErrorMessage("Network error. Check your connection and try again.");
+      }
       setStatus("error");
     }
   }
