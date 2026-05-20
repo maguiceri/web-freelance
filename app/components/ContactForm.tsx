@@ -2,8 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 
-const FORMSUBMIT_ENDPOINT =
-  "https://formsubmit.co/ajax/magui.cerisola@gmail.com";
+const CONTACT_ENDPOINT = "/api/contact";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -24,7 +23,7 @@ export default function ContactForm() {
     const timeout = setTimeout(() => controller.abort(), 10_000);
 
     try {
-      const res = await fetch(FORMSUBMIT_ENDPOINT, {
+      const res = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,15 +42,12 @@ export default function ContactForm() {
       clearTimeout(timeout);
 
       const data = (await res.json().catch(() => ({}))) as {
-        success?: string | boolean;
-        message?: string;
+        success?: boolean;
         error?: string;
       };
 
-      if (!res.ok || data.success === "false" || data.success === false) {
-        setErrorMessage(
-          data.message || data.error || "Could not send. Try again later."
-        );
+      if (!res.ok || !data.success) {
+        setErrorMessage(data.error || "Could not send. Try again later.");
         setStatus("error");
         return;
       }
