@@ -191,7 +191,7 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="max-w-5xl mx-auto scroll-mt-28 px-4 py-20 text-slate-100">
+      {false && <section id="projects" className="max-w-5xl mx-auto scroll-mt-28 px-4 py-20 text-slate-100">
         <Reveal as="h2" delayMs={0} className="text-2xl font-light mb-10 text-slate-100">
           Projects
         </Reveal>
@@ -314,8 +314,7 @@ Collaborated closely with product, design, and backend teams in an Agile environ
 
 
         </div>
-      </section>
-
+      </section>}
       {/* About Section */}
       <section id="about" className="max-w-3xl mx-auto scroll-mt-28 px-4 py-16 text-slate-100">
         <div className="card-tile relative rounded-2xl border border-white/10 bg-slate-950/40 p-8 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-white/18 md:p-10">
