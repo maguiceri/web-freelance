@@ -18,6 +18,7 @@ export default function ContactForm() {
     const name = String(fd.get("name") ?? "").trim();
     const email = String(fd.get("email") ?? "").trim();
     const message = String(fd.get("message") ?? "").trim();
+    const website = String(fd.get("website") ?? "");
 
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10_000);
@@ -29,13 +30,7 @@ export default function ContactForm() {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({
-          _subject: `Portfolio contact from ${name || "visitor"}`,
-          name,
-          email,
-          message,
-          _replyto: email,
-        }),
+        body: JSON.stringify({ name, email, message, website }),
         signal: controller.signal,
       });
 
@@ -71,6 +66,12 @@ export default function ContactForm() {
       onSubmit={handleSubmit}
       aria-busy={status === "sending"}
     >
+      {/* honeypot: hidden from real users, bots fill it and get silently rejected */}
+      <label aria-hidden="true" className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden opacity-0">
+        <span>Website</span>
+        <input name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </label>
+
       <label className="block">
         <span className="text-xs text-slate-200/70">Name</span>
         <input

@@ -118,7 +118,7 @@ export default function Home() {
             <span className="hero-glass-panel-corner hero-glass-panel-corner--br" aria-hidden />
             <h1 className="relative text-balance font-light tracking-tight">
               <span className="hero-title-gradient mt-3 block text-[2.1rem] font-light leading-[1.06] sm:text-5xl lg:text-[2.75rem] lg:leading-[1.07]">
-                Modern web experiences,automation & AI-powered interfaces.
+                Modern web experiences, automation & AI-powered interfaces.
               </span>
               <span className="mx-auto mt-5 block max-w-xl text-base leading-relaxed text-slate-300/92 sm:text-lg lg:mx-0">
                 5+ years building scalable frontend applications,
