@@ -65,6 +65,11 @@ const jsonLd = {
         "Frontend Development",
         "Web Automation",
       ],
+      sameAs: [
+        "https://www.linkedin.com/in/magali-cerisola-1a5111167/",
+        "https://github.com/maguiceri",
+        "https://www.instagram.com/magui.dev",
+      ],
     },
     {
       "@type": "ProfessionalService",
