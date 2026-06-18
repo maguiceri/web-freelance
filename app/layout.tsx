@@ -118,15 +118,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-slate-100`}
+        suppressHydrationWarning
+      >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-slate-100`}
-      >
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
