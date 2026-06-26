@@ -15,11 +15,11 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       // React dev tools need 'unsafe-eval' for stack trace reconstruction; never used in prod
-      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+      `script-src 'self' 'unsafe-inline' https://analytics.tiktok.com${isDev ? " 'unsafe-eval'" : ""}`,
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "img-src 'self' data: blob:",
-      "connect-src 'self'",
+      "img-src 'self' data: blob: https://*.tiktok.com",
+      "connect-src 'self' https://analytics.tiktok.com",
       "frame-ancestors 'none'",
     ].join("; "),
   },
