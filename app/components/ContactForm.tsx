@@ -49,7 +49,7 @@ export default function ContactForm() {
 
       setStatus("success");
       form.reset();
-      (window as any).ttq?.track("Lead");
+      (window as any).ttq?.track("SubmitForm");
     } catch (err) {
       clearTimeout(timeout);
       if (err instanceof Error && err.name === "AbortError") {
