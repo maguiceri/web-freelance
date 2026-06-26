@@ -49,6 +49,7 @@ export default function ContactForm() {
 
       setStatus("success");
       form.reset();
+      (window as any).ttq?.track("Lead");
     } catch (err) {
       clearTimeout(timeout);
       if (err instanceof Error && err.name === "AbortError") {
