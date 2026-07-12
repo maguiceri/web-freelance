@@ -18,11 +18,11 @@ const bricolage = Bricolage_Grotesque({
 const BASE_URL = "https://maguiceri.dev";
 
 const DESCRIPTION =
-  "Diseñadora web freelance. Hago webs para negocios que convierten visitas en clientes. Trabajo remoto con empresas de toda Latinoamérica. Entrega en 4 días hábiles.";
+  "Hago webs para negocios que convierten visitas en clientes. Trabajo remoto con empresas de toda Latinoamérica. Entrega en 4 días hábiles.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Diseñadora Web Freelance | Magali Cerisola",
+  title: "Diseño Web para Negocios | Magali Cerisola",
   description: DESCRIPTION,
   alternates: {
     canonical: "/",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     url: BASE_URL,
     siteName: "Magali Cerisola",
-    title: "Diseñadora Web Freelance | Magali Cerisola",
+    title: "Diseño Web para Negocios | Magali Cerisola",
     description: DESCRIPTION,
     images: [
       {
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Diseñadora Web Freelance | Magali Cerisola",
+    title: "Diseño Web para Negocios | Magali Cerisola",
     description: DESCRIPTION,
     images: ["/cv.jpeg"],
   },
