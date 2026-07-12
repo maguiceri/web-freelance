@@ -18,11 +18,11 @@ const bricolage = Bricolage_Grotesque({
 const BASE_URL = "https://maguiceri.dev";
 
 const DESCRIPTION =
-  "¿Invertís en publicidad y la gente no compra? El problema casi nunca es el anuncio: es la web. Hago webs para negocios argentinos que convierten visitas en clientes.";
+  "Diseñadora web freelance en Buenos Aires. Hago webs para negocios argentinos que convierten visitas en clientes. Entrega en 4 días hábiles, precios en pesos.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Magali Cerisola | Webs que convierten para negocios argentinos",
+  title: "Diseñadora Web Freelance Buenos Aires | Magali Cerisola",
   description: DESCRIPTION,
   alternates: {
     canonical: "/",
@@ -31,21 +31,21 @@ export const metadata: Metadata = {
     type: "website",
     url: BASE_URL,
     siteName: "Magali Cerisola",
-    title: "Magali Cerisola | Webs que convierten para negocios argentinos",
+    title: "Diseñadora Web Freelance Buenos Aires | Magali Cerisola",
     description: DESCRIPTION,
     images: [
       {
         url: "/cv.jpeg",
         width: 800,
         height: 800,
-        alt: "Magali Cerisola – Webs que convierten para negocios argentinos",
+        alt: "Magali Cerisola – Diseñadora Web Freelance Buenos Aires",
       },
     ],
     locale: "es_AR",
   },
   twitter: {
     card: "summary",
-    title: "Magali Cerisola | Webs que convierten para negocios argentinos",
+    title: "Diseñadora Web Freelance Buenos Aires | Magali Cerisola",
     description: DESCRIPTION,
     images: ["/cv.jpeg"],
   },
@@ -59,15 +59,21 @@ const jsonLd = {
       name: "Magali Cerisola",
       url: BASE_URL,
       image: `${BASE_URL}/cv.jpeg`,
-      jobTitle: "Freelance Fullstack Developer",
+      jobTitle: "Diseñadora Web Freelance",
       email: "magui.cerisola@gmail.com",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Buenos Aires",
+        addressCountry: "AR",
+      },
       knowsAbout: [
+        "Diseño Web",
+        "Desarrollo Web",
         "React",
         "Next.js",
         "TypeScript",
-        "Fullstack Development",
-        "Frontend Development",
-        "Web Automation",
+        "Diseño Web Freelance Buenos Aires",
+        "Páginas Web para Negocios",
       ],
       sameAs: [
         "https://www.linkedin.com/in/magali-cerisola-1a5111167/",
@@ -77,7 +83,7 @@ const jsonLd = {
     },
     {
       "@type": "ProfessionalService",
-      name: "Magali Cerisola – Freelance Development",
+      name: "Magali Cerisola – Diseño Web Freelance Buenos Aires",
       url: BASE_URL,
       image: `${BASE_URL}/cv.jpeg`,
       description: DESCRIPTION,
@@ -94,21 +100,21 @@ const jsonLd = {
           reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
           author: { "@type": "Person", name: "Martina Vega" },
           reviewBody:
-            "Working with Magali was a great experience. She translated my designs into a clean, pixel-perfect interface while maintaining attention to detail in spacing, typography, and responsiveness. Communication was smooth, and the final result matched the design perfectly.",
+            "Trabajar con Magali fue una experiencia excelente. Tradujo mis diseños en una interfaz limpia y pixel-perfect, con atención al detalle en espaciado, tipografía y adaptación mobile. La comunicación fue fluida y el resultado final coincidió exactamente con lo que necesitaba.",
         },
         {
           "@type": "Review",
           reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
           author: { "@type": "Person", name: "Francisco Piaggio" },
           reviewBody:
-            "Magali writes clean, maintainable code and has a strong grasp of modern fullstack practices. She builds reusable components and always pays attention to performance and detail.",
+            "Magali escribe código limpio y mantenible, y tiene un sólido dominio de las prácticas fullstack modernas. Construye componentes reutilizables y siempre presta atención al rendimiento y los detalles.",
         },
         {
           "@type": "Review",
           reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
           author: { "@type": "Person", name: "Juan Pablo Saraceno" },
           reviewBody:
-            "Magali delivered a high-quality website that met both our design and performance expectations. She was reliable, easy to work with, and always communicated clearly throughout the process. The final product feels fast, modern, and user-friendly.",
+            "Magali entregó un sitio web de alta calidad que superó nuestras expectativas de diseño y rendimiento. Fue confiable, fácil de trabajar y se comunicó con claridad en todo momento. El resultado final se siente rápido, moderno y fácil de usar.",
         },
       ],
     },
