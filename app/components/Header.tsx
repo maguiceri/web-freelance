@@ -9,7 +9,7 @@ const WA =
   encodeURIComponent("Hola Magali, vi tu web y quiero consultarte.");
 
 const navItems = [
-  { href: "#casos", label: "Trabajos" },
+  { href: "#quien-soy", label: "Quién soy" },
   { href: "#proceso", label: "Proceso" },
   { href: "#testimonios", label: "Testimonios" },
 ];

@@ -158,6 +158,11 @@ export default function Home() {
   const [timerStarted, setTimerStarted] = useState(false);
 
   useEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const id = setInterval(() => {
       if (!paused.current) setActive(p => (p + 1) % SINTOMAS.length);
     }, CAROUSEL_INTERVAL);
