@@ -22,7 +22,7 @@ const DESCRIPTION =
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Diseño Web para Negocios | Magali Cerisola",
+  title: "Páginas Web para Negocios | Magali Cerisola",
   description: DESCRIPTION,
   alternates: {
     canonical: "/",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     url: BASE_URL,
     siteName: "Magali Cerisola",
-    title: "Diseño Web para Negocios | Magali Cerisola",
+    title: "Páginas Web para Negocios | Magali Cerisola",
     description: DESCRIPTION,
     images: [
       {
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Diseño Web para Negocios | Magali Cerisola",
+    title: "Páginas Web para Negocios | Magali Cerisola",
     description: DESCRIPTION,
     images: ["/cv.jpeg"],
   },
