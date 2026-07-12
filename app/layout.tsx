@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Bricolage_Grotesque } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import WhatsAppFloat from "./components/WhatsAppFloat";
@@ -9,9 +9,10 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
+  weight: ["600", "800"],
 });
 
 const BASE_URL = "https://maguiceri.dev";
@@ -120,9 +121,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es-AR">
+    <html lang="es-AR" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-slate-100`}
+        className={`${geistSans.variable} ${bricolage.variable} antialiased bg-[#05070f] text-[#EEF2F9]`}
         suppressHydrationWarning
       >
         <script
