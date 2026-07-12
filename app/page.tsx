@@ -1,96 +1,102 @@
-// page.tsx
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import ContactForm from "./components/ContactForm";
-import FixedHeader from "./components/FixedHeader";
-import NeuralCanvas from "./components/NeuralCanvas";
-import { useLayoutEffect } from "react";
 import Reveal from "./components/Reveal";
+import { useLayoutEffect } from "react";
 
-const SERVICE_CARDS = [
-  {
-    title: "Custom Website Development",
-    body: "I build modern, high-quality websites from scratch tailored to your business needs. Clean code, scalable architecture, and a strong focus on user experience.",
-  },
-    {
-    title: "Automation Consulting",
-    body: "Tell me about your business and repetitive tasks. I’ll help you design smarter automated workflows powered by AI and modern tools.",
-  },
-  {
-    title: "Responsive & Mobile-First Design",
-    body: "Your website will look and work perfectly across all devices - mobile, tablet, and desktop - ensuring a seamless user experience everywhere.",
-  },
-  {
-    title: "Performance & UX Optimization",
-    body: "I optimize your website for speed, smooth interactions, and better user experience, improving load times and overall usability.",
-  },
-  {
-    title: "Ongoing Maintenance & Support",
-    body: "I provide continuous support, updates, and improvements to keep your website secure, up to date, and running smoothly.",
-  },
-  {
-    title: "Hosting & Deployment Setup",
-    body: "I handle deployment and hosting setup so your website is live, secure, and accessible with reliable performance.",
-  },
-  {
-    title: "Website Review & Improvements",
-    body: "I analyze your existing website and provide actionable improvements in design, performance, and usability.",
-  },
-] as const;
+// ─── WhatsApp ────────────────────────────────────────────────────────────────
+const WA =
+  "https://wa.me/5491178230346?text=" +
+  encodeURIComponent("Hola Magali, vi tu web y quiero consultarte.");
 
-function IconReact() {
+function trackWA() {
+  (window as any).ttq?.track("Contact");
+}
+
+// ─── Ícono WhatsApp ───────────────────────────────────────────────────────────
+function IconWA() {
   return (
-    <svg viewBox="0 0 24 24" className="h-[13px] w-[13px]" fill="none" aria-hidden>
-      <circle cx="12" cy="12" r="1.85" className="fill-current" />
-      <ellipse cx="12" cy="12" rx="10" ry="3.95" stroke="currentColor" strokeWidth="1.25" className="opacity-[0.92]" />
-      <ellipse cx="12" cy="12" rx="10" ry="3.95" stroke="currentColor" strokeWidth="1.25" className="opacity-[0.92]" transform="rotate(60 12 12)" />
-      <ellipse cx="12" cy="12" rx="10" ry="3.95" stroke="currentColor" strokeWidth="1.25" className="opacity-[0.92]" transform="rotate(120 12 12)" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="h-5 w-5 shrink-0"
+      aria-hidden
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
     </svg>
   );
 }
 
-function IconNext() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-[13px] w-[13px]" fill="currentColor" aria-hidden>
-      <path d="M8.25 6.75h2.2l5.85 9.9V6.75h1.95v10.5h-2.15l-5.9-9.95v9.95H8.25V6.75Z" />
-    </svg>
-  );
-}
+// ─── Datos ────────────────────────────────────────────────────────────────────
+const PROBLEMAS = [
+  "Invertís en publicidad. La gente llega, mira y se va sin comprar.",
+  "Mandás tráfico a tu Instagram. Preguntan, no concretan.",
+  "Tenés web, pero no sabés si trae clientes. No hay forma de saberlo.",
+  "La hicieron con una plantilla hace años. 'Quedó linda', no convierte.",
+  "Cuando alguien entra, no entiende en 5 segundos qué hacés ni qué tiene que hacer.",
+  "Tenés que explicar lo mismo en cada consulta porque la web no lo hace por vos.",
+];
 
-function IconTypeScript() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-[13px] w-[13px]" aria-hidden>
-      <rect x="4.75" y="4.75" width="14.5" height="14.5" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1.35" />
-      <text
-        x="12"
-        y="15.75"
-        textAnchor="middle"
-        fill="currentColor"
-        fontSize="8.25"
-        fontWeight="700"
-        fontFamily="ui-sans-serif, system-ui, sans-serif"
-      >
-        TS
-      </text>
-    </svg>
-  );
-}
+const PROCESO = [
+  {
+    num: "01",
+    tiempo: "30 min · Gratis",
+    titulo: "Diagnóstico",
+    desc: "Hablo con vos. Entiendo tu negocio, tu cliente y qué está fallando ahora.",
+  },
+  {
+    num: "02",
+    tiempo: "2 días hábiles",
+    titulo: "Propuesta clara",
+    desc: "Te mando qué voy a hacer, por qué y cuánto vale. Sin letra chica, sin sorpresas.",
+  },
+  {
+    num: "03",
+    tiempo: "3 a 4 semanas",
+    titulo: "Diseño y desarrollo",
+    desc: "Trabajo. Te muestro avances. Ajustamos juntos. Sabés siempre en qué etapa estamos.",
+  },
+  {
+    num: "04",
+    tiempo: "1 semana",
+    titulo: "Entrega",
+    desc: "La web sale. Te explico cómo funciona. Dominio, código y hosting: todo tuyo.",
+  },
+];
 
-function IconTailwind() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-[13px] w-[13px]" fill="currentColor" aria-hidden>
-      <path d="M12 6.25c-2.05 0-3.33 1.02-3.8 3.08.78-1.02 1.68-1.4 2.72-1.12.52.13.88.48 1.3.88.48.5 1.04 1.08 2.28 1.08 2.05 0 3.33-1.02 3.8-3.08-.78 1.02-1.68 1.4-2.72 1.12-.52-.13-.88-.48-1.3-.88-.48-.5-1.04-1.08-2.28-1.08zm-3.8 5.42c-.78 1.02-1.68 1.4-2.72 1.12-.52-.13-.88-.48-1.3-.88-.48-.5-1.04-1.08-2.28-1.08-2.05 0-3.33 1.02-3.8 3.08.78-1.02 1.68-1.4 2.72-1.12.52.13.88.48 1.3.88.48.5 1.04 1.08 2.28 1.08 2.05 0 3.33-1.02 3.8-3.08z" />
-    </svg>
-  );
-}
+// TODO: Reemplazar con testimonios de clientes hablando de resultados en su negocio
+const TESTIMONIOS = [
+  {
+    img: "/jp.jpeg",
+    texto:
+      "Magali entregó una web de alta calidad que cumplió con todo lo que esperábamos. Fue confiable, fácil de tratar y comunicó con claridad durante todo el proceso. El resultado final es rápido, moderno y fácil de usar.",
+    nombre: "Juan Pablo Saraceno",
+    rol: "Product Lead · Dueño",
+  },
+  {
+    img: "/mar.jpeg",
+    texto:
+      "Trabajar con Magali fue una muy buena experiencia. Tradujo nuestros diseños en una interfaz limpia y prolija, con atención al detalle en espaciado, tipografía y adaptación mobile. La comunicación fue fluida y el resultado final coincidió exactamente con lo que pedimos.",
+    nombre: "Martina Vega",
+    rol: "Diseñadora",
+  },
+  {
+    img: "/fran.jpeg",
+    texto:
+      "Tiene un dominio sólido del trabajo y siempre presta atención al rendimiento y al detalle. Lo que entrega funciona bien, se ve bien y está bien hecho.",
+    nombre: "Francisco Piaggio",
+    rol: "Colaborador de proyecto",
+  },
+];
 
-
-
+// ─── Componente principal ─────────────────────────────────────────────────────
 export default function Home() {
-  // Recarga con #sección: el navegador hace scroll al id; volvemos arriba para que arranque en el hero.
   useLayoutEffect(() => {
-    const [entry] = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+    const [entry] = performance.getEntriesByType(
+      "navigation"
+    ) as PerformanceNavigationTiming[];
     if (entry?.type === "reload" && window.location.hash) {
       window.scrollTo(0, 0);
     }
@@ -100,511 +106,372 @@ export default function Home() {
     <div
       id="main-content"
       tabIndex={-1}
-      className="min-h-screen text-slate-900 relative overflow-hidden outline-none"
+      className="min-h-screen bg-[#020617] text-slate-100 outline-none"
     >
-      <FixedHeader />
-      <NeuralCanvas />
-
-      {/* Hero: text panel + portrait side by side, centered */}
+      {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section
         id="top"
-        className="relative isolate mx-auto mt-16 flex min-h-[calc(100dvh-4rem)] max-w-5xl scroll-mt-28 flex-col items-center justify-center px-4 py-8 text-slate-100 md:mt-0 md:min-h-[calc(100dvh-4rem)] md:pb-24 md:pt-28"
+        className="relative isolate mx-auto flex min-h-[calc(100dvh-4rem)] max-w-4xl scroll-mt-28 flex-col justify-center px-6 pb-16 pt-24 md:pb-24 md:pt-32"
       >
-        <div className="flex w-full flex-col gap-5 lg:flex-row lg:items-stretch">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_55%_at_50%_-5%,rgba(59,130,246,0.11),transparent)]"
+        />
 
-          {/* Text card */}
-          <div className="hero-text-card relative flex-1 overflow-hidden rounded-[2rem] p-8 text-center lg:text-left lg:p-12">
-            <span className="hero-glass-panel-corner hero-glass-panel-corner--tl" aria-hidden />
-            <span className="hero-glass-panel-corner hero-glass-panel-corner--br" aria-hidden />
-            <h1 className="relative text-balance font-light tracking-tight">
-              <span className="hero-title-gradient mt-3 block text-[2.1rem] font-light leading-[1.06] sm:text-5xl lg:text-[2.75rem] lg:leading-[1.07]">
-                Modern web experiences, automation & AI-powered interfaces.
-              </span>
-              <span className="mx-auto mt-5 block max-w-xl text-base leading-relaxed text-slate-300/92 sm:text-lg lg:mx-0">
-                5+ years building scalable frontend applications,
-                interactive interfaces and automation solutions.
-              </span>
-            </h1>
-            <div className="relative mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4 lg:justify-start">
-              <Link
-                href="#contact"
-                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-400 to-blue-500 px-7 py-3 text-sm font-semibold text-slate-950 shadow-[0_12px_40px_-18px_rgba(59,130,246,0.55)] outline-none transition duration-150 hover:brightness-110 motion-safe:hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-blue-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-8 sm:text-[15px]"
-              >
-                Start a project
-              </Link>
-
-              <div className="flex items-center gap-2">
-                <Link
-                  href="https://www.linkedin.com/in/magali-cerisola-1a5111167/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn profile (opens in a new tab)"
-                  className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.05] p-2.5 text-slate-300 outline-none transition hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-blue-200 focus-visible:ring-2 focus-visible:ring-blue-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden>
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                </Link>
-                <Link
-                  href="https://github.com/maguiceri"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub profile (opens in a new tab)"
-                  className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.05] p-2.5 text-slate-300 outline-none transition hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-blue-200 focus-visible:ring-2 focus-visible:ring-blue-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden>
-                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                  </svg>
-                </Link>
-                <Link
-                  href="https://www.instagram.com/magui.dev"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram profile (opens in a new tab)"
-                  className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.05] p-2.5 text-slate-300 outline-none transition hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-blue-200 focus-visible:ring-2 focus-visible:ring-blue-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden>
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
-                  </svg>
-                </Link>
-                <Link
-                  href="https://wa.me/5491178230346"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="WhatsApp (opens in a new tab)"
-                  className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.05] p-2.5 text-slate-300 outline-none transition hover:border-green-400/40 hover:bg-green-500/10 hover:text-green-300 focus-visible:ring-2 focus-visible:ring-green-400/55 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden>
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
-                  </svg>
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Photo card */}
-          <div className="hero-photo-card relative hidden w-[260px] shrink-0 flex-col items-center justify-center overflow-hidden rounded-[2rem] p-8 lg:flex">
-            <div className="relative h-[200px] w-[200px] overflow-hidden rounded-full border-2 border-blue-400/40 shadow-[0_0_0_8px_rgba(59,130,246,0.07),0_0_60px_rgba(59,130,246,0.2),0_20px_50px_rgba(0,0,0,0.5)]">
-              <Image
-                src="/cv.jpeg"
-                alt="Portrait of Magali Cerisola"
-                fill
-                className="object-cover"
-                sizes="200px"
-                priority
-              />
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" className="max-w-6xl mx-auto scroll-mt-28 px-4 py-20 text-slate-100">
-        <Reveal as="h2" delayMs={0} className="text-center text-2xl font-light mb-4 text-slate-100">
-          Services
+        <Reveal as="p" delayMs={0} className="font-mono text-[11px] uppercase tracking-[0.26em] text-blue-400/60 mb-7">
+          Diseño web · Buenos Aires
         </Reveal>
+
+        <Reveal
+          as="h1"
+          delayMs={80}
+          className="text-[2.75rem] font-light leading-[1.04] tracking-tight sm:text-6xl lg:text-[5rem]"
+        >
+          El problema<br />
+          casi nunca<br />
+          es el{" "}
+          <span className="text-blue-400">diseño.</span>
+        </Reveal>
+
         <Reveal
           as="p"
-          delayMs={150}
-          className="mx-auto max-w-2xl text-center text-slate-200/75 text-lg mb-12"
+          delayMs={200}
+          className="mt-7 max-w-lg text-base leading-relaxed text-slate-300/75 sm:text-lg"
         >
-          From idea to production, I help you ship user-friendly interfaces with consistent design and strong UX.
+          Si invertís en publicidad y la gente no se convierte en clientes, el
+          problema es que nadie pensó qué pasa cuando alguien entra a tu web.
+          Hago webs para negocios argentinos que convierten visitas en clientes.
         </Reveal>
 
-        <div className="flex flex-wrap justify-center gap-8">
-          {SERVICE_CARDS.map((card, i) => (
+        <Reveal as="div" delayMs={300} className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+          <Link
+            href={WA}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={trackWA}
+            className="inline-flex items-center gap-2.5 rounded-full bg-[#25D366] px-8 py-4 text-[15px] font-semibold text-white shadow-[0_8px_32px_rgba(37,211,102,0.32)] outline-none transition hover:brightness-110 motion-safe:hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#020617]"
+          >
+            <IconWA />
+            Escribime por WhatsApp
+          </Link>
+          <p className="text-xs text-slate-500">Diagnóstico gratis · Sin compromiso</p>
+        </Reveal>
+      </section>
+
+      {/* ── EL PROBLEMA ──────────────────────────────────────────────────── */}
+      <section id="problema" className="mx-auto max-w-3xl scroll-mt-28 px-6 py-20">
+        <Reveal as="h2" delayMs={0} className="text-2xl font-light text-slate-100 mb-2">
+          ¿Te suena alguna de estas?
+        </Reveal>
+        <Reveal as="p" delayMs={100} className="text-slate-400 text-base mb-10">
+          Son los síntomas más comunes de una web que no convierte.
+        </Reveal>
+
+        <div>
+          {PROBLEMAS.map((p, i) => (
             <Reveal
-              key={card.title}
-              as="article"
-              delayMs={90 + i * 38}
-              className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/40 p-6 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-blue-400/20 motion-safe:hover:bg-slate-950/55"
+              key={i}
+              as="div"
+              delayMs={80 + i * 45}
+              className="group border-b border-white/[0.06] py-5 first:border-t transition-colors hover:border-blue-500/20"
             >
-              <div className="service-card-bob" style={{ animationDelay: `${i * 0.42}s` }}>
-                <h3 className="text-lg font-medium text-blue-200 transition duration-150 group-hover:text-blue-100">
-                  {card.title}
-                </h3>
-                <p className="mt-2 text-sm leading-7 text-slate-200/75">{card.body}</p>
+              <div className="flex items-start gap-4">
+                <span className="mt-0.5 shrink-0 w-6 font-mono text-[11px] tabular-nums text-blue-400/35">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className="text-[15px] leading-relaxed text-slate-200/80 transition-colors group-hover:text-slate-100">
+                  {p}
+                </p>
               </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal as="div" delayMs={420} className="mt-10 rounded-xl border border-blue-500/20 bg-blue-950/25 px-6 py-5">
+          <p className="text-sm leading-relaxed text-slate-300/80">
+            <span className="font-medium text-blue-300">Si marcaste aunque sea una</span>, tenemos algo
+            para hablar. En 30 minutos te digo exactamente qué está frenando tus ventas.
+          </p>
+        </Reveal>
+      </section>
+
+      {/* ── TRABAJOS ─────────────────────────────────────────────────────── */}
+      <section id="trabajos" className="mx-auto max-w-5xl scroll-mt-28 px-6 py-20">
+        <Reveal as="div" className="mb-12">
+          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.26em] text-blue-400/60">
+            Casos reales
+          </p>
+          <h2 className="text-2xl font-light text-slate-100">
+            No mockups. No plantillas. Proyectos terminados.
+          </h2>
+        </Reveal>
+
+        {/* Caso 1: Atucasa */}
+        <Reveal as="article" className="mb-6 overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0c1526]">
+          <div className="flex items-center justify-between gap-4 border-b border-white/[0.07] px-6 py-4">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-blue-400/55">
+                Servicios de importación
+              </p>
+              <h3 className="mt-0.5 text-base font-medium text-slate-100">Atucasa</h3>
+            </div>
+            <Link
+              href="https://atucasa.net/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Ver Atucasa (se abre en nueva pestaña)"
+              className="shrink-0 rounded text-xs text-blue-300/65 underline underline-offset-4 outline-none transition hover:text-blue-200 focus-visible:ring-2 focus-visible:ring-blue-400/60"
+            >
+              ver sitio →
+            </Link>
+          </div>
+
+          <div className="grid md:grid-cols-2">
+            <div className="border-b border-white/[0.07] p-6 md:border-b-0 md:border-r">
+              <p className="mb-4 font-mono text-[10px] uppercase tracking-widest text-amber-400/60">
+                Antes
+              </p>
+              <ul className="space-y-3 text-sm leading-relaxed text-slate-300/70">
+                <li className="flex gap-2.5">
+                  <span className="mt-1 shrink-0 text-amber-400/35">—</span>
+                  Sin web propia. Todo pasaba por Instagram y WhatsApp.
+                </li>
+                <li className="flex gap-2.5">
+                  <span className="mt-1 shrink-0 text-amber-400/35">—</span>
+                  Sin precios visibles ni proceso claro. Cada consulta arrancaba desde cero.
+                </li>
+                <li className="flex gap-2.5">
+                  <span className="mt-1 shrink-0 text-amber-400/35">—</span>
+                  Mucho tiempo en consultas que no convertían.
+                </li>
+              </ul>
+            </div>
+
+            <div className="p-6">
+              <p className="mb-4 font-mono text-[10px] uppercase tracking-widest text-blue-400/60">
+                Después
+              </p>
+              <ul className="mb-6 space-y-3 text-sm leading-relaxed text-slate-300/70">
+                <li className="flex gap-2.5">
+                  <span className="mt-1 shrink-0 text-blue-400/35">—</span>
+                  Web con calculadora de costos, proceso paso a paso y contacto directo.
+                </li>
+                <li className="flex gap-2.5">
+                  <span className="mt-1 shrink-0 text-blue-400/35">—</span>
+                  Cada visita entiende qué hacen, para quién y cuánto sale antes de escribir.
+                </li>
+                <li className="flex gap-2.5">
+                  <span className="mt-1 shrink-0 text-blue-400/35">—</span>
+                  Consultas más calificadas. Menos tiempo explicando lo mismo.
+                </li>
+              </ul>
+              <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-white/10">
+                <Image
+                  src="/proyect.jpg"
+                  alt="Plataforma web de Atucasa — servicios de importación"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Caso 2: Banca (NDA) */}
+        <Reveal as="article" delayMs={120} className="overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0c1526]">
+          <div className="border-b border-white/[0.07] px-6 py-4">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-blue-400/55">
+              Servicios financieros · Confidencial
+            </p>
+            <h3 className="mt-0.5 text-base font-medium text-slate-100">Plataforma bancaria</h3>
+          </div>
+
+          <div className="grid md:grid-cols-2">
+            <div className="border-b border-white/[0.07] p-6 md:border-b-0 md:border-r">
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-amber-400/60">
+                El desafío
+              </p>
+              <p className="text-sm leading-relaxed text-slate-300/70">
+                Plataforma de escala empresarial con flujos críticos: autenticación, onboarding
+                y operaciones financieras. Millones de sesiones mensuales. Cero margen de error
+                en experiencia de usuario.
+              </p>
+            </div>
+
+            <div className="p-6">
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-blue-400/60">
+                El trabajo
+              </p>
+              <p className="mb-5 text-sm leading-relaxed text-slate-300/70">
+                Rediseño y desarrollo de flujos clave. Arquitectura de componentes reutilizables.
+                Optimización de rendimiento en pantallas de alta carga de datos.
+              </p>
+              <span className="inline-flex items-center gap-1.5 rounded-md border border-amber-500/20 bg-amber-950/30 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-amber-200/65">
+                NDA · Sin imágenes
+              </span>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* ── PROCESO ──────────────────────────────────────────────────────── */}
+      <section id="proceso" className="mx-auto max-w-4xl scroll-mt-28 px-6 py-20">
+        <Reveal as="div" className="mb-12">
+          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.26em] text-blue-400/60">
+            Sin sorpresas
+          </p>
+          <h2 className="text-2xl font-light text-slate-100">Cómo trabajamos</h2>
+        </Reveal>
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {PROCESO.map((paso, i) => (
+            <Reveal
+              key={paso.num}
+              as="div"
+              delayMs={i * 80}
+              className="rounded-xl border border-white/[0.07] bg-[#0c1526] p-6"
+            >
+              <div className="mb-5 flex items-start justify-between gap-2">
+                <span className="font-mono text-3xl font-light leading-none text-blue-400/18">
+                  {paso.num}
+                </span>
+                <span className="text-right font-mono text-[10px] leading-tight text-slate-500">
+                  {paso.tiempo}
+                </span>
+              </div>
+              <h3 className="mb-2 text-sm font-semibold text-slate-100">{paso.titulo}</h3>
+              <p className="text-xs leading-relaxed text-slate-400">{paso.desc}</p>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal as="p" delayMs={360} className="mt-6 text-center text-xs text-slate-500">
+          El primer paso es gratis.{" "}
+          <Link
+            href={WA}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={trackWA}
+            className="text-blue-400 underline underline-offset-4 transition hover:text-blue-300"
+          >
+            Agendalo por WhatsApp →
+          </Link>
+        </Reveal>
+      </section>
+
+      {/* ── TESTIMONIOS ──────────────────────────────────────────────────── */}
+      <section id="testimonios" className="mx-auto max-w-5xl scroll-mt-28 px-6 py-20">
+        <Reveal as="div" className="mb-12">
+          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.26em] text-blue-400/60">
+            Clientes
+          </p>
+          <h2 className="text-2xl font-light text-slate-100">Lo que dicen</h2>
+        </Reveal>
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {TESTIMONIOS.map((t, i) => (
+            <Reveal
+              key={t.nombre}
+              as="blockquote"
+              delayMs={i * 80}
+              className="flex flex-col rounded-2xl border border-white/[0.07] bg-[#0c1526] p-6"
+            >
+              <p className="flex-1 text-sm leading-relaxed text-slate-300/80">
+                &ldquo;{t.texto}&rdquo;
+              </p>
+              <footer className="mt-6 flex items-center gap-3">
+                <Image
+                  src={t.img}
+                  alt={t.nombre}
+                  width={40}
+                  height={40}
+                  className="rounded-full object-cover ring-1 ring-white/10"
+                />
+                <div>
+                  <p className="text-sm font-medium text-slate-100">{t.nombre}</p>
+                  <p className="text-xs text-slate-500">{t.rol}</p>
+                </div>
+              </footer>
             </Reveal>
           ))}
         </div>
       </section>
 
-      {/* Projects Section */}
-      {false && <section id="projects" className="max-w-5xl mx-auto scroll-mt-28 px-4 py-20 text-slate-100">
-        <Reveal as="h2" delayMs={0} className="text-2xl font-light mb-10 text-slate-100">
-          Projects
-        </Reveal>
-        <div className="grid gap-8 md:grid-cols-2 md:items-stretch">
-          <Reveal
-            as="article"
-            delayMs={150}
-            className="card-tile card-tile-amber group relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-amber-500/25 bg-slate-950/70 p-6 shadow-[0_0_0_1px_rgba(251,191,36,0.08),inset_0_1px_0_0_rgba(255,255,255,0.04)] backdrop-blur motion-safe:hover:border-amber-400/45"
-          >
+      {/* ── CIERRE ────────────────────────────────────────────────────────── */}
+      <section id="contacto" className="mx-auto max-w-3xl scroll-mt-28 px-6 py-20">
+        <Reveal as="div" className="overflow-hidden rounded-3xl border border-white/[0.07] bg-[#0c1526]">
+          <div className="relative p-8 md:p-12">
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0 opacity-[0.06]"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(-33deg, transparent, transparent 12px, rgba(251, 191, 36, 0.9) 12px, rgba(251, 191, 36, 0.9) 13px)",
-              }}
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full border border-amber-500/20"
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -bottom-6 left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-amber-500/5 blur-2xl"
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_-10%,rgba(59,130,246,0.09),transparent)]"
             />
 
-            <div className="relative flex items-start justify-between gap-3">
-              <div className="inline-flex items-center gap-2 rounded-md border border-amber-500/30 bg-amber-950/40 px-2.5 py-1">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.75"
-                  className="h-3.5 w-3.5 shrink-0 text-amber-400/90"
-                  aria-hidden
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16.5 10.5V6.75a4.5 4.5 0 0 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
-                  />
-                </svg>
-                <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-200/90">
-                  Confidential
-                </span>
-              </div>
-              <span className="font-mono text-[10px] leading-none text-slate-500">NDA</span>
-            </div>
+            <div className="relative grid items-center gap-8 md:grid-cols-[1fr_auto]">
+              <div>
+                <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.26em] text-blue-400/60">
+                  Diagnóstico gratis
+                </p>
+                <h2 className="text-3xl font-light leading-tight text-white sm:text-4xl">
+                  ¿Tu web convierte?<br />
+                  En 30 minutos<br />
+                  lo sabemos.
+                </h2>
+                <p className="mt-5 max-w-sm text-sm leading-relaxed text-slate-300/70">
+                  Escribime y coordinamos una llamada. Te digo exactamente qué está frenando
+                  tus ventas y qué haría para arreglarlo. Sin costo. Sin obligación de
+                  contratar.
+                </p>
 
-            <h3 className="relative mt-5 text-lg font-medium text-slate-100">Banking Platform UI</h3>
-            <p className="relative mt-1 text-xs text-amber-200/55">Client work - restricted disclosure</p>
-
-            <div className="relative mt-5 space-y-2.5" aria-hidden>
-              <div className="h-2.5 w-full rounded-sm bg-slate-800/90" />
-              <div className="h-2.5 w-[92%] rounded-sm bg-slate-800/80" />
- 
-            </div>
-
-            <p className="relative mt-5 text-[11px] leading-relaxed text-slate-400">
-            Contributed to the development and modernization of a large-scale banking platform, building and refactoring complex fullstack features using React and modern technologies.
-
-Focused on performance optimization, reusable component architecture, and improving user experience across critical user flows.
-
-Collaborated closely with product, design, and backend teams in an Agile environment.
-            </p>
-
-            <p className="relative mt-auto pt-4 font-mono text-[10px] tracking-wide text-slate-600">
-              REF: <span className="text-slate-500">XX-XXXX-BANK</span>
-            </p>
-          </Reveal>
-          <Reveal
-            as="article"
-            delayMs={300}
-            className="card-tile group relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.06)] outline-none focus-within:ring-2 focus-within:ring-blue-400/35 focus-within:ring-offset-2 focus-within:ring-offset-slate-950 motion-safe:hover:border-blue-400/25"
-          >
-            <div className="relative min-h-[240px] w-full min-h-0 flex-1">
-              <Image
-                src="/proyect.jpg"
-                alt="Featured project screenshot"
-                fill
-                className="object-cover transition-transform duration-[450ms] ease-out motion-safe:group-hover:scale-[1.04] motion-safe:group-focus-within:scale-[1.04]"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
-              />
-
-              {/* Always-on bottom fade so title reads on the image */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-transparent"
-              />
-
-              {/* Hover / focus: indigo-blue veil so the image stays slightly visible behind */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/25 via-slate-950/55 to-blue-500/20 opacity-0 backdrop-blur-[0px] transition-all duration-200 group-hover:opacity-100 group-hover:backdrop-blur-[6px] group-focus-within:opacity-100 group-focus-within:backdrop-blur-[6px]"
-              />
-
-              <div className="pointer-events-none absolute inset-0 flex flex-col justify-end p-6">
-                <div className="pointer-events-auto text-left">
+                <div className="mt-8">
                   <Link
-                    href="https://atucasa.net/"
+                    href={WA}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block rounded-md outline-none transition hover:opacity-95 focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                    aria-label="Import Services Web Application - visit Atucasa (opens in a new tab)"
+                    onClick={trackWA}
+                    className="inline-flex items-center gap-2.5 rounded-full bg-[#25D366] px-8 py-4 text-[15px] font-semibold text-white shadow-[0_8px_32px_rgba(37,211,102,0.28)] outline-none transition hover:brightness-110 motion-safe:hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c1526]"
                   >
-                    <h3 className="text-lg font-medium text-blue-200 drop-shadow-md underline-offset-4 transition group-hover:underline">
-                      Import Services Web Application
-                    </h3>
+                    <IconWA />
+                    Escribirme por WhatsApp
                   </Link>
-                  <p className="mt-2 max-w-prose text-sm leading-relaxed text-slate-100/95 opacity-0 translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:translate-y-0">
-                    Built a responsive web platform for an import services business, including a cost calculator, user
-                    authentication, and key sections like services, process, and contact to enhance user experience and
-                    conversion.
+                  <p className="mt-3 text-xs text-slate-500">
+                    O por mail:{" "}
+                    <a
+                      href="mailto:magui.cerisola@gmail.com"
+                      className="text-slate-400 underline underline-offset-4 transition hover:text-slate-300"
+                    >
+                      magui.cerisola@gmail.com
+                    </a>
                   </p>
                 </div>
               </div>
-            </div>
-          </Reveal>
 
-
-        </div>
-      </section>}
-      {/* About Section */}
-      <section id="about" className="max-w-3xl mx-auto scroll-mt-28 px-4 py-16 text-slate-100">
-        <div className="card-tile relative rounded-2xl border border-white/10 bg-slate-950/40 p-8 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-white/18 md:p-10">
-          <Reveal as="h2" delayMs={0} className="text-2xl font-light mb-4 text-slate-100">
-            About Me
-          </Reveal>
-          <Reveal as="p" delayMs={150} className="text-slate-200/75 text-lg">
-          Hi, I'm Magali Cerisola — a fullstack developer with over 5 years of experience building web applications for real businesses, including the banking sector.
-
-I help clients create modern, responsive, and high-quality websites that are fast, easy to use, and designed to deliver results.
-
-My goal is to turn your ideas into a functional and professional product that meets your needs and provides a great experience for your users.
-
-I'm passionate about development and always focused on writing clean, efficient code.
-
-Let’s work together to bring your project to life.
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Reviews Section */}
-      <section id="reviews" className="max-w-6xl mx-auto scroll-mt-28 px-4 py-20 text-slate-100">
-        <Reveal as="h2" delayMs={0} className="text-center text-2xl font-light mb-4 text-slate-100">
-          Reviews
-        </Reveal>
-        <Reveal
-          as="p"
-          delayMs={150}
-          className="mx-auto max-w-2xl text-center text-slate-200/75 text-lg mb-12"
-        >
-          Here&apos;s what clients say about working together.
-        </Reveal>
-
-        <div className="flex flex-wrap justify-center gap-8">
-          <Reveal
-            as="article"
-            delayMs={180}
-            className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/45 px-8 pb-8 pt-10 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-blue-400/30"
-          >
-              <div className="relative mx-auto mb-6 flex h-24 w-24 shrink-0 items-center justify-center">
-                <div
-                  aria-hidden
-                  className="absolute -inset-2 rounded-full bg-gradient-to-br from-blue-400/50 via-blue-400/20 to-blue-600/30 opacity-50 blur-lg transition-opacity duration-200 group-hover:opacity-90"
-                />
-                <Image
-                  src="/mar.jpeg"
-                  alt="Martina Vega, client review"
-                  width={96}
-                  height={96}
-                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-slate-950 transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-blue-400/40"
-                />
-              </div>
-              <p className="text-sm leading-relaxed text-slate-200/85">
-              “Working with Magali was a great experience. She translated my designs into a clean, pixel-perfect interface while maintaining attention to detail in spacing, typography, and responsiveness. Communication was smooth, and the final result matched the design perfectly.”
-              </p>
-              <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
-                <Link
-                  href="https://linktr.ee/m.dagos?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAdGRleARLpbZleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafJ-l41L_EfCsd4nxU_CdeBlSX4AbWTgru4REtjrwRtxt_rKGYQQ-ZeYXHPsg_aem_4pDjRnYeDZmv3x2OZyZhQQ"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-blue-200/95 outline-none transition hover:text-blue-100 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                  aria-label="Martina Vega on Linktree (opens in a new tab)"
-                >
-                  <span>Martina Vega</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-4 w-4 shrink-0 text-blue-300/90"
-                    aria-hidden
-                  >
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                  </svg>
-                </Link>
-              </div>
-              <p className="text-xs text-slate-400">UI/UX Designer</p>
-          </Reveal>
-
-          <Reveal
-            as="article"
-            delayMs={260}
-            className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/45 px-8 pb-8 pt-10 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-blue-400/30"
-          >
-              <div className="relative mx-auto mb-6 flex h-24 w-24 shrink-0 items-center justify-center">
-                <div
-                  aria-hidden
-                  className="absolute -inset-2 rounded-full bg-gradient-to-br from-blue-400/50 via-blue-400/20 to-blue-600/30 opacity-50 blur-lg transition-opacity duration-200 group-hover:opacity-90"
-                />
-                <Image
-                  src="/fran.jpeg"
-                  alt="Francisco Piaggio, client review"
-                  width={96}
-                  height={96}
-                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-slate-950 transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-blue-400/40"
-                />
-              </div>
-              <p className="text-sm leading-relaxed text-slate-200/85">
-              “Magali writes clean, maintainable code and has a strong grasp of modern fullstack practices. She builds reusable components and always pays attention to performance and detail.”
-              </p>
-              <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
-                <Link
-                  href="https://www.linkedin.com/in/francisco-piaggio-224730b9/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-blue-200/95 outline-none transition hover:text-blue-100 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                  aria-label="Francisco Piaggio on LinkedIn (opens in a new tab)"
-                >
-                  <span>Francisco Piaggio</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="h-4 w-4 shrink-0 text-blue-300/90"
-                    aria-hidden
-                  >
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                </Link>
-              </div>
-              <p className="text-xs text-slate-400">Fullstack Developer</p>
-          </Reveal>
-
-          <Reveal
-            as="article"
-            delayMs={340}
-            className="card-tile card-tile-shine group relative w-full max-w-sm rounded-2xl border border-white/10 bg-slate-950/45 px-8 pb-8 pt-10 text-center shadow-[0_0_0_1px_rgba(255,255,255,0.06)] backdrop-blur motion-safe:hover:border-blue-400/30"
-          >
-              <div className="relative mx-auto mb-6 flex h-24 w-24 shrink-0 items-center justify-center">
-                <div
-                  aria-hidden
-                  className="absolute -inset-2 rounded-full bg-gradient-to-br from-blue-400/50 via-blue-400/20 to-blue-600/30 opacity-50 blur-lg transition-opacity duration-200 group-hover:opacity-90"
-                />
-                <Image
-                  src="/jp.jpeg"
-                  alt="Juan Pablo Saraceno, client review"
-                  width={96}
-                  height={96}
-                  className="relative z-[1] h-24 w-24 rounded-full object-cover ring-2 ring-white/15 ring-offset-2 ring-offset-slate-950 transition-transform duration-200 motion-safe:group-hover:scale-105 group-hover:ring-blue-400/40"
-                />
-              </div>
-              <p className="text-sm leading-relaxed text-slate-200/85">
-              “Magali delivered a high-quality website that met both our design and performance expectations. She was reliable, easy to work with, and always communicated clearly throughout the process. The final product feels fast, modern, and user-friendly.”
-              </p>
-              <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
-                <Link
-                  href="https://www.linkedin.com/in/juan-pablo-saraceno-49656b/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md text-sm font-semibold text-blue-200/95 outline-none transition hover:text-blue-100 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                  aria-label="Juan Pablo Saraceno on LinkedIn (opens in a new tab)"
-                >
-                  <span>Juan Pablo Saraceno</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="h-4 w-4 shrink-0 text-blue-300/90"
-                    aria-hidden
-                  >
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                </Link>
-              </div>
-              <p className="text-xs text-slate-400">Product Lead / Business Owner</p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="max-w-5xl mx-auto scroll-mt-28 px-4 py-20 text-slate-100">
-        <Reveal as="h2" delayMs={0} className="text-2xl font-light mb-10 text-slate-100">
-          Contact
-        </Reveal>
-
-        <div className="rounded-3xl border border-white/10 bg-slate-950/72 backdrop-blur-sm shadow-[0_0_0_1px_rgba(255,255,255,0.06)] overflow-hidden antialiased">
-          <div className="grid md:grid-cols-2">
-            {/* Left gradient panel */}
-            <div className="relative p-10 md:p-12">
-              <div aria-hidden className="absolute inset-0">
-                <div className="absolute inset-0 bg-[radial-gradient(1200px_circle_at_20%_20%,rgba(59,130,246,0.55),transparent_55%)]" />
-                <div className="absolute inset-0 bg-[radial-gradient(900px_circle_at_70%_80%,rgba(56,189,248,0.35),transparent_55%)]" />
-                <div className="absolute inset-0 bg-[radial-gradient(700px_circle_at_60%_35%,rgba(99,102,241,0.22),transparent_55%)]" />
-                <div className="absolute inset-0 bg-slate-950/35" />
-              </div>
-
-              <Reveal as="div" delayMs={150} className="relative">
-                <p className="text-blue-200/90 text-sm font-medium tracking-wide">Get in touch</p>
-                <h3 className="mt-3 text-4xl font-light text-white">Let&apos;s build something</h3>
-                <p className="mt-3 max-w-sm text-slate-200/80">
-                  Tell me about your product, timeline, and goals. I usually reply within 24-48 hours.
-                </p>
-
-                <div className="mt-8 flex flex-col gap-4 text-sm text-slate-200/80">
-                  <div>
-                    <span className="text-slate-200/60">Email</span>
-                    <div className="mt-1">
-                      <a
-                        className="text-blue-200 underline underline-offset-4 outline-none transition rounded-sm hover:text-blue-100 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                        href="mailto:magui.cerisola@gmail.com"
-                      >
-                        magui.cerisola@gmail.com
-                      </a>
-                    </div>
-                  </div>
-                  <div>
-                    <span className="text-slate-200/60">WhatsApp</span>
-                    <div className="mt-1">
-                      <a
-                        href="https://wa.me/5491178230346"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-green-300/90 underline underline-offset-4 outline-none transition rounded-sm hover:text-green-200 focus-visible:ring-2 focus-visible:ring-green-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 shrink-0" aria-hidden>
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
-                        </svg>
-                        +54 9 11 7823-0346
-                      </a>
-                    </div>
-                  </div>
+              {/* Retrato */}
+              <div className="hidden md:block">
+                <div className="relative h-48 w-40 overflow-hidden rounded-2xl border border-white/10">
+                  <Image
+                    src="/cv.jpeg"
+                    alt="Magali Cerisola"
+                    fill
+                    className="object-cover object-top"
+                    sizes="160px"
+                  />
                 </div>
-              </Reveal>
-            </div>
-
-            {/* Right form panel */}
-            <div className="p-10 md:p-12 bg-slate-950/60">
-              <Reveal as="div" delayMs={200} className="">
-                <p className="text-center text-slate-200/80 text-sm font-medium">Send a message</p>
-
-                <ContactForm />
-              </Reveal>
+              </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
-      <footer className="flex flex-col items-center gap-4 py-10 text-xs text-slate-200/40">
-        <div className="flex items-center gap-3">
+      {/* ── FOOTER ───────────────────────────────────────────────────────── */}
+      <footer className="mx-auto max-w-5xl border-t border-white/[0.05] px-6 py-10 flex flex-col items-center gap-4">
+        <div className="flex items-center gap-4">
           <Link
             href="https://www.linkedin.com/in/magali-cerisola-1a5111167/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            className="transition hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/55 rounded-full"
+            className="rounded-full text-slate-600 transition hover:text-slate-300 outline-none focus-visible:ring-2 focus-visible:ring-blue-400/55"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden>
               <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -615,7 +482,7 @@ Let’s work together to bring your project to life.
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="transition hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/55 rounded-full"
+            className="rounded-full text-slate-600 transition hover:text-slate-300 outline-none focus-visible:ring-2 focus-visible:ring-blue-400/55"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden>
               <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
@@ -626,14 +493,16 @@ Let’s work together to bring your project to life.
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
-            className="transition hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/55 rounded-full"
+            className="rounded-full text-slate-600 transition hover:text-slate-300 outline-none focus-visible:ring-2 focus-visible:ring-blue-400/55"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden>
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
             </svg>
           </Link>
         </div>
-        <span>&copy; {new Date().getFullYear()} Magali Cerisola. All rights reserved.</span>
+        <p className="text-xs text-slate-700">
+          &copy; {new Date().getFullYear()} Magali Cerisola. Todos los derechos reservados.
+        </p>
       </footer>
     </div>
   );

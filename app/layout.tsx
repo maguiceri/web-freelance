@@ -17,11 +17,11 @@ const geistMono = Geist_Mono({
 const BASE_URL = "https://maguiceri.dev";
 
 const DESCRIPTION =
-  "Freelance fullstack developer with 5+ years of experience — React, Next.js, TypeScript. I build fast, modern websites and automation solutions tailored to your business.";
+  "¿Invertís en publicidad y la gente no compra? El problema casi nunca es el anuncio: es la web. Hago webs para negocios argentinos que convierten visitas en clientes.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Magali Cerisola | Freelance Fullstack Developer",
+  title: "Magali Cerisola | Webs que convierten para negocios argentinos",
   description: DESCRIPTION,
   alternates: {
     canonical: "/",
@@ -30,20 +30,21 @@ export const metadata: Metadata = {
     type: "website",
     url: BASE_URL,
     siteName: "Magali Cerisola",
-    title: "Magali Cerisola | Freelance Fullstack Developer",
+    title: "Magali Cerisola | Webs que convierten para negocios argentinos",
     description: DESCRIPTION,
     images: [
       {
         url: "/cv.jpeg",
         width: 800,
         height: 800,
-        alt: "Magali Cerisola – Freelance Fullstack Developer",
+        alt: "Magali Cerisola – Webs que convierten para negocios argentinos",
       },
     ],
+    locale: "es_AR",
   },
   twitter: {
     card: "summary",
-    title: "Magali Cerisola | Freelance Fullstack Developer",
+    title: "Magali Cerisola | Webs que convierten para negocios argentinos",
     description: DESCRIPTION,
     images: ["/cv.jpeg"],
   },
@@ -119,7 +120,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es-AR">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-slate-100`}
         suppressHydrationWarning
