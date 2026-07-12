@@ -108,7 +108,7 @@ export default function Header() {
 
           <button
             type="button"
-            className="inline-flex shrink-0 items-center justify-center rounded-xl border border-white/14 bg-white/[0.06] p-2.5 text-slate-200 outline-none transition hover:border-blue-400/35 hover:bg-blue-500/10 hover:text-blue-100 active:scale-95 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 md:hidden"
+            className="inline-flex shrink-0 items-center justify-center p-2 outline-none active:scale-95 focus-visible:ring-2 focus-visible:ring-[#3B7BFF]/60 rounded-lg md:hidden"
             aria-label="Toggle menu"
             aria-expanded={mobileNav === "open"}
             onClick={() => {
@@ -121,19 +121,21 @@ export default function Header() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              className="h-5 w-5"
+              stroke="#3B7BFF"
+              strokeWidth="2"
+              strokeLinecap="round"
+              className="h-6 w-6"
               aria-hidden
+              style={{ filter: "drop-shadow(0 0 5px #3B7BFF) drop-shadow(0 0 2px #3B7BFF)" }}
             >
               {mobileNav === "open" || mobileNav === "closing" ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                <path d="M6 18 18 6M6 6l12 12" />
               ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5"
-                />
+                <>
+                  <line x1="3" y1="7" x2="21" y2="7" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="17" x2="21" y2="17" />
+                </>
               )}
             </svg>
           </button>
