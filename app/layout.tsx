@@ -18,11 +18,11 @@ const bricolage = Bricolage_Grotesque({
 const BASE_URL = "https://maguiceri.dev";
 
 const DESCRIPTION =
-  "Diseñadora web freelance en Buenos Aires. Hago webs para negocios argentinos que convierten visitas en clientes. Entrega en 4 días hábiles, precios en pesos.";
+  "Diseñadora web freelance. Hago webs para negocios que convierten visitas en clientes. Trabajo remoto con empresas de toda Latinoamérica. Entrega en 4 días hábiles.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: "Diseñadora Web Freelance Buenos Aires | Magali Cerisola",
+  title: "Diseñadora Web Freelance | Magali Cerisola",
   description: DESCRIPTION,
   alternates: {
     canonical: "/",
@@ -31,21 +31,21 @@ export const metadata: Metadata = {
     type: "website",
     url: BASE_URL,
     siteName: "Magali Cerisola",
-    title: "Diseñadora Web Freelance Buenos Aires | Magali Cerisola",
+    title: "Diseñadora Web Freelance | Magali Cerisola",
     description: DESCRIPTION,
     images: [
       {
         url: "/cv.jpeg",
         width: 800,
         height: 800,
-        alt: "Magali Cerisola – Diseñadora Web Freelance Buenos Aires",
+        alt: "Magali Cerisola – Diseñadora Web Freelance",
       },
     ],
     locale: "es_AR",
   },
   twitter: {
     card: "summary",
-    title: "Diseñadora Web Freelance Buenos Aires | Magali Cerisola",
+    title: "Diseñadora Web Freelance | Magali Cerisola",
     description: DESCRIPTION,
     images: ["/cv.jpeg"],
   },
@@ -61,19 +61,14 @@ const jsonLd = {
       image: `${BASE_URL}/cv.jpeg`,
       jobTitle: "Diseñadora Web Freelance",
       email: "magui.cerisola@gmail.com",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Buenos Aires",
-        addressCountry: "AR",
-      },
       knowsAbout: [
         "Diseño Web",
-        "Desarrollo Web",
+        "Desarrollo Web Freelance",
         "React",
         "Next.js",
         "TypeScript",
-        "Diseño Web Freelance Buenos Aires",
         "Páginas Web para Negocios",
+        "Diseño Web Latinoamérica",
       ],
       sameAs: [
         "https://www.linkedin.com/in/magali-cerisola-1a5111167/",
@@ -83,7 +78,8 @@ const jsonLd = {
     },
     {
       "@type": "ProfessionalService",
-      name: "Magali Cerisola – Diseño Web Freelance Buenos Aires",
+      name: "Magali Cerisola – Diseño Web Freelance",
+      areaServed: "Latinoamérica",
       url: BASE_URL,
       image: `${BASE_URL}/cv.jpeg`,
       description: DESCRIPTION,
