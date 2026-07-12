@@ -298,7 +298,7 @@ export default function Home() {
       </section>
 
       {/* ── PROBLEMA ─────────────────────────────────────────────────────── */}
-      <section className="stack-card sticky top-[88px] z-[11] border border-[#1E2A44] bg-[#0B1120] py-[clamp(72px,10vw,130px)]">
+      <section className="stack-card lg:sticky lg:top-[88px] z-[11] border border-[#1E2A44] bg-[#0B1120] py-[clamp(72px,10vw,130px)]">
         <div className="mx-auto max-w-[1080px] px-[4vw]">
 
           {/* Header */}
@@ -403,7 +403,7 @@ export default function Home() {
       {/* ── PROCESO ──────────────────────────────────────────────────────── */}
       <section
         id="proceso"
-        className="stack-card sticky top-[94px] z-[12] border border-[#1E2A44] bg-[#080E1C] py-[clamp(72px,10vw,130px)] scroll-mt-20"
+        className="stack-card lg:sticky lg:top-[94px] z-[12] border border-[#1E2A44] bg-[#080E1C] py-[clamp(72px,10vw,130px)] scroll-mt-20"
       >
         <div className="mx-auto max-w-[1080px] px-[4vw]">
           <Reveal as="p" className="text-[12px] font-semibold tracking-[0.18em] uppercase text-[#3B7BFF] mb-[14px]">
