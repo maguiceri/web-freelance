@@ -240,7 +240,7 @@ export default function Home() {
           {/* Copy */}
           <div className="flex-1 min-w-0">
             <Reveal as="p" className="text-[12px] font-semibold tracking-[0.18em] uppercase text-[#3B7BFF] mb-[22px]">
-              Páginas web para negocios · Trabajo remoto
+              Páginas web para negocios
             </Reveal>
 
             <h1 className="font-display font-extrabold text-[clamp(38px,6.4vw,72px)] leading-[1.03] tracking-[-0.035em] text-[#EEF2F9]">
