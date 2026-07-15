@@ -154,8 +154,6 @@ export default function Home() {
   const [pct, setPct] = useState(0);
   const [statStarted, setStatStarted] = useState(false);
 
-  const timerFillRef = useRef<HTMLDivElement>(null);
-  const [timerStarted, setTimerStarted] = useState(false);
 
   useEffect(() => {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -207,16 +205,6 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
-  useEffect(() => {
-    const el = timerFillRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setTimerStarted(true); obs.disconnect(); } },
-      { threshold: 0.8 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
 
   useEffect(() => {
     const el = procesoRef.current;
@@ -244,40 +232,13 @@ export default function Home() {
             </Reveal>
 
             <h1 className="font-display font-extrabold text-[clamp(38px,6.4vw,72px)] leading-[1.03] tracking-[-0.035em] text-[#EEF2F9]">
-              <span className="block word-in" style={{ animationDelay: "60ms" }}>Tenés visitas.</span>
-              <span className="block word-in" style={{ animationDelay: "220ms" }}>No tenés clientes.</span>
+              <span className="block word-in" style={{ animationDelay: "60ms" }}>Webs que convierten</span>
+              <span className="block word-in" style={{ animationDelay: "220ms" }}>visitas en clientes.</span>
             </h1>
 
             <Reveal as="p" delayMs={140} className="text-[#7C89A3] text-[clamp(16px,2vw,19px)] max-w-[52ch] mt-[26px]">
               Diseño y programo webs para negocios que ya invierten en publicidad y{" "}
               <Highlight delay={400}>no venden.</Highlight>
-            </Reveal>
-
-            {/* Timer — signature element */}
-            <Reveal
-              as="div"
-              delayMs={220}
-              className="mt-[44px] border border-[#1E2A44] rounded-[14px] bg-[#0B1120] p-[22px_24px] max-w-[520px]"
-            >
-              <div className="flex justify-between items-baseline text-[13px] text-[#7C89A3] mb-[14px]">
-                <span>Lo que tarda alguien en decidir si te contrata</span>
-                <strong className="font-display font-extrabold text-[26px] tracking-[-0.02em] text-[#EEF2F9] ml-4 shrink-0">
-                  3s
-                </strong>
-              </div>
-              <div className="h-[5px] bg-[#111A2E] rounded-full overflow-hidden">
-                <div
-                  ref={timerFillRef}
-                  className={`timer-fill h-full bg-gradient-to-r from-[#3B7BFF] to-[#7AA6FF] rounded-full${timerStarted ? " timer-fill--running" : ""}`}
-                />
-              </div>
-              <p className="mt-[14px] text-[14px] text-[#7C89A3] leading-relaxed">
-                Si en ese tiempo no entiende{" "}
-                <strong className="font-semibold text-[#c8d0dc]">qué hacés</strong>{" "}
-                y{" "}
-                <strong className="font-semibold text-[#c8d0dc]">por qué confiar en vos</strong>
-                , se va. Y no vuelve.
-              </p>
             </Reveal>
 
             <Reveal as="div" delayMs={300} className="mt-[36px] flex flex-wrap items-center gap-x-5 gap-y-2">
