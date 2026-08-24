@@ -15,7 +15,7 @@ const bricolage = Bricolage_Grotesque({
   weight: ["600", "800"],
 });
 
-const BASE_URL = "https://maguiceri.dev";
+const BASE_URL = "https://www.maguiceri.dev";
 
 const DESCRIPTION =
   "Hago webs para negocios que convierten visitas en clientes. Trabajo remoto con empresas de toda Latinoamérica. Entrega en 4 días hábiles.";
