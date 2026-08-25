@@ -61,10 +61,7 @@ export default function LogoMark({ height = 40, className = "", style }: Props) 
       aria-label="m."
       role="img"
       className={className}
-      style={{
-        filter: "drop-shadow(0 0 8px rgba(59,123,255,0.45))",
-        ...style,
-      }}
+      style={style}
     >
       {/* fondo oscuro dentro del círculo */}
       <circle cx="60" cy="60" r="56" fill="#030C1A" />
@@ -73,7 +70,7 @@ export default function LogoMark({ height = 40, className = "", style }: Props) 
       <circle
         ref={ringRef}
         cx="60" cy="60" r="56"
-        stroke="#3B7BFF"
+        stroke="var(--accent-ink)"
         strokeWidth="2.5"
         transform="rotate(-90 60 60)"
       />
@@ -82,14 +79,14 @@ export default function LogoMark({ height = 40, className = "", style }: Props) 
       <path
         ref={pathRef}
         d="M31 84 L31 54 C31 36 55 36 55 54 L55 84 L55 54 C55 36 79 36 79 54 L79 84"
-        stroke="#3B7BFF"
+        stroke="var(--accent-ink)"
         strokeWidth="9"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
 
       {/* punto */}
-      <circle ref={dotRef} cx="90" cy="84" r="4.5" fill="#3B7BFF" />
+      <circle ref={dotRef} cx="90" cy="84" r="4.5" fill="var(--accent-ink)" />
     </svg>
   );
 }

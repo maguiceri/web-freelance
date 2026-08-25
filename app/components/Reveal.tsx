@@ -43,14 +43,9 @@ export default function Reveal({
     const node = ref.current;
     if (!node) return;
 
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      setShown(true);
-      return;
-    }
-
+    // El caso "prefers-reduced-motion" se resuelve en CSS (.reveal en
+    // globals.css): así no hace falta un setState sincrónico en el efecto, y
+    // el contenido queda visible aunque el JS no llegue a correr.
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -70,7 +65,7 @@ export default function Reveal({
   return (
     <Element
       ref={ref as React.Ref<HTMLElement>}
-      className={className}
+      className={`reveal ${className}`}
       style={{
         opacity: shown ? 1 : 0,
         transform: shown ? "translate3d(0,0,0)" : initialTransform[direction],

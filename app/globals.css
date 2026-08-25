@@ -3,6 +3,24 @@
 :root {
   --background: #020617;
   --foreground: #ededed;
+
+  /* ── Azul de marca ──────────────────────────────────────────────────────
+     Plano, sin resplandor. Dos tonos porque cumplen funciones distintas:
+
+     --accent      rellenos sólidos (botones, barras, nodos). El texto que va
+                   encima es blanco, y el contraste da 5.85:1 → AA.
+     --accent-ink  texto y rótulos sobre el fondo oscuro. Un relleno tan
+                   apagado como --accent no llega al contraste mínimo como
+                   texto (3.44:1), así que para tipografía se usa este, que
+                   da 6.16:1 sobre #05070F y sigue siendo más apagado que el
+                   #3B7BFF original.
+
+     Si querés mover el tono de la marca, tocá sólo estas tres líneas. */
+  --accent: #2f5fd0;
+  --accent-hover: #3a6ce0;
+  --accent-ink: #5b8def;
+
+  --border: #1e2a44;
 }
 
 @theme inline {
@@ -12,70 +30,28 @@
   --font-display: var(--font-bricolage);
 }
 
-.font-display {
-  font-family: var(--font-bricolage), system-ui, sans-serif;
-}
-
-@keyframes timerDrain {
-  from { transform: scaleX(1); }
-  to   { transform: scaleX(0); }
-}
-.timer-fill {
-  transform-origin: left;
-  width: 100%;
-}
-.timer-fill--running {
-  animation: timerDrain 3s linear forwards;
-}
-@media (prefers-reduced-motion: reduce) {
-  .timer-fill--running {
-    animation: none;
-    transform: scaleX(0.35);
-  }
-}
-
-/* Carousel progress bar — matches CAROUSEL_INTERVAL in page.tsx */
-@keyframes carouselProgress {
-  from { width: 0%; }
-  to   { width: 100%; }
-}
-.carousel-progress {
-  animation: carouselProgress 4.2s linear forwards;
-}
-@media (prefers-reduced-motion: reduce) {
-  .carousel-progress { animation: none; width: 100%; }
-}
-
-/* Timer cycling phrases — in sync with the 3s drain */
-@keyframes timerPhrase1 {
-  0%, 40%  { opacity: 1; transform: translateY(0); }
-  50%, 90% { opacity: 0; transform: translateY(-6px); }
-  100%     { opacity: 1; transform: translateY(0); }
-}
-@keyframes timerPhrase2 {
-  0%, 40%  { opacity: 0; transform: translateY(6px); }
-  50%, 90% { opacity: 1; transform: translateY(0); }
-  100%     { opacity: 0; transform: translateY(6px); }
-}
-.timer-phrase-1 {
-  animation: timerPhrase1 3s ease-in-out infinite;
-}
-.timer-phrase-2 {
-  position: absolute;
-  animation: timerPhrase2 3s ease-in-out infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .timer-phrase-1 { animation: none; opacity: 1; }
-  .timer-phrase-2 { animation: none; opacity: 0; }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
 }
 
-/* Skip link: keyboard / screen reader first */
+.font-display {
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+}
+
+::selection {
+  background-color: rgb(47 95 208 / 0.4);
+  color: rgb(248 250 252);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ── Skip link: teclado y lectores de pantalla primero ──────────────────── */
 .skip-link {
   position: absolute;
   width: 1px;
@@ -101,146 +77,26 @@ body {
   clip: auto;
   white-space: normal;
   border-radius: 0.5rem;
-  background: rgb(96 165 250);
-  color: rgb(15 23 42);
+  background: var(--accent);
+  color: #ffffff;
   font-weight: 600;
   font-size: 0.875rem;
-  box-shadow: 0 10px 40px -10px rgb(96 165 250 / 0.5);
-  outline: 2px solid rgb(191 219 254);
+  outline: 2px solid var(--accent-ink);
   outline-offset: 2px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
+/* ── Secciones apiladas ─────────────────────────────────────────────────── */
+.stack-card {
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.35);
+}
+@media (min-width: 1024px) {
+  .stack-card {
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.45);
   }
 }
 
-::selection {
-  background-color: rgb(96 165 250 / 0.35);
-  color: rgb(248 250 252);
-}
-
-@keyframes fadeDown {
-  from {
-    opacity: 0;
-    transform: translateY(-28px);
-    filter: blur(5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: none;
-  }
-}
-
-.fadeDown {
-  opacity: 0;
-  transform: translateY(-28px);
-  filter: blur(5px);
-  animation-name: fadeDown;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fadeDown {
-    animation: none;
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-}
-
-/* Same motion as fadeDown but without filter — avoids blurring all children
-   when applied to a container (e.g. hero glass panel with backdrop-blur). */
-@keyframes fadeDownNoBlur {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fadeDownPanel {
-  opacity: 0;
-  transform: translateY(-20px);
-  animation-name: fadeDownNoBlur;
-  animation-duration: 0.55s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fadeDownPanel {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes gradientShift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-.hero-title-gradient {
-  background-image: linear-gradient(
-    115deg,
-    rgb(248 250 252) 0%,
-    rgb(147 197 253) 25%,
-    rgb(96 165 250) 50%,
-    rgb(191 219 254) 75%,
-    rgb(248 250 252) 100%
-  );
-  background-size: 220% 220%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-title-gradient {
-    animation: gradientShift 8s ease-in-out infinite;
-  }
-}
-
-
-@keyframes kickerPulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgb(96 165 250 / 0.15);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgb(96 165 250 / 0);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-kicker {
-    animation: kickerPulse 2.6s ease-in-out infinite;
-  }
-}
-
-/* Subtle grid behind hero (static, cheap to paint) */
-.hero-grid-bg {
-  background-image:
-    linear-gradient(rgb(148 163 184 / 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(148 163 184 / 0.06) 1px, transparent 1px);
-  background-size: 52px 52px;
-  mask-image: radial-gradient(ellipse 85% 70% at 50% 35%, rgb(0 0 0), transparent 72%);
-}
-
-/* Cards: lift + border glow on hover */
+/* ── Tarjetas: elevación en hover, sin halo de color ────────────────────── */
 .card-tile {
   position: relative;
   transition:
@@ -253,64 +109,8 @@ body {
 @media (prefers-reduced-motion: no-preference) {
   .card-tile:hover {
     transform: translateY(-6px);
-    box-shadow:
-      0 28px 60px -32px rgb(0 0 0 / 0.65),
-      0 0 0 1px rgb(96 165 250 / 0.12),
-      0 0 40px -20px rgb(96 165 250 / 0.15);
-  }
-
-  .card-tile.card-tile-amber:hover {
-    box-shadow:
-      0 28px 60px -32px rgb(0 0 0 / 0.65),
-      0 0 0 1px rgb(251 191 36 / 0.22),
-      0 0 44px -22px rgb(251 191 36 / 0.12);
-  }
-}
-
-.card-tile-shine {
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.card-tile-shine > * {
-  position: relative;
-  z-index: 1;
-}
-
-.card-tile-shine::after {
-  content: "";
-  position: absolute;
-  inset: -20%;
-  z-index: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    115deg,
-    transparent 35%,
-    rgb(255 255 255 / 0.06) 50%,
-    transparent 65%
-  );
-  transform: translateX(-100%) skewX(-14deg);
-  opacity: 0;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .card-tile-shine:hover::after {
-    animation: cardShineSweep 0.45s ease-out forwards;
-  }
-}
-
-@keyframes cardShineSweep {
-  0% {
-    opacity: 0;
-    transform: translateX(-100%) skewX(-14deg);
-  }
-  25% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(100%) skewX(-14deg);
+    box-shadow: 0 28px 60px -32px rgb(0 0 0 / 0.65);
+    border-color: var(--accent);
   }
 }
 
@@ -318,84 +118,104 @@ body {
   .card-tile:hover {
     transform: none;
     box-shadow: none;
+    border-color: var(--accent);
   }
+}
 
-  .card-tile-shine:hover::after {
+/* ── FAQ ────────────────────────────────────────────────────────────────── */
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item summary:hover h3 {
+  color: var(--accent-ink);
+}
+.faq-item summary h3 {
+  transition: color 0.18s ease;
+}
+
+/* ── Barra de progreso del carrusel — en sync con INTERVALO en Sintomas ─── */
+@keyframes carouselProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+/* La duración la fija cada carrusel con --carousel-dur, para que la barra
+   termine justo cuando avanza el slide. Sintomas usa el default. */
+.carousel-progress {
+  animation: carouselProgress var(--carousel-dur, 4.2s) linear forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .carousel-progress {
+    animation: none;
+    width: 100%;
+  }
+}
+
+/* ── Logo del hero: flote suave ─────────────────────────────────────────── */
+@keyframes logoFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-logo-float {
+    animation: logoFloat 5.5s ease-in-out 1.6s infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-logo-float {
     animation: none;
   }
 }
 
-/* Testimonial stat: number glow + box border pulse */
-@keyframes statNumberGlow {
-  0%, 100% { text-shadow: 0 0 24px rgba(59,123,255,0.35); }
-  50%       { text-shadow: 0 0 60px rgba(59,123,255,0.75), 0 0 100px rgba(59,123,255,0.3); }
-}
-@keyframes statBoxPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 1px rgba(59,123,255,0.18), 0 0 24px rgba(59,123,255,0.06);
-    border-color: rgba(30,42,68,1);
-  }
-  50% {
-    box-shadow: 0 0 0 1px rgba(59,123,255,0.45), 0 0 48px rgba(59,123,255,0.18);
-    border-color: rgba(59,123,255,0.4);
-  }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .stat-number-glow {
-    animation: statNumberGlow 2.8s ease-in-out infinite;
-  }
-  .stat-box-pulse {
-    animation: statBoxPulse 2.8s ease-in-out infinite;
-  }
-}
-
-/* ── Scroll-stack sections ─────────────────────────────── */
-.stack-card {
-  box-shadow: 0 -8px 32px rgba(0,0,0,0.35);
-}
-@media (min-width: 1024px) {
-  .stack-card {
-    border-radius: 24px 24px 0 0;
-    box-shadow: 0 -12px 48px rgba(0,0,0,0.45);
-  }
-}
-
-/* ── Hero logo: float suave ──────────────────────────── */
-@keyframes logoFloat {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-14px); }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .hero-logo-float { animation: logoFloat 5.5s ease-in-out 1.6s infinite; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-logo-float { animation: none; }
-}
-
-/* ── Hero h1 word-by-word reveal ───────────────────────── */
+/* ── h1 del hero: entrada por línea ─────────────────────────────────────── */
 @keyframes wordIn {
-  from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
-  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 .word-in {
   display: inline-block;
   opacity: 0;
-  animation: wordIn 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
+  animation: wordIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 @media (prefers-reduced-motion: reduce) {
-  .word-in { animation: none; opacity: 1; filter: none; transform: none; }
+  .word-in {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
 }
 
-/* ── Text highlight sweep ──────────────────────────────── */
+/* ── Subrayado que se dibuja al entrar en pantalla ──────────────────────── */
 @keyframes highlightSweep {
-  from { background-size: 0% 100%; }
-  to   { background-size: 100% 100%; }
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 100% 100%;
+  }
 }
 .text-mark {
-  background-image: linear-gradient(transparent 48%, rgba(59,123,255,0.45) 48%);
+  background-image: linear-gradient(transparent 48%, rgb(47 95 208 / 0.5) 48%);
   background-repeat: no-repeat;
   background-size: 0% 100%;
-  color: #EEF2F9;
+  color: #eef2f9;
   transition: color 0.4s ease-out;
 }
 .text-mark-on {
@@ -403,10 +223,13 @@ body {
   color: #ffffff;
 }
 @media (prefers-reduced-motion: reduce) {
-  .text-mark-on { animation: none; background-size: 100% 100%; }
+  .text-mark-on {
+    animation: none;
+    background-size: 100% 100%;
+  }
 }
 
-/* Mobile nav drawer */
+/* ── Drawer de navegación mobile ────────────────────────────────────────── */
 @keyframes navOverlayFade {
   from {
     opacity: 0;
@@ -518,628 +341,14 @@ body {
   }
 }
 
-/* Desktop nav link hover */
-.nav-pill-link {
-  position: relative;
-  transition:
-    color 0.2s ease,
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .nav-pill-link:hover {
-    box-shadow: 0 0 0 1px rgb(96 165 250 / 0.2);
-  }
-}
-
-/* Services: subtle float on inner content (hover lift stays on article) */
-@keyframes serviceCardBob {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .service-card-bob {
-    animation: serviceCardBob 3.2s ease-in-out infinite;
-  }
-}
-
+/* ── Reveal: sin movimiento si el sistema lo pide ────────────────────────
+   Reveal.tsx aplica opacidad y transform inline, así que la anulación tiene
+   que ser !important. A cambio, el contenido queda visible aunque el JS no
+   llegue a ejecutarse. */
 @media (prefers-reduced-motion: reduce) {
-  .service-card-bob {
-    animation: none;
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
-}
-
-/* Hero stack pills: tech chips with icon + neon + motion */
-@keyframes heroPillBobGlow {
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-3px) scale(1.03);
-  }
-}
-
-@keyframes heroPillShine {
-  0%,
-  100% {
-    opacity: 0.15;
-  }
-  50% {
-    opacity: 0.55;
-  }
-}
-
-@keyframes twinkle {
-  0%,
-  100% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(-1px);
-  }
-}
-
-@keyframes edgeFlow {
-  0% {
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dashoffset: -20px;
-  }
-}
-
-@keyframes nodePulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.88;
-  }
-  50% {
-    transform: scale(1.06);
-    opacity: 1;
-  }
-}
-
-@keyframes auraPulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.24;
-  }
-  50% {
-    transform: scale(1.08);
-    opacity: 0.34;
-  }
-}
-
-.fxEdgeFlow {
-  animation-name: edgeFlow;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  transform-origin: center;
-}
-
-.fxNode {
-  transform-origin: center;
-  animation: nodePulse 4.8s ease-in-out infinite;
-}
-
-.fxNodeAura {
-  transform-origin: center;
-  animation: auraPulse 5.6s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fxEdgeFlow,
-  .fxNode,
-  .fxNodeAura {
-    animation: none !important;
-  }
-}
-
-.hero-stack-pill {
-  position: relative;
-  z-index: 0;
-  isolation: isolate;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  border-radius: 0.75rem;
-  padding: 0.4rem 0.75rem 0.4rem 0.55rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  background: linear-gradient(155deg, rgb(15 23 42 / 0.92) 0%, rgb(30 41 59 / 0.55) 100%);
-  border: 1px solid rgb(148 163 184 / 0.25);
-  box-shadow:
-    0 0 0 1px rgb(0 0 0 / 0.35),
-    inset 0 1px 0 rgb(255 255 255 / 0.06);
-  text-shadow: 0 1px 2px rgb(0 0 0 / 0.5);
-}
-
-.hero-stack-pill::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgb(255 255 255 / 0.14), transparent 55%, rgb(255 255 255 / 0.06));
-  opacity: 0.2;
-  pointer-events: none;
-}
-
-.hero-stack-pill-icon {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  height: 1.35rem;
-  width: 1.35rem;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.45rem;
-  background: rgb(0 0 0 / 0.35);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08);
-}
-
-.hero-stack-pill-label {
-  position: relative;
-  z-index: 1;
-}
-
-.hero-stack-pill--react {
-  border-color: rgb(59 130 246 / 0.45);
-  color: rgb(250 232 255 / 0.98);
-  box-shadow:
-    0 0 0 1px rgb(59 130 246 / 0.12),
-    0 0 14px rgb(59 130 246 / 0.28),
-    0 0 28px rgb(192 38 211 / 0.12),
-    inset 0 1px 0 rgb(255 255 255 / 0.08);
-}
-
-.hero-stack-pill--next {
-  border-color: rgb(148 163 184 / 0.45);
-  color: rgb(241 245 249 / 0.95);
-  box-shadow:
-    0 0 0 1px rgb(255 255 255 / 0.08),
-    0 0 16px rgb(148 163 184 / 0.2),
-    0 0 32px rgb(100 116 139 / 0.15),
-    inset 0 1px 0 rgb(255 255 255 / 0.06);
-}
-
-.hero-stack-pill--ts {
-  border-color: rgb(96 165 250 / 0.5);
-  color: rgb(191 219 254 / 0.98);
-  box-shadow:
-    0 0 0 1px rgb(59 130 246 / 0.15),
-    0 0 14px rgb(59 130 246 / 0.28),
-    0 0 28px rgb(37 99 235 / 0.15),
-    inset 0 1px 0 rgb(255 255 255 / 0.07);
-}
-
-.hero-stack-pill--tailwind {
-  border-color: rgb(96 165 250 / 0.5);
-  color: rgb(204 251 241 / 0.98);
-  box-shadow:
-    0 0 0 1px rgb(96 165 250 / 0.14),
-    0 0 14px rgb(96 165 250 / 0.32),
-    0 0 30px rgb(20 184 166 / 0.18),
-    inset 0 1px 0 rgb(255 255 255 / 0.08);
-}
-
-.hero-stack-pill--react .hero-stack-pill-icon {
-  color: rgb(96 165 250);
-}
-
-.hero-stack-pill--next .hero-stack-pill-icon {
-  color: rgb(226 232 240);
-}
-
-.hero-stack-pill--ts .hero-stack-pill-icon {
-  color: rgb(147 197 253);
-}
-
-.hero-stack-pill--tailwind .hero-stack-pill-icon {
-  color: rgb(96 165 250);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-stack-pill {
-    animation: heroPillBobGlow 2.6s ease-in-out infinite;
-  }
-
-  .hero-stack-pill::after {
-    animation: heroPillShine 2.6s ease-in-out infinite;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-stack-pill {
-    animation: none;
-  }
-
-  .hero-stack-pill::after {
-    animation: none;
-    opacity: 0.25;
-  }
-}
-
-/* Hero main glass panel */
-.hero-glass-panel {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(
-    168deg,
-    rgb(15 23 42 / 0.72) 0%,
-    rgb(15 23 42 / 0.38) 42%,
-    rgb(15 23 42 / 0.55) 100%
-  );
-  border: 1px solid rgb(255 255 255 / 0.12);
-  box-shadow:
-    0 0 0 1px rgb(96 165 250 / 0.06),
-    0 28px 90px -36px rgb(0 0 0 / 0.88),
-    inset 0 1px 0 rgb(255 255 255 / 0.1),
-    inset 0 -18px 48px -24px rgb(96 165 250 / 0.06);
-}
-
-/* Móvil: sin backdrop-blur en el panel (Safari/Chrome suavizan el texto);
-   fondo más opaco + título sin animación de gradiente + entrada sin filter. */
-@media (max-width: 767px) {
-  .hero-glass-panel {
-    background: linear-gradient(
-      168deg,
-      rgb(15 23 42 / 0.94) 0%,
-      rgb(15 23 42 / 0.86) 45%,
-      rgb(15 23 42 / 0.92) 100%
-    );
-    /* Sombra más contenida: el inset inferior ancho suele “manchar” fuera del radio en iOS */
-    box-shadow:
-      0 0 0 1px rgb(96 165 250 / 0.05),
-      0 18px 48px -28px rgb(0 0 0 / 0.82),
-      inset 0 1px 0 rgb(255 255 255 / 0.08);
-  }
-
-  .hero-title-gradient {
-    animation: none;
-    background-position: 40% 50%;
-    text-rendering: geometricPrecision;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-glass-panel .fadeDown {
-      filter: none;
-      animation-name: fadeDownNoBlur;
-    }
-  }
-}
-
-.hero-glass-panel::before {
-  content: "";
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(96 165 250 / 0.5), rgb(59 130 246 / 0.35), transparent);
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-.hero-glass-panel-corner {
-  position: absolute;
-  width: 3.5rem;
-  height: 3.5rem;
-  pointer-events: none;
-  border-style: solid;
-  border-color: rgb(96 165 250 / 0.22);
-}
-
-.hero-glass-panel-corner--tl {
-  left: 0.75rem;
-  top: 0.75rem;
-  border-left: 1px solid;
-  border-top: 1px solid;
-  border-radius: 0.5rem 0 0 0;
-}
-
-.hero-glass-panel-corner--br {
-  right: 0.75rem;
-  bottom: 0.75rem;
-  border-right: 1px solid;
-  border-bottom: 1px solid;
-  border-radius: 0 0 0.5rem 0;
-}
-
-/* ── Hero Unified Card ───────────────────────────────────────── */
-.hero-unified-card {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(
-    168deg,
-    rgb(15 23 42 / 0.72) 0%,
-    rgb(15 23 42 / 0.38) 42%,
-    rgb(15 23 42 / 0.55) 100%
-  );
-  border: 1px solid rgb(255 255 255 / 0.12);
-  box-shadow:
-    0 0 0 1px rgb(96 165 250 / 0.06),
-    0 28px 90px -36px rgb(0 0 0 / 0.88),
-    inset 0 1px 0 rgb(255 255 255 / 0.1),
-    inset 0 -18px 48px -24px rgb(96 165 250 / 0.06);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.hero-unified-card::before {
-  content: "";
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgb(96 165 250 / 0.5),
-    rgb(59 130 246 / 0.35),
-    transparent
-  );
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-@keyframes heroCardGlow {
-  0%, 100% {
-    box-shadow:
-      0 0 0 1px rgb(96 165 250 / 0.06),
-      0 28px 90px -36px rgb(0 0 0 / 0.88),
-      inset 0 1px 0 rgb(255 255 255 / 0.1),
-      inset 0 -18px 48px -24px rgb(96 165 250 / 0.06);
-  }
-  50% {
-    box-shadow:
-      0 0 0 1px rgb(96 165 250 / 0.18),
-      0 28px 90px -36px rgb(0 0 0 / 0.88),
-      0 0 80px -20px rgb(96 165 250 / 0.13),
-      inset 0 1px 0 rgb(255 255 255 / 0.13),
-      inset 0 -18px 48px -24px rgb(96 165 250 / 0.11);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-unified-card {
-    animation:
-      fadeDownNoBlur 0.55s ease-out 0.06s both,
-      heroCardGlow 7s ease-in-out 0.9s infinite;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-unified-card {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (max-width: 767px) {
-  .hero-unified-card {
-    background: linear-gradient(
-      168deg,
-      rgb(15 23 42 / 0.94) 0%,
-      rgb(15 23 42 / 0.86) 45%,
-      rgb(15 23 42 / 0.92) 100%
-    );
-    box-shadow:
-      0 0 0 1px rgb(96 165 250 / 0.05),
-      0 18px 48px -28px rgb(0 0 0 / 0.82),
-      inset 0 1px 0 rgb(255 255 255 / 0.08);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-unified-card .fadeDown {
-      filter: none;
-      animation-name: fadeDownNoBlur;
-    }
-  }
-}
-
-/* ── Hero split cards ────────────────────────────────────────── */
-@keyframes heroFloat {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-10px); }
-}
-
-.hero-text-card,
-.hero-photo-card {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(
-    168deg,
-    rgb(15 23 42 / 0.72) 0%,
-    rgb(15 23 42 / 0.38) 42%,
-    rgb(15 23 42 / 0.55) 100%
-  );
-  border: 1px solid rgb(255 255 255 / 0.12);
-  box-shadow:
-    0 0 0 1px rgb(129 140 248 / 0.06),
-    0 28px 90px -36px rgb(0 0 0 / 0.88),
-    inset 0 1px 0 rgb(255 255 255 / 0.1),
-    inset 0 -18px 48px -24px rgb(129 140 248 / 0.06);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.hero-text-card::before,
-.hero-photo-card::before {
-  content: "";
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(129 140 248 / 0.5), rgb(96 165 250 / 0.35), transparent);
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-text-card {
-    animation:
-      fadeDownNoBlur 0.55s ease-out 0.08s both,
-      heroFloat 5.5s ease-in-out 1.5s infinite;
-  }
-  .hero-photo-card {
-    animation:
-      fadeDownNoBlur 0.55s ease-out 0.24s both,
-      heroFloat 6.5s ease-in-out -0.8s infinite;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-text-card,
-  .hero-photo-card {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (max-width: 767px) {
-  .hero-text-card {
-    background: linear-gradient(
-      168deg,
-      rgb(15 23 42 / 0.94) 0%,
-      rgb(15 23 42 / 0.86) 45%,
-      rgb(15 23 42 / 0.92) 100%
-    );
-    box-shadow:
-      0 0 0 1px rgb(129 140 248 / 0.05),
-      0 18px 48px -28px rgb(0 0 0 / 0.82),
-      inset 0 1px 0 rgb(255 255 255 / 0.08);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-}
-
-/* ── Portrait orbital system ─────────────────────────────────── */
-.portrait-scene {
-  position: relative;
-  width: 420px;
-  height: 420px;
-  flex-shrink: 0;
-}
-
-/* Orbit rings — círculos achatados con scaleY para simular perspectiva */
-.portrait-ring-el {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.portrait-ring-el-1 {
-  width: 400px; height: 400px;
-  border: 1px solid rgba(96, 165, 250, 0.28);
-  box-shadow: 0 0 18px rgba(96, 165, 250, 0.07);
-  transform: translate(-50%, -50%);
-}
-
-.portrait-ring-el-2 {
-  width: 318px; height: 318px;
-  border: 1px solid rgba(96, 165, 250, 0.28);
-  box-shadow: 0 0 18px rgba(37, 99, 235, 0.07);
-  transform: translate(-50%, -50%);
-}
-
-.portrait-ring-el-3 {
-  width: 244px; height: 244px;
-  border: 1px solid rgba(96, 165, 250, 0.25);
-  box-shadow: 0 0 18px rgba(96, 165, 250, 0.07);
-  transform: translate(-50%, -50%);
-}
-
-/* Brazos giratorios — div 0×0 en el centro que gira y lleva el satélite */
-.portrait-orbit-arm {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-}
-
-@keyframes orbitArmSpin {
-  to { transform: rotateZ(360deg); }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .portrait-orbit-arm-1 { animation: orbitArmSpin 9s linear infinite; }
-  .portrait-orbit-arm-2 { animation: orbitArmSpin 6s linear infinite reverse; }
-  .portrait-orbit-arm-3 { animation: orbitArmSpin 13s linear infinite; animation-delay: -4s; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .portrait-orbit-arm-1,
-  .portrait-orbit-arm-2,
-  .portrait-orbit-arm-3 { animation: none; }
-}
-
-/* Satélites — en el extremo de cada brazo */
-.portrait-sat {
-  position: absolute;
-  border-radius: 50%;
-  top: -5.5px;
-}
-
-.portrait-sat-1 {
-  width: 11px; height: 11px;
-  left: 194.5px; /* radio 200 - mitad del dot */
-  background: rgba(96, 165, 250, 0.95);
-  box-shadow: 0 0 8px rgba(96, 165, 250, 0.9), 0 0 22px rgba(96, 165, 250, 0.5);
-}
-
-.portrait-sat-2 {
-  width: 9px; height: 9px;
-  top: -4.5px;
-  left: 154.5px; /* radio 159 - mitad del dot */
-  background: rgba(96, 165, 250, 0.95);
-  box-shadow: 0 0 8px rgba(96, 165, 250, 0.9), 0 0 18px rgba(37, 99, 235, 0.5);
-}
-
-.portrait-sat-3 {
-  width: 8px; height: 8px;
-  top: -4px;
-  left: 118px; /* radio 122 - mitad del dot */
-  background: rgba(96, 165, 250, 0.95);
-  box-shadow: 0 0 6px rgba(96, 165, 250, 0.9), 0 0 14px rgba(96, 165, 250, 0.5);
-}
-
-/* Foto circular */
-.portrait-photo-el {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid rgba(96, 165, 250, 0.40);
-  box-shadow:
-    0 0 0 6px rgba(96, 165, 250, 0.07),
-    0 0 0 12px rgba(96, 165, 250, 0.03),
-    0 0 50px rgba(96, 165, 250, 0.22),
-    0 24px 60px rgba(0, 0, 0, 0.55);
-  z-index: 10;
 }

@@ -1,14 +1,15 @@
 "use client";
 
+import { waLink } from "../lib/content";
+
 export default function WhatsAppFloat() {
   return (
     <a
-      href="https://wa.me/5491178230346"
+      href={waLink("general")}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp"
-      className="group fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-[0_4px_24px_rgba(37,211,102,0.45)] outline-none transition-all duration-200 hover:scale-110 hover:shadow-[0_6px_32px_rgba(37,211,102,0.6)] active:scale-95 focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-      onClick={() => (window as any).ttq?.track("Contact")}
+      aria-label="Escribime por WhatsApp"
+      className="group fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] outline-none transition-transform duration-200 hover:scale-110 active:scale-95 focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
