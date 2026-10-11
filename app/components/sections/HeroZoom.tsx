@@ -85,6 +85,9 @@ const fuente = (f: Foto) =>
     height: f.h,
     sizes: f.sizes,
     alt: ALT,
+    // Es lo primero que se ve: no se difiere. Dentro de <picture> el
+    // navegador sólo baja la fuente que corresponde a la orientación.
+    loading: "eager",
     fetchPriority: "high",
   }).props;
 

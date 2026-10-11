@@ -3,7 +3,6 @@ import { Geist, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
-import WhatsAppFloat from "./components/layout/WhatsAppFloat";
 import { BASE_URL, IDENTITY } from "./lib/content";
 import { siteSchema } from "./lib/schema";
 
@@ -77,8 +76,6 @@ export default function RootLayout({
         </main>
 
         <Footer />
-
-        <WhatsAppFloat />
       </body>
     </html>
   );

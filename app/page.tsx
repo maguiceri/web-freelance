@@ -10,7 +10,7 @@ import { BASE_URL, FAQS_GENERALES } from "./lib/content";
 
 const TITULO = "Webs animadas para tu marca | Magali Cerisola";
 const DESCRIPCION =
-  "Diseño y programo webs animadas, con scroll interactivo, para que tu marca no se olvide. Maqueta en 2 días y web online en 6 a 7.";
+  "Diseño y programo webs animadas, con scroll interactivo, para que tu marca no se olvide.";
 
 export const metadata: Metadata = {
   title: TITULO,
@@ -39,7 +39,6 @@ export default function Home() {
       <Faq faqs={FAQS_GENERALES} pageUrl={BASE_URL} z={15} />
 
       <Cierre
-        contexto="general"
         z={16}
         titulo={<>¿Sumamos tu marca a <Highlight delay={400}>este universo?</Highlight></>}
         bajada="Escribime con tu idea y armamos juntos una web que no se olvide."

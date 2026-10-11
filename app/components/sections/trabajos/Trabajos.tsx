@@ -104,8 +104,11 @@ export default function Trabajos() {
             id="trabajos-titulo"
             className="font-display text-[clamp(34px,5vw,60px)] font-extrabold leading-[1.02] tracking-[-0.035em] text-[#EEF2F9]"
           >
-            Mis trabajos
+            Webs que ya están online
           </h2>
+          <p className="mt-3 text-[clamp(15px,1.5vw,18px)] text-[#B8C2D6]">
+            Trabajo remoto con marcas de toda Latinoamérica.
+          </p>
         </header>
 
         <ul
@@ -117,7 +120,7 @@ export default function Trabajos() {
             <li
               key={t.slug}
               style={{ "--i": i } as React.CSSProperties}
-              className="trabajo-apilado motion-safe:lg:w-[min(56vw,820px,calc((100svh-390px)*1.6))]"
+              className="trabajo-apilado motion-safe:lg:w-[min(56vw,820px,calc((100svh-430px)*1.6))]"
             >
               <div data-card className="origin-top">
                 <TrabajoCard trabajo={t} />

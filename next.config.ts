@@ -29,6 +29,14 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  // Las páginas de servicio ya no existen: quien llegue por un link viejo va
+  // a la home.
+  async redirects() {
+    return [
+      { source: "/webs", destination: "/", permanent: true },
+      { source: "/sistemas", destination: "/", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

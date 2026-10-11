@@ -42,7 +42,7 @@ export default function Faq({
         <div className="mt-[40px] divide-y divide-[#1E2A44] border-y border-[#1E2A44]">
           {faqs.map((f, i) => (
             <Reveal as="div" key={f.q} delayMs={i * 60}>
-              <details className="faq-item group">
+              <details className="faq-item group" open={i === 0}>
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-6 outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-ink)]/50 rounded">
                   <h3 className="font-display font-semibold text-[clamp(17px,2vw,20px)] leading-snug text-[#EEF2F9]">
                     {f.q}

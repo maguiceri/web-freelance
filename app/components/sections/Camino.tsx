@@ -31,8 +31,9 @@ const PRENDE = 0.05;
  * sección de abajo), así que esta sección tiene que quedar por encima de esa:
  * su `z` debe ser mayor.
  *
- * Cada paso es una tarjeta: se enciende cuando la línea llega y se atenúa
- * cuando se enciende la siguiente, para que siempre haya un solo paso en foco.
+ * Cada paso es una tarjeta: los que todavía no llegaron se ven atenuados, el
+ * actual se enciende cuando llega la línea y los ya leídos bajan apenas, para
+ * que siempre haya un solo paso en foco sin dejar la sección vacía.
  *
  * El dominio va por un camino más fino que sale de su tarjeta, corre al lado
  * del principal y se le une en la última parada.
@@ -206,7 +207,7 @@ export default function Camino({ z = 13 }: { z?: number }) {
               )
               .fromTo(
                 textos[i],
-                { autoAlpha: 0, y: 16, borderColor: "#1E2A44" },
+                { autoAlpha: 0.35, y: 12, borderColor: "#1E2A44" },
                 { autoAlpha: 1, y: 0, borderColor: "#5B8DEF", duration: PRENDE },
                 cuando,
               );
@@ -216,14 +217,14 @@ export default function Camino({ z = 13 }: { z?: number }) {
             if (siguiente !== undefined && i < paradas.length - 1) {
               tl!.to(
                 textos[i],
-                { autoAlpha: 0.6, borderColor: "#1E2A44", duration: PRENDE },
+                { autoAlpha: 0.8, borderColor: "#1E2A44", duration: PRENDE },
                 siguiente - PRENDE,
               );
             }
           });
 
           const sale = llegada[0] + PRENDE;
-          tl.fromTo(tarjeta.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: PRENDE }, llegada[0]).to(
+          tl.fromTo(tarjeta.current, { autoAlpha: 0.35 }, { autoAlpha: 1, duration: PRENDE }, llegada[0]).to(
             dominio.current,
             { strokeDashoffset: 0, duration: llegada[paradas.length - 1] - sale },
             sale,
@@ -264,7 +265,7 @@ export default function Camino({ z = 13 }: { z?: number }) {
       style={{ zIndex: z }}
       className="stack-card relative scroll-mt-20 overflow-x-clip border border-[#1E2A44] bg-[#080E1C] py-[clamp(72px,10vw,130px)]"
     >
-      <div className="mx-auto max-w-[1080px] px-5 lg:px-[4vw]">
+      <div className="mx-auto max-w-[1240px] px-5 lg:px-[4vw]">
         <Reveal
           as="p"
           className="mb-[14px] text-[12px] font-semibold uppercase tracking-[0.18em] text-[var(--accent-ink)]"

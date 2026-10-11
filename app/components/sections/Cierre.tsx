@@ -5,7 +5,7 @@ import { useState } from "react";
 import Reveal from "../ui/Reveal";
 import Highlight from "../ui/Highlight";
 import ContactForm from "../ui/ContactForm";
-import { IDENTITY, waLink, type Servicio } from "../../lib/content";
+import { IDENTITY, waLink } from "../../lib/content";
 
 function IconWA() {
   return (
@@ -18,27 +18,24 @@ function IconWA() {
 /**
  * Cierre con dos vías de contacto.
  *
- * WhatsApp es la vía rápida; el formulario existía en el repo pero no estaba
- * conectado a ninguna página. En Sistemas viene abierto por defecto, porque ahí
- * el perfil de cliente suele preferir dejar un mail antes que whatsappear.
+ * WhatsApp es la vía rápida; el formulario queda a un clic para quien
+ * prefiere dejar un mail.
  */
 export default function Cierre({
-  contexto = "general",
   titulo,
   bajada,
   boton = "Quiero mi presupuesto",
   z = 15,
 }: {
-  contexto?: Servicio["slug"] | "general";
   titulo?: React.ReactNode;
   bajada?: string;
   /** Texto del botón de WhatsApp. */
   boton?: string;
   z?: number;
 }) {
-  const [formAbierto, setFormAbierto] = useState(contexto === "sistemas");
+  const [formAbierto, setFormAbierto] = useState(false);
 
-  const wa = waLink(contexto);
+  const wa = waLink();
 
   return (
     <section
@@ -93,7 +90,7 @@ export default function Cierre({
 
         {formAbierto && (
           <div id="form-contacto" className="mx-auto mt-8 max-w-[520px] text-left">
-            <ContactForm contexto={contexto} />
+            <ContactForm />
             <p className="mt-5 text-center text-[13px] text-[#7C89A3]">
               O directo a{" "}
               <a

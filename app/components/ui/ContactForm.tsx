@@ -4,16 +4,10 @@ import { useState, type FormEvent } from "react";
 
 const CONTACT_ENDPOINT = "/api/contact";
 
-const ETIQUETA_CONTEXTO: Record<string, string> = {
-  webs: "Consulta desde Webs",
-  sistemas: "Consulta desde Sistemas a medida",
-  general: "Consulta desde el inicio",
-};
-
 const inputCls =
   "mt-2 w-full min-h-[44px] rounded-xl border border-[#1E2A44] bg-[#0B1120] px-4 py-3 text-sm text-[#EEF2F9] placeholder:text-[#5C6880] outline-none transition-colors duration-200 focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/25";
 
-export default function ContactForm({ contexto = "general" }: { contexto?: string }) {
+export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -26,13 +20,8 @@ export default function ContactForm({ contexto = "general" }: { contexto?: strin
     const fd = new FormData(form);
     const name = String(fd.get("name") ?? "").trim();
     const email = String(fd.get("email") ?? "").trim();
-    const mensaje = String(fd.get("message") ?? "").trim();
+    const message = String(fd.get("message") ?? "").trim();
     const website = String(fd.get("website") ?? "");
-
-    // El endpoint sólo acepta name/email/message, así que el origen de la
-    // consulta viaja dentro del mensaje.
-    const etiqueta = ETIQUETA_CONTEXTO[contexto] ?? ETIQUETA_CONTEXTO.general;
-    const message = `[${etiqueta}]\n\n${mensaje}`;
 
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10_000);
