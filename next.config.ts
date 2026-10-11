@@ -28,6 +28,9 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
+    // Las fotos no cambian sin cambiar de nombre: se guardan optimizadas un
+    // mes, para que casi nadie espere la conversión de la foto de portada.
+    minimumCacheTTL: 2678400,
   },
   // Las páginas de servicio ya no existen: quien llegue por un link viejo va
   // a la home.

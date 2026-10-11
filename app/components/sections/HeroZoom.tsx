@@ -70,10 +70,15 @@ const variables = (f: Foto) =>
   `--pl:${pct(f.pantalla.x0)};--pt:${pct(f.pantalla.y0)};` +
   `--pr:${pct(1 - f.pantalla.x1)};--pb:${pct(1 - f.pantalla.y1)}`;
 
+/* Unidades de alto. En un celular la barra del navegador se esconde al
+   scrollear y el área visible crece: `svh` es el alto con la barra y `lvh` sin
+   ella. El escenario y la foto cubren `lvh`, para que al esconderse la barra
+   no quede una franja abajo por donde se vea la sección siguiente. El texto y
+   el botón se acomodan en `svh`, para que entren siempre a la vista. */
 const CSS_FOTO =
-  `.hero-foto{${variables(VERTICAL)};--alto:max(calc(100vw*var(--p)),100svh);` +
-  `width:max(100vw,calc(100svh/var(--p)));` +
-  `top:clamp(100svh - var(--alto),50svh - var(--foco)*var(--alto),0px)}` +
+  `.hero-foto{${variables(VERTICAL)};--alto:max(calc(100vw*var(--p)),100lvh);` +
+  `width:max(100vw,calc(100lvh/var(--p)));` +
+  `top:clamp(100lvh - var(--alto),50svh - var(--foco)*var(--alto),0px)}` +
   `@media ${APAISADO}{.hero-foto{${variables(HORIZONTAL)}}}`;
 
 const ALT = "Magali Cerisola tomando un café con su perro en la falda; al lado, su notebook abierta.";
@@ -93,8 +98,8 @@ const fuente = (f: Foto) =>
 
 /* ── Ritmo de la animación ──────────────────────────────────────────────────
    Posiciones sobre el progreso del scroll (0 = arriba, 1 = fin del tramo).
-   El largo del tramo es el alto de la sección: `motion-safe:h-[220svh]` son
-   100svh de la portada + 120svh de zoom. */
+   El largo del tramo es el alto de la sección: un viewport de portada más
+   120svh de zoom. */
 const RITMO = {
   textoFuera: 0.22,
   cartelDesde: 0.5,
@@ -109,7 +114,8 @@ export default function HeroZoom() {
   const frame = useRef<HTMLDivElement>(null);
   const zoom = useRef<HTMLDivElement>(null);
   const fondo = useRef<HTMLDivElement>(null);
-  const cartel = useRef<HTMLParagraphElement>(null);
+  const cartel = useRef<HTMLAnchorElement>(null);
+  const pista = useRef<HTMLDivElement>(null);
   const texto = useRef<HTMLDivElement>(null);
   const velos = useRef<HTMLDivElement>(null);
 
@@ -125,7 +131,7 @@ export default function HeroZoom() {
         // el zoom termina ya está en su lugar, y al fundirse la foto aparece
         // "adentro" de la pantalla. Se hace por JS y no por CSS para que, si
         // el script no carga, la portada no le tape el comienzo.
-        gsap.set(root.current, { marginBottom: "-100svh" });
+        gsap.set(root.current, { marginBottom: "-100lvh" });
 
         /** Escala y desplazamiento para que un destino cubra todo el stage. */
         const destino = () => {
@@ -166,6 +172,7 @@ export default function HeroZoom() {
           })
           .to(texto.current, { autoAlpha: 0, y: -24, duration: RITMO.textoFuera }, 0)
           .to(velos.current, { autoAlpha: 0, duration: RITMO.textoFuera }, 0)
+          .to(pista.current, { autoAlpha: 0, duration: RITMO.textoFuera }, 0)
           .to(
             zoom.current,
             {
@@ -200,11 +207,11 @@ export default function HeroZoom() {
     <section
       ref={root}
       aria-label="Presentación"
-      className="hero-zoom pointer-events-none relative z-10 motion-safe:h-[220svh]"
+      className="hero-zoom pointer-events-none relative z-10 motion-safe:h-[calc(100lvh+120svh)]"
     >
       <div
         ref={stage}
-        className="relative h-svh overflow-hidden motion-safe:sticky motion-safe:top-0"
+        className="relative h-lvh overflow-hidden motion-safe:sticky motion-safe:top-0"
       >
         <div ref={fondo} aria-hidden className="absolute inset-0 bg-[#05070F]" />
 
@@ -214,9 +221,10 @@ export default function HeroZoom() {
           <div ref={zoom} className="relative h-full w-full origin-top-left will-change-transform">
             {/* La pantalla va atrás de la foto y se ve por el recorte transparente. */}
             <div className="@container absolute bottom-[var(--pb)] left-[var(--pl)] right-[var(--pr)] top-[var(--pt)] bg-[#080E1C]">
-              <p
+              <a
                 ref={cartel}
-                className="absolute left-[50%] top-[44%] landscape:left-[56%] -translate-x-1/2 -translate-y-1/2 -rotate-[3deg] whitespace-nowrap text-center font-display text-[11cqw] font-extrabold leading-[1.15] tracking-[-0.02em] text-[#EEF2F9]"
+                href="#trabajos"
+                className="pointer-events-auto absolute left-[50%] top-[44%] landscape:left-[56%] -translate-x-1/2 -translate-y-1/2 -rotate-[3deg] whitespace-nowrap text-center font-display text-[11cqw] font-extrabold leading-[1.15] tracking-[-0.02em] text-[#EEF2F9]"
               >
                 Entrá a mi
                 <br />
@@ -224,7 +232,7 @@ export default function HeroZoom() {
                 <span aria-hidden className="inline-block text-[var(--accent-ink)] motion-safe:animate-bounce">
                   ↓
                 </span>
-              </p>
+              </a>
             </div>
 
             <picture>
@@ -237,16 +245,36 @@ export default function HeroZoom() {
         {/* Velos para que el texto se lea sobre la foto: arriba y abajo en
             vertical, a la izquierda (sobre la pared) en apaisado. */}
         <div ref={velos} aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-x-0 top-0 h-[38%] bg-gradient-to-b from-[#05070F] from-12% via-[#05070F]/70 via-55% to-transparent landscape:hidden" />
-          <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-[#05070F] from-30% via-[#05070F]/80 via-62% to-transparent landscape:hidden" />
+          <div className="absolute inset-x-0 top-0 h-[38svh] bg-gradient-to-b from-[#05070F] from-12% via-[#05070F]/70 via-55% to-transparent landscape:hidden" />
+          <div className="absolute inset-x-0 bottom-0 h-[calc(100lvh-60svh)] bg-gradient-to-t from-[#05070F] from-30% via-[#05070F]/80 via-62% to-transparent landscape:hidden" />
           <div className="absolute inset-y-0 left-0 hidden w-[62%] bg-gradient-to-r from-[#05070F]/90 via-[#05070F]/65 via-45% to-transparent landscape:block" />
+        </div>
+
+        {/* Pista de scroll: la portada no avanza sola, así que se dice. También
+            es un link, para quien prefiere tocar. */}
+        <div ref={pista} className="pointer-events-none absolute inset-x-0 top-0 h-svh">
+          <a
+            href="#trabajos"
+            className="pointer-events-auto absolute bottom-6 right-5 flex min-h-[52px] items-center gap-2.5 rounded-full bg-[#05070F]/60 py-1.5 pl-4 pr-1.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#EEF2F9] outline-none backdrop-blur-sm transition-colors hover:bg-[#05070F]/85 focus-visible:ring-2 focus-visible:ring-[var(--accent-ink)] landscape:bottom-7 landscape:left-1/2 landscape:right-auto landscape:-translate-x-1/2"
+          >
+            <span className="landscape:hidden">Deslizá</span>
+            <span className="hidden landscape:inline">Scrolleá para entrar</span>
+            <span
+              aria-hidden
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] motion-safe:animate-bounce"
+            >
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 2.5v11M3.5 9 8 13.5 12.5 9" />
+              </svg>
+            </span>
+          </a>
         </div>
 
         {/* Texto. Vertical: nombre arriba, propuesta y botón abajo, para no tapar
             las caras. Apaisado: todo junto sobre la pared de la izquierda. */}
         <div
           ref={texto}
-          className="pointer-events-auto absolute inset-0 flex flex-col justify-between px-5 pb-6 pt-[84px] landscape:right-auto landscape:w-[31vw] landscape:justify-center landscape:gap-[5svh] landscape:pb-0 landscape:pl-[4vw] landscape:pr-0 landscape:pt-[72px]"
+          className="pointer-events-auto absolute inset-x-0 top-0 flex h-svh flex-col justify-between px-5 pb-6 pt-[84px] landscape:right-auto landscape:w-[31vw] landscape:justify-center landscape:gap-[5svh] landscape:pb-0 landscape:pl-[4vw] landscape:pr-0 landscape:pt-[72px]"
         >
           <div>
             <h1 className="font-display text-[clamp(46px,14vw,104px)] landscape:text-[clamp(34px,min(5.3vw,13svh),104px)] font-extrabold leading-[0.98] tracking-[-0.04em] text-[#EEF2F9]">
