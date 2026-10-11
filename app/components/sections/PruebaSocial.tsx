@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import Reveal from "../Reveal";
+import Reveal from "../ui/Reveal";
 import {
   CASOS,
   SERVICIOS,

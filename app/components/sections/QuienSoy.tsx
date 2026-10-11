@@ -1,31 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import Reveal from "../Reveal";
-import Highlight from "../Highlight";
-import { BIO, IDENTITY } from "../../lib/content";
+import Reveal from "../ui/Reveal";
+import Highlight from "../ui/Highlight";
+import { BIO } from "../../lib/content";
 
 export default function QuienSoy({ z = 14 }: { z?: number }) {
-  const photoRef = useRef<HTMLDivElement>(null);
-  const [vis, setVis] = useState(false);
-
-  useEffect(() => {
-    const el = photoRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setVis(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
   return (
     <section
       id="quien-soy"
@@ -34,23 +14,24 @@ export default function QuienSoy({ z = 14 }: { z?: number }) {
     >
       <div className="mx-auto max-w-[1080px] px-[4vw]">
         <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-16">
-          <div ref={photoRef} className="shrink-0 mx-auto lg:mx-0">
-            <div className="relative rounded-[20px] overflow-hidden w-[260px] lg:w-[320px]">
+          <div className="shrink-0 mx-auto lg:mx-0">
+            <div className="relative aspect-[4/5] rounded-[20px] overflow-hidden w-[260px] lg:w-[320px]">
+              {/* La foto es más alta que el marco: se encuadra en las dos caras. */}
               <Image
-                src="/perfil.jpg"
-                alt="Magali Cerisola, desarrolladora freelance en Buenos Aires"
-                width={320}
-                height={380}
-                className="object-cover w-full h-auto block"
+                src="/perfil.png"
+                alt="Magali Cerisola sonriendo junto a su perra, que le apoya el hocico en la cara"
+                fill
+                sizes="(min-width: 1024px) 320px, 260px"
+                className="object-cover object-[50%_30%]"
               />
-              <div
-                className="absolute inset-0 bg-[#080E1C]"
-                style={{
-                  transform: vis ? "translateX(101%)" : "translateX(0)",
-                  transition: "transform 0.9s cubic-bezier(0.22,1,0.36,1)",
-                  transitionDelay: "0.1s",
-                }}
-              />
+              {/* Dónde está la cara de la perra dentro del marco. Ahí termina el
+                  camino de "Cómo trabajo": si cambia la foto o el encuadre,
+                  hay que mover este punto. */}
+              <span data-perra aria-hidden className="absolute left-[32%] top-[62%]" />
+{/* Velo que tapa la foto. Por defecto no se dibuja (la foto se ve);
+                  el camino de "Cómo trabajo" lo muestra y lo levanta de abajo
+                  hacia arriba cuando la perra llega. */}
+              <div data-velo aria-hidden className="invisible absolute inset-0 bg-[#080E1C]" />
             </div>
           </div>
 
@@ -68,7 +49,7 @@ export default function QuienSoy({ z = 14 }: { z?: number }) {
               direction="left"
               className="font-display font-extrabold text-[clamp(26px,3.4vw,38px)] tracking-[-0.03em] leading-[1.12] text-[#EEF2F9] mb-6"
             >
-              Soy {IDENTITY.name}, {IDENTITY.jobTitle.toLowerCase()}.
+              {BIO.titulo}
             </Reveal>
 
             <Reveal
@@ -76,27 +57,19 @@ export default function QuienSoy({ z = 14 }: { z?: number }) {
               delayMs={80}
               className="text-[#EEF2F9] text-[clamp(16px,1.8vw,18px)] leading-relaxed mb-5"
             >
-              Trabajé 6 años como desarrolladora,{" "}
-              <Highlight delay={200}>5 de ellos en Banco Santander.</Highlight> Ahí aprendí que la
-              tecnología no puede fallar cuando hay gente y plata real del otro lado.
+              Programo hace 6 años,{" "}
+              <Highlight delay={200}>5 de ellos en el Banco Santander Argentina.</Highlight> Un día me di cuenta
+              de que lo que más disfrutaba era hacer que las cosas se movieran, sorprendieran y se
+              sintieran vivas.
             </Reveal>
 
             <Reveal
               as="p"
               delayMs={140}
-              className="text-[#7C89A3] text-[clamp(15px,1.6vw,17px)] leading-relaxed mb-5"
-            >
-              Hoy aplico esa misma exigencia a negocios que están creciendo —{" "}
-              <Highlight delay={300}>sin la letra chica</Highlight> ni los intermediarios de una
-              agencia grande.
-            </Reveal>
-
-            <Reveal
-              as="p"
-              delayMs={200}
               className="text-[#EEF2F9] text-[clamp(15px,1.6vw,17px)] leading-relaxed font-medium border-l-2 border-[var(--accent)] pl-4"
             >
-              {BIO.cierre}
+              Ahora me dedico a eso: webs animadas para marcas que quieren{" "}
+              <Highlight delay={300}>que las recuerden.</Highlight>
             </Reveal>
           </div>
         </div>

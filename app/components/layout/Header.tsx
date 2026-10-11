@@ -3,18 +3,20 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import LogoMark from "./LogoMark";
-import { SERVICIOS, waLink } from "../lib/content";
+import { waLink } from "../../lib/content";
 
-const WA = waLink("general");
+const WA = waLink();
 
 const navItems = [
-  ...SERVICIOS.map((s) => ({ href: `/${s.slug}`, label: s.nav })),
+  { href: "/#trabajos", label: "Trabajos" },
+  { href: "/#como-trabajo", label: "Cómo trabajo" },
   { href: "/#quien-soy", label: "Quién soy" },
-  { href: "/#casos", label: "Casos" },
+  { href: "/#faq", label: "FAQ" },
 ];
 
 export default function Header() {
-  const [isVisible, setIsVisible] = useState(true);
+  /** Arriba de todo el menú va transparente sobre la foto; al bajar toma fondo. */
+  const [scrolled, setScrolled] = useState(false);
   /** El drawer sigue montado durante "closing" para que corra la animación de salida. */
   const [mobileNav, setMobileNav] = useState<"idle" | "open" | "closing">("idle");
 
@@ -47,14 +49,8 @@ export default function Header() {
   }, [isDrawerMounted]);
 
   useEffect(() => {
-    let lastY = window.scrollY;
-
-    const onScroll = () => {
-      const currentY = window.scrollY;
-      if (currentY <= 80) setIsVisible(true);
-      else setIsVisible(currentY < lastY);
-      lastY = currentY;
-    };
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
 
     const onResize = () => {
       if (window.innerWidth >= 768) setMobileNav("idle");
@@ -70,22 +66,24 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 bg-[rgba(5,7,15,0.82)] backdrop-blur-[14px] border-b border-[#1E2A44] transition-transform duration-200 ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+        scrolled
+          ? "border-[#1E2A44] bg-[rgba(5,7,15,0.86)] backdrop-blur-[14px]"
+          : "border-transparent bg-transparent lg:border-[#1E2A44] lg:bg-[rgba(5,7,15,0.86)] lg:backdrop-blur-[14px]"
       }`}
     >
-      <nav className="relative z-[2] mx-auto max-w-[1080px] px-[4vw] py-4" aria-label="Principal">
-        <div className="flex items-center justify-between gap-4">
+      <nav className="relative z-[2] mx-auto max-w-[1280px] px-5 py-3 lg:px-[4vw] xl:px-0" aria-label="Principal">
+        <div className="flex items-center gap-3">
           <Link
             href="/"
             aria-label="Inicio — Magali Cerisola"
             className="outline-none transition hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[var(--accent-ink)]/60 rounded shrink-0"
           >
-            <LogoMark height={52} />
+            <LogoMark height={44} />
           </Link>
 
           {/* Nav de escritorio */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="ml-auto hidden md:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -97,9 +95,17 @@ export default function Header() {
             ))}
           </div>
 
+          <Link
+            href={WA}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto md:ml-2 inline-flex min-h-[40px] items-center shrink-0 bg-[var(--accent)] text-white font-semibold text-[14px] px-4 rounded-[9px] outline-none transition-colors duration-200 hover:bg-[var(--accent-hover)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[var(--accent-ink)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#05070F]"
+          >
+            Quiero mi web
+          </Link>
           <button
             type="button"
-            className="inline-flex shrink-0 items-center justify-center p-2 outline-none active:scale-95 focus-visible:ring-2 focus-visible:ring-[var(--accent-ink)]/60 rounded-lg md:hidden"
+            className="inline-flex shrink-0 items-center justify-center h-10 w-10 outline-none active:scale-95 focus-visible:ring-2 focus-visible:ring-[var(--accent-ink)]/60 rounded-lg md:hidden"
             aria-label={mobileNav === "open" ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={mobileNav === "open"}
             onClick={() => {
@@ -129,14 +135,6 @@ export default function Header() {
             </svg>
           </button>
 
-          <Link
-            href={WA}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:inline-block shrink-0 bg-[var(--accent)] text-white font-semibold text-[14px] px-[18px] py-[10px] rounded-[8px] outline-none transition-colors duration-200 hover:bg-[var(--accent-hover)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[var(--accent-ink)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#05070F]"
-          >
-            Escribime
-          </Link>
         </div>
 
         {isDrawerMounted ? (
@@ -193,7 +191,7 @@ export default function Header() {
                   </svg>
                   Escribime por WhatsApp
                 </Link>
-                <p className="text-xs text-slate-600 text-center">Diagnóstico gratis · Sin compromiso</p>
+                <p className="text-xs text-slate-500 text-center">Llamada de 30 minutos · Sin costo, sin compromiso</p>
               </div>
             </div>
           </>

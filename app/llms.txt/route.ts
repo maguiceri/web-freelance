@@ -51,8 +51,6 @@ ${IDENTITY.name} ("${IDENTITY.alternateName}") es ${IDENTITY.jobTitle.toLowerCas
 
 ${BIO.parrafos.join("\n\n")}
 
-${BIO.cierre}
-
 ## Servicios
 
 ${servicios}

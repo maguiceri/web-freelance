@@ -46,7 +46,7 @@ export const IDENTITY = {
 /** Mensaje de WhatsApp precargado según de dónde venga la persona. */
 export function waLink(context: "general" | "webs" | "sistemas" = "general") {
   const texts = {
-    general: "Hola Magali, vi tu web y quiero consultarte.",
+    general: "Hola Magali, vi tu web y quiero mi web animada.",
     webs: "Hola Magali, quiero una web para mi negocio. ¿Me pasás presupuesto?",
     sistemas:
       "Hola Magali, quiero automatizar un proceso de mi negocio. ¿Me pasás presupuesto?",
@@ -237,7 +237,7 @@ export const CASOS: Caso[] = [
     autor: "Dagos Studio",
     // Martina Vega es quien está detrás de Dagos Studio; también dejó
     // testimonio del servicio de Webs, así que reutiliza la misma foto.
-    img: "/mar.jpeg",
+    img: "/clientes/mar.jpeg",
     fotoDe: "Martina Vega",
   },
   {
@@ -252,7 +252,7 @@ export const CASOS: Caso[] = [
     ],
     testimonio: "Antes vivía juntando datos de mil lados. Ahora abro el panel.",
     autor: "Dra. Mayra González",
-    img: "/mayra.jpeg",
+    img: "/clientes/mayra.jpeg",
     fotoDe: "Dra. Mayra González",
   },
 ];
@@ -276,7 +276,7 @@ export const TESTIMONIOS: Testimonio[] = [
       "La web quedó rapidísima y por fin se entiende qué hacemos. Las consultas que llegan ahora vienen con la decisión tomada.",
     nombre: "Juan Pablo Saraceno",
     rol: "Dueño de negocio",
-    img: "/jp.jpeg",
+    img: "/clientes/jp.jpeg",
     servicio: "webs",
   },
   {
@@ -284,7 +284,7 @@ export const TESTIMONIOS: Testimonio[] = [
       "Cumplió los tiempos, comunicó todo con claridad y el resultado superó lo que teníamos en la cabeza.",
     nombre: "Martina Vega",
     rol: "Diseñadora",
-    img: "/mar.jpeg",
+    img: "/clientes/mar.jpeg",
     servicio: "webs",
   },
   {
@@ -292,7 +292,7 @@ export const TESTIMONIOS: Testimonio[] = [
       "Antes vivía contestando las mismas preguntas por WhatsApp. Ahora la web las contesta sola.",
     nombre: "Francisco Piaggio",
     rol: "Colaborador de proyecto",
-    img: "/fran.jpeg",
+    img: "/clientes/fran.jpeg",
     servicio: "webs",
   },
 ];
@@ -300,31 +300,86 @@ export const TESTIMONIOS: Testimonio[] = [
 /* ── Quién soy ──────────────────────────────────────────────────────────── */
 
 export const BIO = {
+  titulo: "Soy Magui (y ella es mi compañera de oficina 🐶).",
   parrafos: [
-    "Trabajé 6 años como desarrolladora, 5 de ellos en Banco Santander. Ahí aprendí que la tecnología no puede fallar cuando hay gente y plata real del otro lado.",
-    "Hoy aplico esa misma exigencia a negocios que están creciendo — sin la letra chica ni los intermediarios de una agencia grande.",
+    "Programo hace 6 años, 5 de ellos en el Banco Santander Argentina. Un día me di cuenta de que lo que más disfrutaba era hacer que las cosas se movieran, sorprendieran y se sintieran vivas.",
+    "Ahora me dedico a eso: webs animadas para marcas que quieren que las recuerden.",
   ],
-  cierre:
-    "No estás comprando una web. Estás contratando a alguien que entiende de esto y está de tu lado.",
+} as const;
+
+/* ── Cómo trabajo (home) ────────────────────────────────────────────────── */
+
+/**
+ * Paradas del camino de la home, en orden. El dominio no es un paso: va por un
+ * camino paralelo que arranca junto al primero y se une en el último.
+ */
+export const CAMINO = {
+  /**
+   * `quien`: a quién le toca ese paso (se muestra como etiqueta).
+   * `destacado`: parte del título que va resaltada; tiene que estar escrita
+   * igual que en `titulo`.
+   */
+  pasos: [
+    {
+      quien: "vos",
+      titulo: "Me contás tu idea",
+      destacado: "tu idea",
+      desc: "Me mandás la identidad de tu marca (logo, colores, tipografías), webs que te gusten y la idea que tengas en mente.",
+    },
+    {
+      quien: "yo",
+      titulo: "Maqueta en 2 días",
+      destacado: "2 días",
+      desc: "Te muestro cómo se va a ver la home, con sus animaciones.",
+    },
+    {
+      quien: "vos",
+      titulo: "Me pasás el contenido",
+      destacado: "el contenido",
+      desc: "Si la maqueta te gusta, me enviás los textos e imágenes para completar la web.",
+    },
+    {
+      quien: "yo",
+      titulo: "Tu web online en 6 a 7 días",
+      destacado: "6 a 7 días",
+      desc: "La desarrollo a medida y queda publicada.",
+    },
+  ],
+  dominio: {
+    titulo: "Tu dominio",
+    desc: "En paralelo te envío una guía en PDF para sacar tu dominio si todavía no lo tenés. Siempre queda a tu nombre.",
+  },
 } as const;
 
 /* ── FAQ general (hub) ──────────────────────────────────────────────────── */
 
 export const FAQS_GENERALES: Faq[] = [
   {
-    q: "¿Qué diferencia hay entre una web y un sistema a medida?",
-    a: "Una web te consigue clientes. Es tu vidriera: la ve gente de afuera y su objetivo es que te contacten. Un sistema a medida te ahorra tiempo. Lo usás vos o tu equipo puertas adentro, para dejar de hacer a mano tareas que se repiten: armar presupuestos, cargar datos, llevar fichas de clientes.",
+    q: "¿Qué tipo de webs hacés?",
+    a: "Webs con animaciones y scroll interactivo, pensadas para que tu marca se recuerde y la información sea fácil de recorrer. Para tiendas online también trabajo con Shopify y Tiendanube, según lo que necesite cada proyecto.",
   },
   {
-    q: "¿Cuánto tarda un proyecto?",
-    a: "Una web queda online en 4 días hábiles desde que me pasás el contenido. Un sistema a medida depende de qué proceso automatizamos: después del diagnóstico te doy un plazo concreto antes de que decidas.",
+    q: "¿Cómo se paga?",
+    a: "50% al empezar el proyecto y 50% al entregarlo.",
   },
   {
-    q: "¿Trabajás con negocios fuera de Argentina?",
-    a: "Sí. Estoy en Buenos Aires y trabajo de forma remota con negocios de toda Latinoamérica. Todo el proceso — diagnóstico, diseño, desarrollo y soporte — se hace a distancia.",
+    q: "¿El dominio queda a mi nombre?",
+    a: "Sí, siempre. Además te dejo una guía para que puedas administrarlo.",
+  },
+  {
+    q: "¿Incluye SEO?",
+    a: "Sí. Incluye SEO básico (títulos, descripciones y velocidad de carga) y optimización para que tu web aparezca en buscadores con inteligencia artificial como ChatGPT (GEO).",
+  },
+  {
+    q: "¿Hay costos mensuales?",
+    a: "Podés elegir entre dos opciones: un mantenimiento mensual fijo, que incluye cambios chicos y monitoreo para que todo funcione bien, o pagar solo cuando necesites un cambio puntual.",
+  },
+  {
+    q: "¿Las animaciones hacen lenta la web?",
+    a: "No. Están optimizadas y se cargan solo cuando hacen falta, así que la web es rápida también en el celular.",
   },
   {
     q: "¿Cómo empiezo?",
-    a: "Me escribís por WhatsApp o por mail y me contás qué necesitás. En una llamada de 30 minutos te digo qué haría y cuánto saldría, sin costo y sin compromiso.",
+    a: "Escribime por WhatsApp o Instagram contándome de qué se trataría tu web y qué información te gustaría que muestre.",
   },
 ];

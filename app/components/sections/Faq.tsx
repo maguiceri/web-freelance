@@ -1,4 +1,4 @@
-import Reveal from "../Reveal";
+import Reveal from "../ui/Reveal";
 import { faqSchema } from "../../lib/schema";
 import type { Faq } from "../../lib/content";
 

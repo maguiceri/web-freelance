@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Reveal from "../components/Reveal";
-import Highlight from "../components/Highlight";
+import Reveal from "../components/ui/Reveal";
+import Highlight from "../components/ui/Highlight";
 import Sintomas from "../components/sections/Sintomas";
 import Proceso from "../components/sections/Proceso";
 import PruebaSocial from "../components/sections/PruebaSocial";

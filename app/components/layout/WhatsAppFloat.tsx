@@ -1,15 +1,31 @@
 "use client";
 
-import { waLink } from "../lib/content";
+import { useEffect, useState } from "react";
+import { waLink } from "../../lib/content";
 
+/**
+ * Botón flotante, sólo en mobile. Aparece al pasar la portada: ahí arriba ya
+ * está "Quiero mi web" y el flotante le taparía el texto.
+ */
 export default function WhatsAppFloat() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 1.3);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <a
-      href={waLink("general")}
+      href={waLink()}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Escribime por WhatsApp"
-      className="group fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] outline-none transition-transform duration-200 hover:scale-110 active:scale-95 focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+      tabIndex={visible ? undefined : -1}
+      aria-hidden={visible ? undefined : true}
+      className={`fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] outline-none transition-[transform,opacity] duration-200 active:scale-95 md:hidden ${visible ? "opacity-100" : "pointer-events-none scale-75 opacity-0"} focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

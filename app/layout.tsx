@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import WhatsAppFloat from "./components/WhatsAppFloat";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+import WhatsAppFloat from "./components/layout/WhatsAppFloat";
 import { BASE_URL, IDENTITY } from "./lib/content";
 import { siteSchema } from "./lib/schema";
 
@@ -66,6 +66,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema()) }}
         />
+
+        {/* Sin JavaScript no hay zoom: que el hero no reserve scroll vacío. */}
+        <noscript>
+          <style>{`.hero-zoom{height:auto!important}`}</style>
+        </noscript>
 
         <a className="skip-link" href="#main-content">
           Ir al contenido

@@ -96,6 +96,18 @@ body {
   }
 }
 
+/* ── Trabajos: tarjetas que se apilan en mobile ─────────────────────────
+   Sticky puro, sin JS. Cada tarjeta se frena un poco más abajo que la
+   anterior (--i es su posición en la lista) y la siguiente la tapa. Sólo con
+   pantalla suficientemente alta: en un celular apaisado la tarjeta no entra
+   entera y el sticky escondería el nombre del cliente. */
+@media (prefers-reduced-motion: no-preference) and (max-width: 1023.98px) and (min-height: 560px) {
+  .trabajo-apilado {
+    position: sticky;
+    top: calc(76px + var(--i, 0) * 10px);
+  }
+}
+
 /* ── Tarjetas: elevación en hover, sin halo de color ────────────────────── */
 .card-tile {
   position: relative;

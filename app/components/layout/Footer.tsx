@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { IDENTITY, SERVICIOS } from "../lib/content";
+import { IDENTITY, SERVICIOS } from "../../lib/content";
 
 export default function Footer() {
   return (

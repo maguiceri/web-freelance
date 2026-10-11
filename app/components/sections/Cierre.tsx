@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import Reveal from "../Reveal";
-import Highlight from "../Highlight";
-import ContactForm from "../ContactForm";
+import Reveal from "../ui/Reveal";
+import Highlight from "../ui/Highlight";
+import ContactForm from "../ui/ContactForm";
 import { IDENTITY, waLink, type Servicio } from "../../lib/content";
 
 function IconWA() {
@@ -26,11 +26,14 @@ export default function Cierre({
   contexto = "general",
   titulo,
   bajada,
+  boton = "Quiero mi presupuesto",
   z = 15,
 }: {
   contexto?: Servicio["slug"] | "general";
   titulo?: React.ReactNode;
   bajada?: string;
+  /** Texto del botón de WhatsApp. */
+  boton?: string;
   z?: number;
 }) {
   const [formAbierto, setFormAbierto] = useState(contexto === "sistemas");
@@ -69,7 +72,7 @@ export default function Cierre({
             className="mt-[36px] inline-flex items-center gap-[10px] bg-[var(--accent)] text-white font-semibold text-[16px] px-[34px] py-[17px] rounded-[11px] outline-none transition-colors duration-200 hover:bg-[var(--accent-hover)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[var(--accent-ink)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#05070F]"
           >
             <IconWA />
-            Quiero mi presupuesto
+            {boton}
           </Link>
 
           <p className="mt-[18px] text-[13px] text-[#7C89A3]">

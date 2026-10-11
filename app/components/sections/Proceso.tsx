@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Reveal from "../Reveal";
-import Highlight from "../Highlight";
+import Reveal from "../ui/Reveal";
+import Highlight from "../ui/Highlight";
 import type { Paso } from "../../lib/content";
 
 /**

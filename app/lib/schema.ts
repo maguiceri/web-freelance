@@ -25,7 +25,7 @@ function personNode() {
     name: IDENTITY.name,
     alternateName: IDENTITY.alternateName,
     url: BASE_URL,
-    image: `${BASE_URL}/perfil.jpg`,
+    image: `${BASE_URL}/perfil.png`,
     jobTitle: IDENTITY.jobTitle,
     email: IDENTITY.email,
     description: `${BIO.parrafos[0]} ${BIO.parrafos[1]}`,
