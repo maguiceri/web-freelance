@@ -104,8 +104,12 @@ const RITMO = {
   textoFuera: 0.22,
   cartelDesde: 0.5,
   cartelHasta: 0.7,
-  /** Desde acá la portada se funde y deja ver la sección de trabajos. */
-  salidaDesde: 0.78,
+  /**
+   * Acá termina el zoom (la pantalla de la notebook ya llena el viewport) y
+   * recién entonces la portada se funde y deja ver la sección de trabajos. Si
+   * se fundiera antes, los trabajos se verían a través de la foto.
+   */
+  salidaDesde: 0.8,
 };
 
 export default function HeroZoom() {
@@ -179,7 +183,7 @@ export default function HeroZoom() {
               scale: () => destino().scale,
               x: () => destino().x,
               y: () => destino().y,
-              duration: 1,
+              duration: RITMO.salidaDesde,
               ease: "power2.in",
             },
             0,
