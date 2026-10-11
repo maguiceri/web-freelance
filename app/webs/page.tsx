@@ -7,7 +7,7 @@ import Proceso from "../components/sections/Proceso";
 import PruebaSocial from "../components/sections/PruebaSocial";
 import Faq from "../components/sections/Faq";
 import Cierre from "../components/sections/Cierre";
-import { BASE_URL, servicioBySlug, waLink } from "../lib/content";
+import { BASE_URL, servicioBySlug, waLink, OG_IMAGE } from "../lib/content";
 import { servicioSchema } from "../lib/schema";
 
 const servicio = servicioBySlug("webs");
@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     url: URL_PAGINA,
     title: servicio.metaTitle,
     description: servicio.metaDescription,
+    images: [OG_IMAGE],
   },
 };
 

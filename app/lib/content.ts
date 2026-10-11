@@ -43,10 +43,22 @@ export const IDENTITY = {
   ],
 } as const;
 
+/**
+ * Imagen de la previsualización al compartir un link. En la home la pone Next
+ * a partir de app/opengraph-image.jpg; las subpáginas definen su propio
+ * `openGraph` (que pisa el heredado), así que tienen que incluirla a mano.
+ */
+export const OG_IMAGE = {
+  url: "/opengraph-image.jpg",
+  width: 1200,
+  height: 630,
+  alt: 'Magui tomando un café con su perra en la falda; al lado, su notebook con el texto "Entrá a mi universo".',
+};
+
 /** Mensaje de WhatsApp precargado según de dónde venga la persona. */
 export function waLink(context: "general" | "webs" | "sistemas" = "general") {
   const texts = {
-    general: "Hola Magali, vi tu web y quiero mi web animada.",
+    general: "Hola Magali, vi tu web y quiero consultarte.",
     webs: "Hola Magali, quiero una web para mi negocio. ¿Me pasás presupuesto?",
     sistemas:
       "Hola Magali, quiero automatizar un proceso de mi negocio. ¿Me pasás presupuesto?",

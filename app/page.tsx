@@ -6,17 +6,21 @@ import QuienSoy from "./components/sections/QuienSoy";
 import Faq from "./components/sections/Faq";
 import Cierre from "./components/sections/Cierre";
 import Highlight from "./components/ui/Highlight";
-import { BASE_URL, FAQS_GENERALES, IDENTITY } from "./lib/content";
+import { BASE_URL, FAQS_GENERALES } from "./lib/content";
+
+const TITULO = "Webs animadas para tu marca | Magali Cerisola";
+const DESCRIPCION =
+  "Diseño y programo webs animadas, con scroll interactivo, para que tu marca no se olvide. Maqueta en 2 días y web online en 6 a 7.";
 
 export const metadata: Metadata = {
-  title: "Webs y sistemas a medida para negocios | Magali Cerisola",
-  description: IDENTITY.tagline,
+  title: TITULO,
+  description: DESCRIPCION,
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     url: BASE_URL,
-    title: "Webs y sistemas a medida para negocios | Magali Cerisola",
-    description: IDENTITY.tagline,
+    title: TITULO,
+    description: DESCRIPCION,
   },
 };
 

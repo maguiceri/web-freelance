@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   // Cada ruta define su propio título; esto es el respaldo y el sufijo común.
   title: {
-    default: "Webs y sistemas a medida para negocios | Magali Cerisola",
+    default: "Webs animadas para tu marca | Magali Cerisola",
     template: "%s",
   },
   description: IDENTITY.tagline,
@@ -36,18 +36,12 @@ export const metadata: Metadata = {
     url: BASE_URL,
     siteName: IDENTITY.name,
     locale: "es_AR",
-    images: [
-      {
-        url: "/cv.jpeg",
-        width: 800,
-        height: 800,
-        alt: `${IDENTITY.name}, ${IDENTITY.jobTitle.toLowerCase()} en ${IDENTITY.locality}`,
-      },
-    ],
   },
+  // La imagen de la previsualización sale de app/opengraph-image.jpg y
+  // app/twitter-image.jpg (una captura de la portada a 1200 × 630), que Next
+  // aplica a todas las rutas.
   twitter: {
-    card: "summary",
-    images: ["/cv.jpeg"],
+    card: "summary_large_image",
   },
 };
 
